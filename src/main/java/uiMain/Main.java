@@ -10,12 +10,12 @@ public class Main {
     static void menu(){
         boolean encendido = true;
         do {
-            System.out.println(" Que desea realizar?" + "\n" +
-                    "1. Realizar Reserva." + "\n" +
-                    "2. Realizar Domicilio." + "\n" +
-                    "3. Realizar Pedido." + "\n" +
-                    "4. Realizar pago." + "\n" +
-                    "5.Califcación del servicio." + "\n" +
+            System.out.println("¿Qué desea hacer?" + "\n" +
+                    "1. Realizar una reserva." + "\n" +
+                    "2. Realizar un domicilio." + "\n" +
+                    "3. Realizar un pedido." + "\n" +
+                    "4. Realizar un pago." + "\n" +
+                    "5. Calificar el servicio." + "\n" +
                     "6. Salir." + "\n" +
                     "Ingrese un número para elegir una opción.");
             Scanner valorEntrada = new Scanner(System. in);
@@ -43,6 +43,7 @@ public class Main {
                     encendido = false;
                     break;
                 case 6:
+                    //cerrar el prograama
                     encendido = false;
                     break;
             }
