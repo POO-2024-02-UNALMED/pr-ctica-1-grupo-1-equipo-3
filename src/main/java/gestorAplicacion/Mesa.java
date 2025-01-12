@@ -10,8 +10,13 @@ public class Mesa {
     private Mesero mesero;
     private String tipo;
     private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
-
-    public Mesa() {
+    
+    public Mesa(int numero, int capacidad, String tipo) {
+        this.numero = numero;
+        this.estado = true; //Disponible
+        this.capacidad = capacidad;
+        this.tipo = tipo;
+        this.reservas = new ArrayList<>();
     }
 
     public boolean estaDisponible(LocalDateTime horario) {
