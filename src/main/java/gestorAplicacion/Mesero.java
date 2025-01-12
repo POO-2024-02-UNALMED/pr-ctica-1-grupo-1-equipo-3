@@ -13,6 +13,13 @@ public class Mesero {
         this.totalCalificaciones = totalCalificaciones;
         restaurante.agregarMesero(this);
     }
+    
+    public Mesero(int codigo, String nombre, int promCalificaciones, int totalCalificaciones) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.promCalificaciones = promCalificaciones;
+        this.totalCalificaciones = totalCalificaciones;
+    }
 
     public void actualizarDesempenoMesero(Calificacion calificacion){
         double sumaAcumalada = this.promCalificaciones * this.totalCalificaciones;
