@@ -14,6 +14,7 @@ public class Restaurante {
     private ArrayList<Mesero> meseros;
     private ArrayList<Mesero> menu;
     private ArrayList<Calificacion> calificacionesRestaurante;
+    private ArrayList<Calificacion> calificacionMeseros;
 
     public Restaurante(String nombre,LocalTime horarioServicio) {
         
@@ -108,5 +109,18 @@ public class Restaurante {
 
     public void setMeseros(ArrayList<Mesero> meseros) {
         this.meseros = meseros;
+
+    public Restaurante(String nombre, String horarioServicio, ArrayList<Mesa> mesas, ArrayList<Reserva> reservas, ArrayList<Mesero> meseros, ArrayList<Mesero> calificacionMeseros) {
+        this.nombre = nombre;
+        this.horarioServicio = horarioServicio;
+        this.mesas = mesas;
+        this.reservas = reservas;
+        this.meseros = meseros;
+        this.calificacionMeseros = calificacionMeseros;
+    }
+
+    //agregarMesero
+    public void agregarMesero(Mesero mesero) {
+        meseros.add(mesero);
     }
 }
