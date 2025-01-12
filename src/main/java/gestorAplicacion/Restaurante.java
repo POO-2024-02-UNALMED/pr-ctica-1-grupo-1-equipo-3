@@ -1,6 +1,7 @@
 package gestorAplicacion;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Restaurante {
 
@@ -8,6 +9,8 @@ public class Restaurante {
     private String horarioServicio;
     private ArrayList<Mesa> mesas;
     private ArrayList<Reserva> reservas;
+    private ArrayList<Mesero> meseros;
+    private ArrayList<Mesero> calificacionMeseros;  //Prioridad para ser escogidos
 
     public void hacerReserva(String fecha, String hora, Mesa mesa) {
         LocalDateTime horario = convertirFechaHora(fecha, hora);
@@ -68,6 +71,17 @@ public class Restaurante {
         return mostrarMesas;
     }
 
-    public Restaurante() {
+    public Restaurante(String nombre, String horarioServicio, ArrayList<Mesa> mesas, ArrayList<Reserva> reservas, ArrayList<Mesero> meseros, ArrayList<Mesero> calificacionMeseros) {
+        this.nombre = nombre;
+        this.horarioServicio = horarioServicio;
+        this.mesas = mesas;
+        this.reservas = reservas;
+        this.meseros = meseros;
+        this.calificacionMeseros = calificacionMeseros;
+    }
+
+    //agregarMesero
+    public void agregarMesero(Mesero mesero) {
+        meseros.add(mesero);
     }
 }

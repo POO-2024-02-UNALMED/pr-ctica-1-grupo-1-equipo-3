@@ -14,7 +14,6 @@ public class Cliente {
     public Calificacion calificar(Pedido pedido, int CalidadComida, int calidadMesero, int tiempoEspera, String comentario) {
         Calificacion nuevaCalificacion = new Calificacion(this, pedido, CalidadComida,calidadMesero,  tiempoEspera,  comentario);
         pedido.setCalificacion(nuevaCalificacion);
-
         return nuevaCalificacion;
     }
 
