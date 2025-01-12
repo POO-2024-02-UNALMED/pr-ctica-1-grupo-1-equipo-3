@@ -19,12 +19,7 @@ public class Mesero {
         totalCalificaciones++;
         promCalificaciones = (Math.round((sumaAcumalada + calificacion.getPromedioCalificacion() / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
     }
-
-    //añadir Mesero a la lista de meseros del restaurante
-    public void anadirMesero() {
-
-    }
-
+    
     public int getCodigo() {
         return codigo;
     }
