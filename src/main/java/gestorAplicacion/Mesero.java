@@ -13,18 +13,17 @@ public class Mesero {
         this.totalCalificaciones = totalCalificaciones;
         restaurante.agregarMesero(this);
     }
-    
-    public Mesero(int codigo, String nombre, int promCalificaciones, int totalCalificaciones) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.promCalificaciones = promCalificaciones;
-        this.totalCalificaciones = totalCalificaciones;
-    }
 
     public void actualizarDesempenoMesero(Calificacion calificacion){
         double sumaAcumalada = this.promCalificaciones * this.totalCalificaciones;
         totalCalificaciones++;
         promCalificaciones = (Math.round((sumaAcumalada + calificacion.getPromedioCalificacion() / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
+    }
+    @Override
+    public String toString(){
+        String stringCodigo = Integer.toString(this.getCodigo());
+        String stringPromCaificaciones = Double.toString(this.getPromCalificaciones());
+        return "Nombre: " + this.getNombre() + ", Codigo: " + stringCodigo + ", Calificación: " + stringPromCaificaciones;
     }
     
     public int getCodigo() {

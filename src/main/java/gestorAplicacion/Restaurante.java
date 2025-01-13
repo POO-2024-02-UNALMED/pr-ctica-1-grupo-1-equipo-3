@@ -12,12 +12,10 @@ public class Restaurante {
     private ArrayList<Mesa> mesas;
     private ArrayList<Reserva> reservas;
     private ArrayList<Mesero> meseros;
-    private ArrayList<Mesero> menu;
     private ArrayList<Calificacion> calificacionesRestaurante;
-    private ArrayList<Mesero> calificacionMeseros;
 
     public Restaurante(String nombre,LocalTime horarioServicio) {
-        
+
         this.nombre = nombre;
         this.reputacion = 0;
         this.ingresos = 0;
@@ -25,11 +23,7 @@ public class Restaurante {
         this.mesas = new ArrayList<>();
         this.reservas = new ArrayList<>();
         this.meseros = new ArrayList<>();
-        this.menu = new ArrayList<>();
         this.calificacionesRestaurante = new ArrayList<>();
-    }
-
-    public Restaurante() {
     }
 
     public void hacerReserva(String fecha, String hora, Mesa mesa) {
@@ -90,16 +84,19 @@ public class Restaurante {
         }
         return mostrarMesas;
     }
-
     public void agregarMesa(Mesa mesa) {
         mesas.add(mesa);
     }
+    //agregarMesero
+    public void agregarMesero(Mesero mesero) {
+        meseros.add(mesero);
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
-	
-	public void setMesas(ArrayList<Mesa> mesas) {
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setMesas(ArrayList<Mesa> mesas) {
         this.mesas = mesas;
     }
 
@@ -107,17 +104,13 @@ public class Restaurante {
         this.meseros = meseros;
     }
 
-    public Restaurante(String nombre, LocalTime horarioServicio, ArrayList<Mesa> mesas, ArrayList<Reserva> reservas, ArrayList<Mesero> meseros, ArrayList<Mesero> calificacionMeseros) {
-        this.nombre = nombre;
-        this.horarioServicio = horarioServicio;
-        this.mesas = mesas;
-        this.reservas = reservas;
-        this.meseros = meseros;
-        this.calificacionMeseros = calificacionMeseros;
+    public ArrayList<Mesa> getMesas() {
+        return mesas;
     }
 
-    //agregarMesero
-    public void agregarMesero(Mesero mesero) {
-        meseros.add(mesero);
+    public ArrayList<Mesero> getMeseros() {
+        return meseros;
     }
+
+
 }

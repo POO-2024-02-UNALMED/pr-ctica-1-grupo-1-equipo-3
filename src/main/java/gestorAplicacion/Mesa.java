@@ -11,12 +11,14 @@ public class Mesa {
     private String tipo;
     private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
     
-    public Mesa(int numero, int capacidad, String tipo) {
+    public Mesa(int numero, int capacidad, String tipo, Restaurante restaurante) {
         this.numero = numero;
         this.estado = true; //Disponible
         this.capacidad = capacidad;
         this.tipo = tipo;
         this.reservas = new ArrayList<>();
+        restaurante.agregarMesa(this);
+
     }
 
     public boolean estaDisponible(LocalDateTime horario) {
