@@ -6,7 +6,8 @@ import java.time.LocalTime;
 public class Restaurante {
 
     private String nombre;
-    private int reputacion;
+    private double reputacion;
+    private int totalCalificaciones;
     private int ingresos;
     private LocalTime horarioServicio;
     private ArrayList<Mesa> mesas;
@@ -18,12 +19,18 @@ public class Restaurante {
 
         this.nombre = nombre;
         this.reputacion = 0;
+        this.totalCalificaciones = calificacionesRestaurante.size();
         this.ingresos = 0;
         this.horarioServicio = horarioServicio;
         this.mesas = new ArrayList<>();
         this.reservas = new ArrayList<>();
         this.meseros = new ArrayList<>();
         this.calificacionesRestaurante = new ArrayList<>();
+    }
+
+    public void actualizarReputacion(Calificacion calificacion) {
+        double sumaAcumalada = this.reputacion * this.totalCalificaciones;
+        reputacion = (Math.round((sumaAcumalada + calificacion.getPromedioCalificacion() / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
     }
 
     public void hacerReserva(String fecha, String hora, Mesa mesa) {
@@ -110,6 +117,14 @@ public class Restaurante {
 
     public ArrayList<Mesero> getMeseros() {
         return meseros;
+    }
+
+    public double getReputacion() {
+        return reputacion;
+    }
+
+    public ArrayList<Calificacion> getCalificacionesRestaurante() {
+        return calificacionesRestaurante;
     }
 
 
