@@ -10,9 +10,9 @@ public enum Menu {
     TARTAR_DE_ATUN("Tartar de Atún", 98000, new String[]{"Atún", "Aguacate", "Salsa de Soya"}),
     RAVIOLI_DE_TRUFA("Ravioli de Trufa", 115000, new String[]{"Ravioli", "Trufa", "Queso Parmesano"});
 	
-	private final String nombre;
+    final String nombre;
     private final double precio;
-    private final String[] ingredientes;
+    final String[] ingredientes;
 	
 	Menu(String nombre, double precio, String[] ingredientes) {
         this.nombre = nombre;
