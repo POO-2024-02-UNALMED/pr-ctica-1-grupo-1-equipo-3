@@ -64,9 +64,8 @@ public class Restaurante {
         return fechaHora;
     }
 
-    public ArrayList<String> mesasDisponibles(int personas, String tipoMesa, LocalDateTime horario) {
+    public ArrayList<Mesa> mesasDisponibles(int personas, String tipoMesa, LocalDateTime horario) {
         ArrayList<Mesa> mesasDisponibles = new ArrayList<Mesa>();
-        ArrayList<String> mostrarMesas = new ArrayList<String>();
 
         for (Mesa mesa : mesas) {
             boolean estado = mesa.estaDisponible(horario);
@@ -74,22 +73,15 @@ public class Restaurante {
             String tipo = mesa.getTipo();
 
             if (estado == true) {
-                if (tipoMesa == tipo) {
-                    if (capacidad == personas) {
-                        mesasDisponibles.add(mesa);
-                    }
-                    if (capacidad == personas + 1) {
+                if (mesa.getTipo().equals(tipo)) {
+                    if (capacidad == personas || capacidad == personas + 1) {
                         mesasDisponibles.add(mesa);
                     }
                 }
             }
         }
 
-        for (Mesa mesa : mesasDisponibles) {
-            String formato = "Mesa " + mesa.getNumero();
-            mostrarMesas.add(formato);
-        }
-        return mostrarMesas;
+        return mesasDisponibles;
     }
     public void agregarMesa(Mesa mesa) {
         mesas.add(mesa);

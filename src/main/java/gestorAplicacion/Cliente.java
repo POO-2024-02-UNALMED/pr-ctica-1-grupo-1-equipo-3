@@ -2,11 +2,11 @@ package gestorAplicacion;
 
 public class Cliente {
     private String nombre;
-    private String identificación;
+    private int identificación;
     private Reserva reserva;
     private Restaurante restaurante;
 
-    public Cliente(String nombre, String identificación, Reserva reserva, Restaurante restaurante) {
+    public Cliente(String nombre, int identificación, Reserva reserva, Restaurante restaurante) {
         this.nombre = nombre;
         this.identificación = identificación;
         this.reserva = reserva;
@@ -29,11 +29,11 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public String getIdentificación() {
+    public int getIdentificación() {
         return identificación;
     }
 
-    public void setIdentificación(String identificación) {
+    public void setIdentificación(int identificación) {
         this.identificación = identificación;
     }
 }

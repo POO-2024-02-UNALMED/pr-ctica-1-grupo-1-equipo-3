@@ -22,12 +22,13 @@ public class Mesa {
     }
 
     public boolean estaDisponible(LocalDateTime horario) {
+        LocalDateTime finHorario = horario.plusHours(1);
 
-        for(Reserva reserva : reservas) {
+        for (Reserva reserva : reservas) {
             LocalDateTime inicioReserva = reserva.getFechaHora();
-            LocalDateTime finReserva = horario.plusHours(1);
+            LocalDateTime finReserva = inicioReserva.plusHours(1);
 
-            if (!(horario.isBefore(inicioReserva) || horario.isAfter(finReserva))) {
+            if (!(horario.isAfter(finReserva) || finHorario.isBefore(inicioReserva))) {
                 return false; // No está disponible si hay conflicto
             }
         }
