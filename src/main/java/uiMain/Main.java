@@ -2,6 +2,7 @@ package uiMain;
 import java.util.Scanner;
 import gestorAplicacion.*;
 import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Main {
@@ -57,7 +58,51 @@ public class Main {
             switch (eleccion) {
                 case 1:
                     //encadenar la funcionalidad 1
+                	//Recopilación de información
+                	Scanner scannerFuncionalidad1 = new Scanner(System.in);
                 	System.out.println("Bienvenido/a al restaurante "+ restaurante.getNombre()+", por favor digite la siguiente información para realizar su reserva");
+                	System.out.println("Ingrese su nombre: ");
+                	String nombre = scannerFuncionalidad1.nextLine();
+                	
+                	System.out.println("Ingrese su número de identificacion(Sin espacios, puntos o comas, sólo el número: ");
+                	int identificacion = scannerFuncionalidad1.nextInt();
+                	scannerFuncionalidad1.nextLine();
+                	
+                	System.out.println("Número de personas: ");
+                	int numeroPersonas = scannerFuncionalidad1.nextInt();
+                	scannerFuncionalidad1.nextLine();
+                	
+                	System.out.println("Mesa deluxe o normal (escriba el tipo de mesa en minúsculas, por favor): ");
+                	String tipoMesa = scannerFuncionalidad1.nextLine();
+                	
+                	String fecha;
+                    String hora;
+                    boolean fechaHoraValida;
+
+                    do {
+                        System.out.println("Fecha de la reserva (Por favor, ingrese la fecha en formato dia/mes/año, incluyendo el '/'): ");
+                        fecha = scannerFuncionalidad1.nextLine();
+
+                        System.out.println("Hora de la reserva (Por favor, ingrese la hora en formato militar hora:minutos, incluyendo el ':'): ");
+                        hora = scannerFuncionalidad1.nextLine();
+                        
+                        fechaHoraValida = restaurante.validarFechaHora(fecha, hora);
+                        if (!fechaHoraValida) {
+                            System.out.println("Fecha u hora mal ingresadas, inténtelo de nuevo (tenga en cuenta las recomendaciones).");
+                        }
+                    } while (!fechaHoraValida);
+                    
+                    LocalDateTime fechaReserva = restaurante.convertirFechaHora(fecha,hora);
+                    ArrayList<String> mostrarMesas = restaurante.mesasDisponibles(numeroPersonas,tipoMesa,fechaReserva);
+                    
+                    if (mostrarMesas.isEmpty()) {
+                        System.out.println("No hay mesas disponibles para las especificaciones dadas.");
+                    } else {
+                        System.out.println("Mesas disponibles:");
+                        for (String i : mostrarMesas) {
+                            System.out.println(i);
+                        }
+                    }
                 	
                     encendido = false;
                     break;

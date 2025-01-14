@@ -13,7 +13,7 @@ public class Restaurante {
     private ArrayList<Mesa> mesas;
     private ArrayList<Reserva> reservas;
     private ArrayList<Mesero> meseros;
-    private ArrayList<Calificacion> calificacionesRestaurante;
+    private ArrayList<Calificacion> calificacionesRestaurante = new ArrayList<>();
 
     public Restaurante(String nombre,LocalTime horarioServicio) {
 
