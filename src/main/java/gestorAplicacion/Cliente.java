@@ -15,8 +15,9 @@ public class Cliente {
 
     public Calificacion calificar(Pedido pedido, int CalidadComida, int calidadMesero, int tiempoEspera, String comentario) {
         Calificacion nuevaCalificacion = new Calificacion(this, pedido, CalidadComida,calidadMesero,  tiempoEspera,  comentario);
-        pedido.setCalificacion(nuevaCalificacion);
-        restaurante.getCalificacionesRestaurante().add(nuevaCalificacion);
+        pedido.setCalificacion(nuevaCalificacion); //Se asocia la calificaión al pedido
+        restaurante.getCalificacionesRestaurante().add(nuevaCalificacion.getPromedioCalificacion()); // La calificacion se añade a la lista de califiaciones del restaurante
+        this.reserva.getMesa().getMesero().getCalificaciones().add(calidadMesero);  //La calificaión se añáde a lista de calificaciones del mesero
         return nuevaCalificacion;
     }
 

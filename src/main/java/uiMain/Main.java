@@ -1,4 +1,4 @@
-package uiMain;
+ package uiMain;
 import java.util.Scanner;
 import gestorAplicacion.*;
 import java.time.LocalTime;
@@ -35,24 +35,21 @@ public class Main {
         Mesero mesero9 = new Mesero(9, "Mariana Gómez", 3, 16, restaurante);
         Mesero mesero10 = new Mesero(10, "Felipe Morales", 4, 19, restaurante);
 
-        menu(restaurante);
-        Factura factura = new Factura(111, 0, restaurante);
-        factura.prioridadMeseros();
-        System.out.println(restaurante.getMeseros());
+        menuPrincipal(restaurante);
     }
 
-    static void menu(Restaurante restaurante){
+    static void menuPrincipal(Restaurante restaurante){
         boolean encendido = true;
         do {
-            System.out.println("¿Qué desea hacer?" + "\n" +
-                    "1. Realizar una reserva." + "\n" +
-                    "2. Realizar un domicilio." + "\n" +
-                    "3. Realizar un pedido." + "\n" +
-                    "4. Realizar un pago." + "\n" +
-                    "5. Calificar el servicio." + "\n" +
-                    "6. Salir." + "\n" +
-                    "Ingrese un número para elegir una opción.");
-            Scanner valorEntrada = new Scanner(System. in);
+            System.out.print("¿Qué desea hacer?" + "\n" +
+                                "1. Realizar una reserva." + "\n" +
+                                "2. Realizar un domicilio." + "\n" +
+                                "3. Realizar un pedido." + "\n" +
+                                "4. Realizar un pago." + "\n" +
+                                "5. Calificar el servicio." + "\n" +
+                                "6. Salir." + "\n" +
+                                "Ingrese un número para elegir una opción: ");
+            Scanner valorEntrada = new Scanner(System.in);
             int eleccion = 0;
             eleccion = valorEntrada.nextInt();
             switch (eleccion) {
@@ -119,7 +116,7 @@ public class Main {
                     encendido = false;
                     break;
                 case 5:
-                    //encadenar la funcionalidad 5
+                    calificar(restaurante);
                     encendido = false;
                     break;
                 case 6:
@@ -128,5 +125,57 @@ public class Main {
                     break;
             }
         } while(encendido);
+
+    }
+
+    public static void calificar(Restaurante restaurante) {
+        boolean encendido1 = true;
+        do {
+            System.out.print("¿Desea relizar una calificación?" + "\n" +
+                                "1. Sí." + "\n" +
+                                "2. No." + "\n" +
+                                "Ingrese un número para elegir una opción: ");
+            Scanner valorEntrada1 = new Scanner(System.in);
+            int eleccion1 = 0;
+            eleccion1 = valorEntrada1.nextInt();
+            switch (eleccion1) {
+                case 1:
+                    System.out.print("Para realizar la calificación porfavor conteste la siguiente encuesta:" + "\n" +
+                                        "1. Del 1 al 5 puntee la calidad de la comida: ");
+                    Scanner eleccionComida = new Scanner(System.in);
+                    int calidadComida = eleccionComida.nextInt();
+
+                    System.out.print("2. Del 1 al 5 puntee la calidad del mesero: ");
+                    Scanner eleccionMesero = new Scanner(System.in);
+                    int calidadMesero = eleccionMesero.nextInt();
+
+                    System.out.print("3. Del 1 al 5 puntee el tiempo de espera: ");
+                    Scanner eleccionEspera = new Scanner(System.in);
+                    int tiempoEspera = eleccionEspera.nextInt();
+
+                    System.out.print("Por ultimo, ¿desea dejar un comentario?" + "\n" +
+                                        "1. Sí." + "\n" +
+                                        "2. No" + "\n" +
+                                        "Ingrese un número para elegir una opción: ");
+                    Scanner valorEntrada2 = new Scanner(System.in);
+                    int eleccion2 = valorEntrada2.nextInt();
+                    switch (eleccion2) {
+                        case 1:
+                            System.out.print("Deje su comentario:");
+                            Scanner eleccionComentario = new Scanner(System.in);
+                            String comentario = eleccionComentario.nextLine();
+                            break;
+                        case 2:
+                            break;
+                    }
+                    encendido1 = false;
+                    break;
+                case 2:
+                    menuPrincipal(restaurante);
+                    encendido1 = false;
+                    break;
+            }
+        }
+        while (encendido1);
     }
 }

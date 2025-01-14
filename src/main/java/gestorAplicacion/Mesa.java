@@ -45,4 +45,8 @@ public class Mesa {
     public String getTipo() {
         return this.tipo;
     }
+
+    public Mesero getMesero() {
+        return mesero;
+    }
 }

@@ -1,16 +1,19 @@
 package gestorAplicacion;
+import java.util.ArrayList;
 
 public class Mesero {
     private int codigo;
     private String nombre;
     private double promCalificaciones;
     private int totalCalificaciones;
+    private ArrayList<Integer> calificaciones;
 
     public Mesero(int codigo, String nombre, int promCalificaciones, int totalCalificaciones, Restaurante restaurante) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.promCalificaciones = promCalificaciones;
         this.totalCalificaciones = totalCalificaciones;
+        this.calificaciones = new ArrayList<>();
         restaurante.agregarMesero(this);
     }
 
@@ -36,5 +39,13 @@ public class Mesero {
 
     public double getPromCalificaciones() {
         return promCalificaciones;
+    }
+
+    public ArrayList<Integer> getCalificaciones() {
+        return calificaciones;
+    }
+
+    public int getTotalCalificaciones() {
+        return totalCalificaciones;
     }
 }

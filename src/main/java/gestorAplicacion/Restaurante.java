@@ -13,7 +13,7 @@ public class Restaurante {
     private ArrayList<Mesa> mesas;
     private ArrayList<Reserva> reservas;
     private ArrayList<Mesero> meseros;
-    private ArrayList<Calificacion> calificacionesRestaurante = new ArrayList<>();
+    private ArrayList<Double> calificacionesRestaurante = new ArrayList<>();
 
     public Restaurante(String nombre,LocalTime horarioServicio) {
 
@@ -123,7 +123,7 @@ public class Restaurante {
         return reputacion;
     }
 
-    public ArrayList<Calificacion> getCalificacionesRestaurante() {
+    public ArrayList<Double> getCalificacionesRestaurante() {
         return calificacionesRestaurante;
     }
 
