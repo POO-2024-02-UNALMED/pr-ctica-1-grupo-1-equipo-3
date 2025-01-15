@@ -5,6 +5,7 @@ public class Reserva {
     private Mesa mesa;
     private LocalDateTime fechaHora;
     private LocalDateTime fechaDeGeneracion;
+    private Mesero mesero;
     private int numeroPersonas;
     private Cliente cliente;
     private int recargo;
@@ -17,6 +18,8 @@ public class Reserva {
     	this.mesa = mesa;
     	this.fechaHora = fechaHora;
     	this.numeroPersonas = numeroPersonas;
+    	this.fechaDeGeneracion = fechaDeGeneracion;
+    	this.calcularRecargo();
     }
     
     public void calcularRecargo() {
@@ -40,9 +43,21 @@ public class Reserva {
     public void setCliente(Cliente cliente) {
     	this.cliente = cliente;
     }
+    
+    public Cliente getCliente() {
+    	return this.cliente;
+    }
 
     public LocalDateTime getFechaHora() {
         return fechaHora;
+    }
+    
+    public void setMesero(Mesero mesero) {
+    	this.mesero = mesero;
+    }
+    
+    public Mesero getMesero() {
+    	return this.mesero;
     }
 
 }

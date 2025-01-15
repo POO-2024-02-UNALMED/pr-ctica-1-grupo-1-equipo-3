@@ -159,8 +159,11 @@ public class Main {
             LocalDateTime fechaActual = LocalDateTime.now();
             Reserva reserva = new Reserva(mesaEscogida, fechaReserva, numeroPersonas, fechaActual);
             Cliente cliente = new Cliente(nombre,identificacion,reserva,restaurante);
+            
+            //Asignación de clases
             reserva.setCliente(cliente);
-                                   
+            mesaEscogida.reservar(reserva);
+            
         }
     }
 

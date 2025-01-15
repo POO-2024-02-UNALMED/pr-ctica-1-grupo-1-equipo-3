@@ -1,5 +1,6 @@
 package gestorAplicacion;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Mesero {
     private int codigo;
@@ -7,6 +8,7 @@ public class Mesero {
     private double promCalificaciones;
     private int totalCalificaciones;
     private ArrayList<Integer> calificaciones;
+    private static ArrayList<Mesero> meseros = new ArrayList<>();
 
     public Mesero(int codigo, String nombre, int promCalificaciones, int totalCalificaciones, Restaurante restaurante) {
         this.codigo = codigo;
@@ -14,6 +16,7 @@ public class Mesero {
         this.promCalificaciones = promCalificaciones;
         this.totalCalificaciones = totalCalificaciones;
         this.calificaciones = new ArrayList<>();
+        Mesero.meseros.add(this);
         restaurante.agregarMesero(this);
     }
 
@@ -22,6 +25,12 @@ public class Mesero {
         totalCalificaciones++;
         promCalificaciones = (Math.round((sumaAcumalada + calificacion.getPromedioCalificacion() / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
     }
+    
+  //Organiza a los meseros en base a su atributo promCalificaciones
+    public static void organizarMeserosPorCalificacion() {
+        meseros.sort(Comparator.comparing(Mesero::getPromCalificaciones).reversed());
+    }
+    
     @Override
     public String toString(){
         String stringCodigo = Integer.toString(this.getCodigo());
@@ -47,5 +56,13 @@ public class Mesero {
 
     public int getTotalCalificaciones() {
         return totalCalificaciones;
+    }
+    
+    public static ArrayList<Mesero> getMeseros() {
+        return meseros;
+    }
+    
+    public static void setMeseros(ArrayList<Mesero> meseros) {
+        Mesero.meseros = meseros;
     }
 }

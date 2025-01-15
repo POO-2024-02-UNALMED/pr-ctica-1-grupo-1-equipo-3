@@ -1,5 +1,6 @@
 package gestorAplicacion;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -37,6 +38,7 @@ public class Restaurante {
         LocalDateTime horario = convertirFechaHora(fecha, hora);
     }
 
+    //Valida que la fecha y hora ingresadas sean válidas
     public boolean validarFechaHora(String fecha, String hora) {
         String[] elementosFecha = fecha.split("/");
         String[] elementosHora = hora.split(":");
@@ -48,6 +50,7 @@ public class Restaurante {
         }
     }
 
+    //Convierte un String fecha y String hora a formato LocalDateTime para que puedan ser usadas en otros métodos
     public LocalDateTime convertirFechaHora(String fecha, String tiempo) {
         //Fecha en formato dd/MM/AAAA y Hora HH:mm
         String[] diaMesAño = fecha.split("/");
@@ -64,6 +67,7 @@ public class Restaurante {
         return fechaHora;
     }
 
+    //Retorna un ArrayList con las mesas que estan disponibles para una fecha y hora determinada
     public ArrayList<Mesa> mesasDisponibles(int personas, String tipoMesa, LocalDateTime horario) {
         ArrayList<Mesa> mesasDisponibles = new ArrayList<Mesa>();
 
@@ -83,9 +87,14 @@ public class Restaurante {
 
         return mesasDisponibles;
     }
+    
+    
+    
+    
     public void agregarMesa(Mesa mesa) {
         mesas.add(mesa);
     }
+    
     //agregarMesero
     public void agregarMesero(Mesero mesero) {
         meseros.add(mesero);
