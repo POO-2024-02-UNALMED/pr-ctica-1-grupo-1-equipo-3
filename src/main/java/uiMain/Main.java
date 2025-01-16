@@ -81,7 +81,8 @@ public class Main {
         } while(encendido);
 
     }
-    
+
+    //FUNCIONALIDAD 1
     public static void reservar(Restaurante restaurante) {
     	
     	//Recopilación de información
@@ -167,48 +168,73 @@ public class Main {
         }
     }
 
+    //FUNCIONALIDAD 5
     public static void calificar(Restaurante restaurante) {
+        Scanner valorEntrada1 = new Scanner(System.in);
         boolean encendido1 = true;
         do {
             System.out.print("¿Desea relizar una calificación?" + "\n" +
                                 "1. Sí." + "\n" +
                                 "2. No." + "\n" +
                                 "Ingrese un número para elegir una opción: ");
-            Scanner valorEntrada1 = new Scanner(System.in);
             int eleccion1 = 0;
             eleccion1 = valorEntrada1.nextInt();
             switch (eleccion1) {
                 case 1:
+                    boolean encendido2 = true;
+                    do {
+                        System.out.print("Ingrese su identificación para realizar la calificación: ");
+                        int idCliente = valorEntrada1.nextInt();
+                        if (idCliente != 0){   //validar que la id sea de un cliente
+
+                            encendido2 = false;
+                        }else{
+                            System.out.println("La identificación no está asociada a ningún cliente" + "\n" +
+                                    "1. Deseo ingresar una identificación valida." + "\n" +
+                                    "2. Salir." + "\n" +
+                                    "Ingrese un número para elegir una opción: ");
+                            int eleccion2 = valorEntrada1.nextInt();
+                            switch (eleccion2){
+                                case 1:
+                                    encendido2 = true;
+                                    break;
+                                case 2:
+                                    menuPrincipal(restaurante);
+                                    encendido2 = false;
+                                    encendido1 = false;
+                                    break;
+                            }
+                        }
+                    }while(encendido2);
                     System.out.print("Para realizar la calificación porfavor conteste la siguiente encuesta:" + "\n" +
-                                        "1. Del 1 al 5 puntee la calidad de la comida: ");
-                    Scanner eleccionComida = new Scanner(System.in);
-                    int calidadComida = eleccionComida.nextInt();
+                            "1. Del 1 al 5 puntee la calidad de la comida: ");
+                    int calidadComida = valorEntrada1.nextInt();
 
                     System.out.print("2. Del 1 al 5 puntee la calidad del mesero: ");
-                    Scanner eleccionMesero = new Scanner(System.in);
-                    int calidadMesero = eleccionMesero.nextInt();
+                    int calidadMesero = valorEntrada1.nextInt();
 
                     System.out.print("3. Del 1 al 5 puntee el tiempo de espera: ");
-                    Scanner eleccionEspera = new Scanner(System.in);
-                    int tiempoEspera = eleccionEspera.nextInt();
+                    int tiempoEspera = valorEntrada1.nextInt();
 
                     System.out.print("Por ultimo, ¿desea dejar un comentario?" + "\n" +
-                                        "1. Sí." + "\n" +
-                                        "2. No" + "\n" +
-                                        "Ingrese un número para elegir una opción: ");
-                    Scanner valorEntrada2 = new Scanner(System.in);
-                    int eleccion2 = valorEntrada2.nextInt();
-                    switch (eleccion2) {
+                            "1. Sí." + "\n" +
+                            "2. No." + "\n" +
+                            "Ingrese un número para elegir una opción: ");
+                    int eleccion3 = valorEntrada1.nextInt();
+                    switch (eleccion3) {
                         case 1:
                             System.out.print("Deje su comentario:");
                             Scanner eleccionComentario = new Scanner(System.in);
                             String comentario = eleccionComentario.nextLine();
+                            encendido1 = false;
                             break;
+
                         case 2:
+                            encendido1 = false;
                             break;
-                    }
-                    encendido1 = false;
+                        }
                     break;
+
                 case 2:
                     menuPrincipal(restaurante);
                     encendido1 = false;
