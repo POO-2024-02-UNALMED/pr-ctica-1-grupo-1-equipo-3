@@ -17,17 +17,17 @@ public class Mesa {
         restaurante.agregarMesa(this);
     }
         
-    //Determina si la mesa está disponible pra una fecha y hora determinadas, 
+    //Determina si la mesa está disponible para una fecha y hora determinadas, 
     //teniendo en cuenta que cada mesa estará reservada para 1 hora por defecto.
     public boolean estaDisponible(LocalDateTime horario) {
-        LocalDateTime finHorario = horario.plusHours(1);
 
         for (Reserva reserva : reservas) {
             LocalDateTime inicioReserva = reserva.getFechaHora();
             LocalDateTime finReserva = inicioReserva.plusHours(1);
 
-            if (!(horario.isAfter(finReserva) || finHorario.isBefore(inicioReserva))) {
-                return false; // No está disponible si hay conflicto
+            if ((horario.isAfter(inicioReserva) || horario.isEqual(inicioReserva)) &&
+            	    (horario.isBefore(finReserva) || horario.isEqual(finReserva))) {
+            	    return false; //Se presenta conflicto
             }
         }
         return true;
@@ -37,10 +37,14 @@ public class Mesa {
     //Asigna un mesero a la reserva y añade la reserva al ArrayList reservas.
     public void reservar(Reserva reserva) {
     	Mesero.organizarMeserosPorCalificacion();
-    	Mesero meseroAsignado = Mesero.getMeseros().get(0);
-    	this.mesero = meseroAsignado;
-    	reserva.setMesero(meseroAsignado);
-    	reservas.add(reserva);
+    	
+    	for (Mesero mesero : Mesero.getMeseros() ) {
+    		if (mesero.disponibilidad(reserva.getFechaHora()) == true) {
+    			this.mesero = mesero;
+    			reserva.setMesero(mesero);
+    			reservas.add(reserva);
+    		}
+    	}
     }
 
     public int getNumero() {
