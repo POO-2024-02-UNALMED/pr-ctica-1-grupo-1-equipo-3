@@ -8,11 +8,28 @@ public class Factura {
     private Calificacion calificacion;
     private Mesero mesero;
     private Restaurante restaurante;
+    private Cliente cliente;
+    private double totalFactura;
+    private double propina;
 
-    public Factura(int totalPagar, int descuento, Restaurante restaurante) {
+    public Factura(int totalPagar, int descuento, Restaurante restaurante, Cliente cliente, double totalFactura, double propina) {
         this.totalPagar = totalPagar;
         this.descuento = descuento;
         this.restaurante = restaurante;
+        this.cliente = cliente;
+        this.totalFactura = totalFactura;
+        this.propina = propina;
+    }
+    public double getTotalFactura() {
+        return totalFactura;
+    }
+
+    public void calcularPuntosPorGasto() {
+        restaurante.calcularPuntosPorGasto(cliente, totalFactura);
+    }
+
+    public void asignarPuntosPorPropina() {
+        restaurante.calcularPuntosPorGasto(cliente, propina);
     }
 
     // La factura queda con su calificacion

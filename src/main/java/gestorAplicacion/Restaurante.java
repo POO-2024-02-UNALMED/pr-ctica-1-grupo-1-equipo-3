@@ -15,6 +15,12 @@ public class Restaurante {
     private ArrayList<Reserva> reservas;
     private ArrayList<Mesero> meseros;
     private ArrayList<Double> calificacionesRestaurante = new ArrayList<>();
+    private ArrayList<Cliente>clientes;
+
+    public Restaurante(String nombre) {
+        this.nombre = nombre;
+        this.clientes = new ArrayList<>();
+    }
 
     public Restaurante(String nombre,LocalTime horarioServicio) {
 
@@ -28,6 +34,54 @@ public class Restaurante {
         this.meseros = new ArrayList<>();
         this.calificacionesRestaurante = new ArrayList<>();
     }
+    // Registrar visita del cliente
+    public void registrarVisita(Cliente cliente) {
+        cliente.incrementarVisitas();
+        calcularPuntosPorFrecuencia(cliente);
+    }
+
+    // Calcular puntos por frecuencia de visita
+    private void calcularPuntosPorFrecuencia(Cliente cliente) {
+        int visitas = cliente.getVisitas();
+        int puntosPorVisita = 10; // Definido arbitrariamente
+        if (visitas > 5) {
+            cliente.acumularPuntos("frecuencia", puntosPorVisita * 2);
+        } else {
+            cliente.acumularPuntos("frecuencia", puntosPorVisita);
+        }
+    }
+     // Calcular puntos por gasto
+     public void calcularPuntosPorGasto(Cliente cliente, double totalFactura) {
+        int puntos = (int) totalFactura / 10; // Asignar 1 punto por cada 10 unidades monetarias gastadas
+        cliente.acumularPuntos("gasto", puntos);
+    }
+
+    // Redimir puntos para reserva
+    public boolean redimirPuntosParaReserva(Cliente cliente, int puntosNecesarios) {
+        if (cliente.getPuntosGenerales() >= puntosNecesarios) {
+            cliente.reducirPuntos("frecuencia", puntosNecesarios);
+            return true;
+        }
+        return false;
+    }
+    // Redimir puntos para productos
+    public boolean redimirPuntosParaProducto(Cliente cliente, int puntosNecesarios) {
+        if (cliente.getPuntosGenerales() >= puntosNecesarios) {
+            cliente.reducirPuntos("gasto", puntosNecesarios);
+            return true;
+        }
+        return false;
+    }
+
+    // Redimir puntos para servicios exclusivos
+    public boolean redimirPuntosParaServicio(Cliente cliente, int puntosNecesarios) {
+        if (cliente.getPuntosGenerales() >= puntosNecesarios) {
+            cliente.reducirPuntos("especiales", puntosNecesarios);
+            return true;
+        }
+        return false;
+    }
+
 
     public void actualizarReputacion(Calificacion calificacion) {
         double sumaAcumalada = this.reputacion * this.totalCalificaciones;

@@ -26,4 +26,9 @@ public class Calificacion {
         return promedioCalificacion;
     }
 }
+private void asignarPuntosPorCalificacion() {
+    int puntosAsignados = (int) Math.round(promedioCalificacion);
+    cliente.actualizarPuntos(puntosAsignados);
+
+
 
