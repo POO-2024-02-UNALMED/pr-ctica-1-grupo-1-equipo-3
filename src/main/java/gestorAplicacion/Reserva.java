@@ -1,5 +1,6 @@
 package gestorAplicacion;
 import java.time.LocalDateTime;
+import java.io.Serializable;
 
 public class Reserva {
     private Mesa mesa;

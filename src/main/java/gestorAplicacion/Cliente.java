@@ -1,5 +1,5 @@
 package gestorAplicacion;
-
+import java.io.Serializable;
 import java.util.HashMap;
 
 public class Cliente {
@@ -22,6 +22,7 @@ public class Cliente {
         this.puntos.put("calificacion", 0);
         this.puntos.put("gasto", 0);
         this.puntos.put("especiales", 0);
+        restaurante.agregarCliente(this);
     }
     public void incrementarVisitas() {
         this.visitas++;
@@ -50,8 +51,10 @@ public class Cliente {
     public Calificacion calificar(Pedido pedido, int CalidadComida, int calidadMesero, int tiempoEspera, String comentario) {
         Calificacion nuevaCalificacion = new Calificacion(this, pedido, CalidadComida,calidadMesero,  tiempoEspera,  comentario);
         pedido.setCalificacion(nuevaCalificacion); //Se asocia la calificaión al pedido
+        pedido.promediarCalificacion(nuevaCalificacion); // El pedido obtiene su calificacion numerica promediada
         restaurante.getCalificacionesRestaurante().add(nuevaCalificacion.getPromedioCalificacion()); // La calificacion se añade a la lista de califiaciones del restaurante
         this.reserva.getMesa().getMesero().getCalificaciones().add(calidadMesero);  //La calificaión se añáde a lista de calificaciones del mesero
+        this.reserva.getMesa().getMesero().actualizarDesempenoMesero(nuevaCalificacion); //se Actualiza el desempeño del mesero
         return nuevaCalificacion;
     }
 

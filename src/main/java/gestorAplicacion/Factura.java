@@ -1,5 +1,5 @@
 package gestorAplicacion;
-
+import java.io.Serializable;
 import java.util.Comparator;
 
 public class Factura {

@@ -1,6 +1,6 @@
 package gestorAplicacion;
 import java.util.Map;
-
+import java.io.Serializable;
 public class Domicilio {
 	
 	// Atributos

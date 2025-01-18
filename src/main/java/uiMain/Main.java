@@ -80,6 +80,7 @@ public class Main {
             }
         } while(encendido);
 
+
     }
 
     //FUNCIONALIDAD 1
@@ -172,6 +173,11 @@ public class Main {
     public static void calificar(Restaurante restaurante) {
         Scanner valorEntrada1 = new Scanner(System.in);
         boolean encendido1 = true;
+        int idCliente = -1;
+        int calidadComida = -1;
+        int calidadMesero = -1;
+        int tiempoEspera = -1;
+        String comentario = "";
         do {
             System.out.print("¿Desea relizar una calificación?" + "\n" +
                                 "1. Sí." + "\n" +
@@ -184,12 +190,12 @@ public class Main {
                     boolean encendido2 = true;
                     do {
                         System.out.print("Ingrese su identificación para realizar la calificación: ");
-                        int idCliente = valorEntrada1.nextInt();
-                        if (idCliente != 0){   //validar que la id sea de un cliente
-
+                        idCliente = valorEntrada1.nextInt();
+                        boolean validarCliente = restaurante.validarCliente(idCliente, restaurante);
+                        if (validarCliente){   //validar que la id sea de un cliente
                             encendido2 = false;
                         }else{
-                            System.out.println("La identificación no está asociada a ningún cliente" + "\n" +
+                            System.out.print("La identificación no está asociada a ningún cliente" + "\n" +
                                     "1. Deseo ingresar una identificación valida." + "\n" +
                                     "2. Salir." + "\n" +
                                     "Ingrese un número para elegir una opción: ");
@@ -208,13 +214,13 @@ public class Main {
                     }while(encendido2);
                     System.out.print("Para realizar la calificación porfavor conteste la siguiente encuesta:" + "\n" +
                             "1. Del 1 al 5 puntee la calidad de la comida: ");
-                    int calidadComida = valorEntrada1.nextInt();
+                    calidadComida = valorEntrada1.nextInt();
 
                     System.out.print("2. Del 1 al 5 puntee la calidad del mesero: ");
-                    int calidadMesero = valorEntrada1.nextInt();
+                    calidadMesero = valorEntrada1.nextInt();
 
                     System.out.print("3. Del 1 al 5 puntee el tiempo de espera: ");
-                    int tiempoEspera = valorEntrada1.nextInt();
+                    tiempoEspera = valorEntrada1.nextInt();
 
                     System.out.print("Por ultimo, ¿desea dejar un comentario?" + "\n" +
                             "1. Sí." + "\n" +
@@ -225,7 +231,7 @@ public class Main {
                         case 1:
                             System.out.print("Deje su comentario:");
                             Scanner eleccionComentario = new Scanner(System.in);
-                            String comentario = eleccionComentario.nextLine();
+                            comentario = eleccionComentario.nextLine();
                             encendido1 = false;
                             break;
 
@@ -242,5 +248,10 @@ public class Main {
             }
         }
         while (encendido1);
+
+        Cliente cliente = restaurante.indicarCliente(idCliente, restaurante);
+
+
+
     }
 }

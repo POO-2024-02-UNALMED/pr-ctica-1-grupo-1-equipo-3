@@ -1,9 +1,11 @@
 package gestorAplicacion;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Almacen {
+public class Almacen  {
 
     private List<String> nombres;
     private List<Integer> cantidades;

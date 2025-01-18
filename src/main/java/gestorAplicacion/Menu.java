@@ -1,4 +1,5 @@
 package gestorAplicacion;
+import java.io.Serializable;
 
 public enum Menu {
     LANGOSTA("Langosta", 120000, new String[]{"Langosta", "Mantequilla", "Limón"}),

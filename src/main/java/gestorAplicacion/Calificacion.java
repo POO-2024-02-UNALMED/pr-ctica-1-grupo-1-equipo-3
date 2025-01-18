@@ -1,4 +1,5 @@
 package gestorAplicacion;
+import java.io.Serializable;
 
 public class Calificacion {
     private Cliente cliente;
@@ -26,9 +27,9 @@ public class Calificacion {
         return promedioCalificacion;
     }
 }
-private void asignarPuntosPorCalificacion() {
-    int puntosAsignados = (int) Math.round(promedioCalificacion);
-    cliente.actualizarPuntos(puntosAsignados);
+//private void asignarPuntosPorCalificacion() {
+ //   int puntosAsignados = (int) Math.round(promedioCalificacion);
+//cliente.actualizarPuntos(puntosAsignados);
 
 
 

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.io.Serializable;
 
 public class Restaurante {
 
@@ -15,11 +16,11 @@ public class Restaurante {
     private ArrayList<Reserva> reservas;
     private ArrayList<Mesero> meseros;
     private ArrayList<Double> calificacionesRestaurante = new ArrayList<>();
-    private ArrayList<Cliente>clientes;
+    private ArrayList<Cliente> ListaClientes;
 
     public Restaurante(String nombre) {
         this.nombre = nombre;
-        this.clientes = new ArrayList<>();
+        this.ListaClientes = new ArrayList<>();
     }
 
     public Restaurante(String nombre,LocalTime horarioServicio) {
@@ -33,6 +34,7 @@ public class Restaurante {
         this.reservas = new ArrayList<>();
         this.meseros = new ArrayList<>();
         this.calificacionesRestaurante = new ArrayList<>();
+        this.ListaClientes = new ArrayList<>();
     }
     // Registrar visita del cliente
     public void registrarVisita(Cliente cliente) {
@@ -182,5 +184,31 @@ public class Restaurante {
         return calificacionesRestaurante;
     }
 
+    public ArrayList<Cliente> getListaClientes() {
+        return ListaClientes;
+    }
 
+    public  void agregarCliente(Cliente cliente) {
+        this.getListaClientes().add(cliente);
+    }
+
+    //valida si un cliente está en la lista de los clientes del restaurante por medio del iD
+    public boolean validarCliente(int id, Restaurante restaurante) {
+        for (Cliente cliente : restaurante.getListaClientes()) {
+            if (cliente.getIdentificación() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Retorna un cliente según su iD
+    public Cliente indicarCliente(int id, Restaurante restaurante){
+        for (Cliente cliente : restaurante.getListaClientes()) {
+            if (cliente.getIdentificación() == id) {
+                return cliente;
+            }
+        }
+        return null;
+    }
 }
