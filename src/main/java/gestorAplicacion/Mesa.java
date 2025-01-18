@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
-public class Mesa {
+public class Mesa implements Serializable{
 
     private int numero;
     private int capacidad;

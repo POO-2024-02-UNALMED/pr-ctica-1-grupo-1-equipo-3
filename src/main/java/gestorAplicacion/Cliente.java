@@ -2,8 +2,7 @@ package gestorAplicacion;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class Cliente {
-    private String nombre;
+public class Cliente extends Persona implements Serializable{
     private int identificación;
     private Reserva reserva;
     private Restaurante restaurante;
@@ -12,7 +11,7 @@ public class Cliente {
 
 
     public Cliente(String nombre, int identificación, Reserva reserva, Restaurante restaurante) {
-        this.nombre = nombre;
+        super(nombre);
         this.identificación = identificación;
         this.reserva = reserva;
         this.restaurante = restaurante;
@@ -59,11 +58,11 @@ public class Cliente {
     }
 
     public String getNombre() {
-        return nombre;
+        return super.getNombre();
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        super.setNombre(nombre);
     }
 
     public int getIdentificación() {

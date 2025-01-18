@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.io.Serializable;
 
-public class Restaurante {
+public class Restaurante implements Serializable{
 
     private String nombre;
     private double reputacion;

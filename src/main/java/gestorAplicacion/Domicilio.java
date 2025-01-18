@@ -1,7 +1,7 @@
 package gestorAplicacion;
 import java.util.Map;
 import java.io.Serializable;
-public class Domicilio {
+public class Domicilio implements Serializable{
 	
 	// Atributos
     private Cliente cliente;

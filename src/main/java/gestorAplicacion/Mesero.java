@@ -4,9 +4,9 @@ import java.util.Comparator;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
-public class Mesero {
+public class Mesero extends Persona implements Serializable{
     private int codigo;
-    private String nombre;
+
     private double promCalificaciones;
     private int totalCalificaciones;
     private ArrayList<LocalDateTime> disponibilidad;  //Fechas en las que el mesero debe atender una reserva
@@ -14,8 +14,8 @@ public class Mesero {
     private static ArrayList<Mesero> meseros = new ArrayList<>();
 
     public Mesero(int codigo, String nombre, int promCalificaciones, int totalCalificaciones, Restaurante restaurante) {
+        super(nombre);
         this.codigo = codigo;
-        this.nombre = nombre;
         this.promCalificaciones = promCalificaciones;
         this.totalCalificaciones = totalCalificaciones;
         this.calificaciones = new ArrayList<>();
@@ -67,7 +67,7 @@ public class Mesero {
     }
 
     public String getNombre() {
-        return nombre;
+        return super.getNombre();
     }
 
     public double getPromCalificaciones() {

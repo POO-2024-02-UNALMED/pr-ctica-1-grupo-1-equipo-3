@@ -1,7 +1,7 @@
 package gestorAplicacion;
 import java.io.Serializable;
 
-public class Calificacion {
+public class Calificacion implements Serializable{
     private Cliente cliente;
     private Pedido pedido;
     private int calidadComida;

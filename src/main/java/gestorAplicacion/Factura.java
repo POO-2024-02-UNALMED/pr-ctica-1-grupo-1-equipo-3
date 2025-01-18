@@ -2,7 +2,7 @@ package gestorAplicacion;
 import java.io.Serializable;
 import java.util.Comparator;
 
-public class Factura {
+public class Factura implements Serializable{
     private int totalPagar;
     private int descuento;
     private Calificacion calificacion;

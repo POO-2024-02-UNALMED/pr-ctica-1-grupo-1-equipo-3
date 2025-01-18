@@ -2,7 +2,7 @@ package gestorAplicacion;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
-public class Reserva {
+public class Reserva implements Serializable{
     private Mesa mesa;
     private LocalDateTime fechaHora;
     private LocalDateTime fechaDeGeneracion;

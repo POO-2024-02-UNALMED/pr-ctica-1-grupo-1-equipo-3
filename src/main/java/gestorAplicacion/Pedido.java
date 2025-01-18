@@ -1,7 +1,7 @@
 package gestorAplicacion;
 import java.io.Serializable;
 
-public class Pedido {
+public class Pedido implements Serializable{
     private int id;
     private Cliente cliente;
     private Calificacion calificacion;
