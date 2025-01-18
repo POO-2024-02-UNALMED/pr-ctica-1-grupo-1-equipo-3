@@ -2,9 +2,11 @@ package gestorAplicacion;
 
 public class Persona {
     private String nombre;
+    private long identificacion;
 
-    public Persona(String nombre) {
+    public Persona(String nombre, long identificacion) {
         this.nombre = nombre;
+        this.identificacion = identificacion;
     }
 
     public String getNombre() {
@@ -13,5 +15,13 @@ public class Persona {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public long getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(long identificacion) {
+        this.identificacion = identificacion;
     }
 }

@@ -3,16 +3,14 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class Cliente extends Persona implements Serializable{
-    private int identificación;
     private Reserva reserva;
     private Restaurante restaurante;
     private int visitas;
     private HashMap<String, Integer> puntos;
 
 
-    public Cliente(String nombre, int identificación, Reserva reserva, Restaurante restaurante) {
-        super(nombre);
-        this.identificación = identificación;
+    public Cliente(String nombre, long identificación, Reserva reserva, Restaurante restaurante) {
+        super(nombre, identificación);
         this.reserva = reserva;
         this.restaurante = restaurante;
         this.visitas = 0;
@@ -65,11 +63,11 @@ public class Cliente extends Persona implements Serializable{
         super.setNombre(nombre);
     }
 
-    public int getIdentificación() {
-        return identificación;
+    public long getIdentificación() {
+        return super.getIdentificacion();
     }
 
-    public void setIdentificación(int identificación) {
-        this.identificación = identificación;
+    public void setIdentificación(long identificación) {
+        super.setIdentificacion(identificación);
     }
 }

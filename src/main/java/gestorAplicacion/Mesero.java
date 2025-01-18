@@ -5,17 +5,14 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 
 public class Mesero extends Persona implements Serializable{
-    private int codigo;
-
     private double promCalificaciones;
     private int totalCalificaciones;
     private ArrayList<LocalDateTime> disponibilidad;  //Fechas en las que el mesero debe atender una reserva
     private ArrayList<Integer> calificaciones;
     private static ArrayList<Mesero> meseros = new ArrayList<>();
 
-    public Mesero(int codigo, String nombre, int promCalificaciones, int totalCalificaciones, Restaurante restaurante) {
-        super(nombre);
-        this.codigo = codigo;
+    public Mesero(long identificacion, String nombre, int promCalificaciones, int totalCalificaciones, Restaurante restaurante) {
+        super(nombre, identificacion);
         this.promCalificaciones = promCalificaciones;
         this.totalCalificaciones = totalCalificaciones;
         this.calificaciones = new ArrayList<>();
@@ -57,13 +54,13 @@ public class Mesero extends Persona implements Serializable{
     
     @Override
     public String toString(){
-        String stringCodigo = Integer.toString(this.getCodigo());
+        String stringIdentificacion = Long.toString(this.getIdentificacion());
         String stringPromCaificaciones = Double.toString(this.getPromCalificaciones());
-        return "Nombre: " + this.getNombre() + ", Codigo: " + stringCodigo + ", Calificación: " + stringPromCaificaciones;
+        return "Nombre: " + this.getNombre() + ", Identificacion: " + stringIdentificacion + ", Calificación: " + stringPromCaificaciones;
     }
     
-    public int getCodigo() {
-        return codigo;
+    public long getIdentificacion() {
+        return super.getIdentificacion();
     }
 
     public String getNombre() {
