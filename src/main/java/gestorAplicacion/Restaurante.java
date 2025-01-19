@@ -54,7 +54,7 @@ public class Restaurante implements Serializable{
     }
      // Calcular puntos por gasto
      public void calcularPuntosPorGasto(Cliente cliente, double totalFactura) {
-        int puntos = (int) totalFactura / 10; // Asignar 1 punto por cada 10 unidades monetarias gastadas
+        int puntos = (int) totalFactura / 1000; // Asignar 1 punto por cada 1000 pesos colombianos
         cliente.acumularPuntos("gasto", puntos);
     }
 
