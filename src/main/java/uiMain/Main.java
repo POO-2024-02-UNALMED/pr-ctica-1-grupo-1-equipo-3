@@ -106,7 +106,8 @@ public class Main {
     	String fecha;
         String hora;
         boolean fechaHoraValida;
-
+        
+        
         do {
             System.out.println("Fecha de la reserva (Por favor, ingrese la fecha en formato dia/mes/año, incluyendo el '/'): ");
             fecha = scannerFuncionalidad1.nextLine();
@@ -129,44 +130,57 @@ public class Main {
         System.out.println(tipoMesa);
         System.out.println(fechaReserva);
         
-        ArrayList<Mesa> mesasDisponibles = restaurante.mesasDisponibles(numeroPersonas,tipoMesa,fechaReserva);
-        
-        if (mesasDisponibles.isEmpty()) {
-            System.out.println("No hay mesas disponibles para las especificaciones dadas.");
-        } else {
-            System.out.println("Mesas disponibles: (ingrese el numero de la mesa que desea escoger)");
-            ArrayList<Integer> numeroMesas = new ArrayList<>();
-                        
-            for (Mesa i : mesasDisponibles) {
-                System.out.println("Mesa "+ i.getNumero());
-                numeroMesas.add(i.getNumero());
-            }
-            
-            int numeroMesaEscogida = scannerFuncionalidad1.nextInt();
-            scannerFuncionalidad1.nextLine();
-            
-            while (!numeroMesas.contains(numeroMesaEscogida)) {
-            	System.out.println("Numero de mesa incorrecto, escoja una de las mesas disponibles");
-            	numeroMesaEscogida = scannerFuncionalidad1.nextInt();
-            }
-            
-            Mesa mesaEscogida = null;
-            
-            for (Mesa i:mesasDisponibles) {
-            	if (i.getNumero() == numeroMesaEscogida) {
-            		mesaEscogida = i;
-            	}
-            }
-                        
-            LocalDateTime fechaActual = LocalDateTime.now();
-            Reserva reserva = new Reserva(mesaEscogida, fechaReserva, numeroPersonas, fechaActual);
-            Cliente cliente = new Cliente(nombre,identificacion,reserva,restaurante);
-            
-            //Asignación de clases
-            reserva.setCliente(cliente);
-            mesaEscogida.reservar(reserva);
-            
-        }
+        boolean reservaExitosa = false;
+        do {
+	        ArrayList<Mesa> mesasDisponibles = restaurante.hacerReserva(fechaReserva,numeroPersonas,tipoMesa);
+	        
+	        if (mesasDisponibles.isEmpty()) {
+	            System.out.println("No hay mesas disponibles para las especificaciones dadas.");
+	        } else {
+	            System.out.println("Mesas disponibles: (ingrese el numero de la mesa que desea escoger)");
+	            ArrayList<Integer> numeroMesas = new ArrayList<>();
+	                        
+	            for (Mesa i : mesasDisponibles) {
+	                System.out.println("Mesa "+ i.getNumero());
+	                numeroMesas.add(i.getNumero());
+	            }
+	            
+	            int numeroMesaEscogida = scannerFuncionalidad1.nextInt();
+	            scannerFuncionalidad1.nextLine();
+	            
+	            while (!numeroMesas.contains(numeroMesaEscogida)) {
+	            	System.out.println("Numero de mesa incorrecto, escoja una de las mesas disponibles");
+	            	numeroMesaEscogida = scannerFuncionalidad1.nextInt();
+	            }
+	            
+	            Mesa mesaEscogida = null;
+	            
+	            for (Mesa i:mesasDisponibles) {
+	            	if (i.getNumero() == numeroMesaEscogida) {
+	            		mesaEscogida = i;
+	            	}
+	            }
+	             
+	            LocalDateTime fechaActual = LocalDateTime.now();
+	            Reserva reserva = new Reserva(mesaEscogida, fechaReserva, numeroPersonas, fechaActual);
+	            boolean meseroAsignado = mesaEscogida.reservar(reserva);
+	            
+	            if (meseroAsignado == false) {
+	            	System.out.println("Lo sentimos, no hay meseros que puedan atender su reserva a la hora indicada");
+	            	reservaExitosa = false;
+	            }else {
+	            		            
+		            Cliente cliente = new Cliente(nombre,identificacion,reserva,restaurante);
+		            
+		            //Asignación de clases
+		            reserva.setCliente(cliente);
+		            
+	            	System.out.println("Reserva realizada con éxito");
+	            	reservaExitosa = true;
+	            }
+	        }
+	        
+    	}while(!reservaExitosa);
     }
 
     //FUNCIONALIDAD 5

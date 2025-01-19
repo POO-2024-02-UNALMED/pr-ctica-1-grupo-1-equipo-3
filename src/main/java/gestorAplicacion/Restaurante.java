@@ -90,8 +90,25 @@ public class Restaurante implements Serializable{
         reputacion = (Math.round((sumaAcumalada + calificacion.getPromedioCalificacion() / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
     }
 
-    public void hacerReserva(String fecha, String hora, Mesa mesa) {
-        LocalDateTime horario = convertirFechaHora(fecha, hora);
+  //Retorna un ArrayList con las mesas que estan disponibles para una fecha y hora determinada
+    public ArrayList<Mesa> hacerReserva(LocalDateTime horario,int personas,String tipoMesa) {
+    	ArrayList<Mesa> mesasDisponibles = new ArrayList<Mesa>();
+
+        for (Mesa mesa : mesas) {
+            boolean estado = mesa.estaDisponible(horario);
+            int capacidad = mesa.getCapacidad();
+            String tipo = mesa.getTipo();
+
+            if (estado == true) {
+                if (mesa.getTipo().equals(tipo)) {
+                    if (capacidad == personas || capacidad == personas + 1) {
+                        mesasDisponibles.add(mesa);
+                    }
+                }
+            }
+        }
+
+        return mesasDisponibles;
     }
 
     //Valida que la fecha y hora ingresadas sean válidas
@@ -122,30 +139,7 @@ public class Restaurante implements Serializable{
 
         return fechaHora;
     }
-
-    //Retorna un ArrayList con las mesas que estan disponibles para una fecha y hora determinada
-    public ArrayList<Mesa> mesasDisponibles(int personas, String tipoMesa, LocalDateTime horario) {
-        ArrayList<Mesa> mesasDisponibles = new ArrayList<Mesa>();
-
-        for (Mesa mesa : mesas) {
-            boolean estado = mesa.estaDisponible(horario);
-            int capacidad = mesa.getCapacidad();
-            String tipo = mesa.getTipo();
-
-            if (estado == true) {
-                if (mesa.getTipo().equals(tipo)) {
-                    if (capacidad == personas || capacidad == personas + 1) {
-                        mesasDisponibles.add(mesa);
-                    }
-                }
-            }
-        }
-
-        return mesasDisponibles;
-    }
-    
-    
-    
+        
     
     public void agregarMesa(Mesa mesa) {
         mesas.add(mesa);
