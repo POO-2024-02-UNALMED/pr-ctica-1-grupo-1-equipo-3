@@ -1,9 +1,13 @@
 package gestorAplicacion;
 
 public class Persona {
-    private String nombre;
-    private long identificacion;
+    String nombre;
+    long identificacion;
 
+    //Constructor sin parametros Persona
+    public Persona() {
+    }
+    
     public Persona(String nombre, long identificacion) {
         this.nombre = nombre;
         this.identificacion = identificacion;
