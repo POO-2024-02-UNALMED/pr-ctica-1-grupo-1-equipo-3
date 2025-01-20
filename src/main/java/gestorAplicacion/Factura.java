@@ -3,7 +3,6 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 public class Factura implements Serializable{
-    private int totalPagar;
     private int descuento;
     private Calificacion calificacion;
     private Mesero mesero;
@@ -12,16 +11,36 @@ public class Factura implements Serializable{
     private double totalFactura;
     private double propina;
 
-    public Factura(int totalPagar, int descuento, Restaurante restaurante, Cliente cliente, double totalFactura, double propina) {
-        this.totalPagar = totalPagar;
+    public Factura(int descuento, Restaurante restaurante, Cliente cliente, double totalFactura, double propina) {
         this.descuento = descuento;
         this.restaurante = restaurante;
         this.cliente = cliente;
         this.totalFactura = totalFactura;
         this.propina = propina;
     }
+
+    @Override
+    public String toString(){
+        return "\n=====================================" + "\n" +
+                "         FACTURA DE CONSUMO          " + "\n" +
+                "Restaurante: " + this.restaurante.getNombre() + "\n" +
+                "Cliente: " + this.cliente.getNombre() + "\n" +
+                "Mesero encargado: " + this.cliente.getReserva().getMesero() + "\n" +
+                "-------------------------------------" + "\n" +
+                "Total: " + this.totalFactura + "\n" +
+                "Descuento aplicado: " + "\n" +
+                "Calificación del servicio: " + this.calificacion.getPromedioCalificacion() + "\n" +
+                "\n=====================================" + "\n" +
+                "Gracias por visitarnos. ¡Esperamos verlo pronto!"  + "\n" +
+                "=====================================";
+    }
+
     public double getTotalFactura() {
         return totalFactura;
+    }
+
+    public void setCalificacion(Calificacion calificacion) {
+        this.calificacion = calificacion;
     }
 
     public void calcularPuntosPorGasto() {
@@ -50,7 +69,7 @@ public class Factura implements Serializable{
                 this.descuento = 0;   // sin descuento
             }
 
-            totalPagar -= (totalPagar * descuento) / 100;
+            totalFactura -= (totalFactura * descuento) / 100;
 
         }
     }

@@ -182,6 +182,10 @@ public class Restaurante implements Serializable{
         return ListaClientes;
     }
 
+    public void setReputacion(double reputacion) {
+        this.reputacion = reputacion;
+    }
+
     public  void agregarCliente(Cliente cliente) {
         this.getListaClientes().add(cliente);
     }

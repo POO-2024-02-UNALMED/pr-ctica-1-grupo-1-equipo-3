@@ -47,11 +47,19 @@ public class Cliente extends Persona implements Serializable{
 
     public Calificacion calificar(Pedido pedido, int CalidadComida, int calidadMesero, int tiempoEspera, String comentario) {
         Calificacion nuevaCalificacion = new Calificacion(this, pedido, CalidadComida,calidadMesero,  tiempoEspera,  comentario);
+
         pedido.setCalificacion(nuevaCalificacion); //Se asocia la calificaión al pedido
+
         pedido.promediarCalificacion(nuevaCalificacion); // El pedido obtiene su calificacion numerica promediada
+
         restaurante.getCalificacionesRestaurante().add(nuevaCalificacion.getPromedioCalificacion()); // La calificacion se añade a la lista de califiaciones del restaurante
+
         this.reserva.getMesero().getCalificaciones().add(calidadMesero);  //La calificaión se añáde a lista de calificaciones del mesero
+
         this.reserva.getMesero().actualizarDesempenoMesero(nuevaCalificacion); //se Actualiza el desempeño del mesero
+
+        this.reserva.getMesa().getPedido().getFactura().setCalificacion(nuevaCalificacion);
+
         return nuevaCalificacion;
     }
 

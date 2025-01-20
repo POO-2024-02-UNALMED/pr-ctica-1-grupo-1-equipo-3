@@ -34,9 +34,7 @@ public class Main implements Utilidad {
         Mesero mesero8 = new Mesero(8, "Santiago Ramírez", 5, 30, restaurante);
         Mesero mesero9 = new Mesero(9, "Mariana Gómez", 3, 16, restaurante);
         Mesero mesero10 = new Mesero(10, "Felipe Morales", 4, 19, restaurante);
-
-        Reserva reserva = new Reserva(mesa6);
-        Cliente cliente = new Cliente("kevin",123, reserva, restaurante);
+        
         menuPrincipal(restaurante);
     }
 
@@ -189,10 +187,10 @@ public class Main implements Utilidad {
     public static void calificar(Restaurante restaurante) {
         Scanner valorEntrada1 = new Scanner(System.in);
         boolean encendido1 = true;
-        int idCliente = -1;
-        int calidadComida = -1;
-        int calidadMesero = -1;
-        int tiempoEspera = -1;
+        int idCliente = 0;
+        int calidadComida = 0;
+        int calidadMesero = 0;
+        int tiempoEspera = 0;
         String comentario = "";
         do {
             System.out.print("¿Desea relizar una calificación?" + "\n" +
@@ -229,8 +227,8 @@ public class Main implements Utilidad {
                         }
                     }while(encendido2);
                     System.out.println("Para realizar la calificación porfavor conteste la siguiente encuesta:" + "\n" +
-                            "1. Para puntuar la calidad de la comida: ");
-                            calidadComida = Utilidad.solicitarEntero();
+                                        "1. Para puntuar la calidad de la comida: ");
+                    calidadComida = Utilidad.solicitarEntero();
 
                     System.out.println("2. Para puntuar la calidad del mesero");
                     calidadMesero = Utilidad.solicitarEntero();
@@ -239,18 +237,16 @@ public class Main implements Utilidad {
                     tiempoEspera = Utilidad.solicitarEntero();
 
                     System.out.print("Por ultimo, ¿desea dejar un comentario?" + "\n" +
-                            "1. Sí." + "\n" +
-                            "2. No." + "\n" +
-                            "Ingrese un número para elegir una opción: ");
+                                    "1. Sí." + "\n" +
+                                    "2. No." + "\n" +
+                                    "Ingrese un número para elegir una opción: ");
                     int eleccion3 = valorEntrada1.nextInt();
                     switch (eleccion3) {
                         case 1:
                             System.out.print("Deje su comentario:");
-                            Scanner eleccionComentario = new Scanner(System.in);
-                            comentario = eleccionComentario.nextLine();
+                            comentario = valorEntrada1.nextLine();
                             encendido1 = false;
                             break;
-
                         case 2:
                             encendido1 = false;
                             break;
@@ -266,6 +262,11 @@ public class Main implements Utilidad {
         while (encendido1);
 
         Cliente cliente = restaurante.indicarCliente(idCliente, restaurante);
+
+        cliente.calificar((cliente.getReserva().getMesa().getPedido()), calidadComida, calidadMesero, tiempoEspera, comentario);
+
+        System.out.println(cliente.getReserva().getMesa().getPedido().getFactura());
+
         
     }
 }
