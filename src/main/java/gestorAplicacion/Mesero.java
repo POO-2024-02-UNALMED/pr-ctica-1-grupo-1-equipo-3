@@ -56,7 +56,7 @@ public class Mesero extends Persona implements Serializable{
     public String toString(){
         String stringIdentificacion = Long.toString(this.getIdentificacion());
         String stringPromCalificaciones = Double.toString(this.getPromCalificaciones());
-        return "Nombre: " + this.getNombre() + "Calificación: " + stringPromCalificaciones;
+        return "Nombre: " + this.getNombre() + ", Calificación: " + stringPromCalificaciones;
     }
     
     public long getIdentificacion() {

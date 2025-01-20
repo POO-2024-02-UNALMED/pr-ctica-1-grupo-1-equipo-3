@@ -28,7 +28,7 @@ public class Factura implements Serializable{
                 "Mesero encargado: " + this.cliente.getReserva().getMesero() + "\n" +
                 "-------------------------------------" + "\n" +
                 "Total: " + this.totalFactura + "\n" +
-                "Descuento aplicado: " + "\n" +
+                "Descuento aplicado: "+ this.aplicarDescuento(calificacion) + "\n" +
                 "Calificación del servicio: " + this.calificacion.getPromedioCalificacion() + "\n" +
                 "\n=====================================" + "\n" +
                 "Gracias por visitarnos. ¡Esperamos verlo pronto!"  + "\n" +
@@ -57,21 +57,26 @@ public class Factura implements Serializable{
     }
 
     //Descuento basado en la calificacion
-    public void aplicarDescuento(Calificacion calificacion) {
+    public String aplicarDescuento(Calificacion calificacion) {
         if (calificacion != null) {
             double promedio  = calificacion.getPromedioCalificacion();
 
             if (promedio <= 2) {
                 this.descuento = 10;  // 10% de descuento
+                totalFactura -= (totalFactura * descuento) / 100;
+                return "10% de descuento";
             } else if (promedio <=3) {
-                this.descuento = 5;   // 5% de descuentp
+                this.descuento = 5;   // 5% de descuento
+                totalFactura -= (totalFactura * descuento) / 100;
+                return "5% de descuento";
             } else {
                 this.descuento = 0;   // sin descuento
+                totalFactura -= (totalFactura * descuento) / 100;
+                return "Sin descuento";
             }
 
-            totalFactura -= (totalFactura * descuento) / 100;
-
         }
+        return null;
     }
 
     //Este metodo se encarga de organizar la lista de meseros respecto a su califacion en la factura

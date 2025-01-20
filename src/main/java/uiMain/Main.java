@@ -263,10 +263,16 @@ public class Main implements Utilidad {
 
         Cliente cliente = restaurante.indicarCliente(idCliente, restaurante);
 
-        cliente.calificar((cliente.getReserva().getMesa().getPedido()), calidadComida, calidadMesero, tiempoEspera, comentario);
+        Calificacion calificacion = cliente.calificar((cliente.getReserva().getMesa().getPedido()), calidadComida, calidadMesero, tiempoEspera, comentario);
+
+        cliente.getReserva().getMesa().getPedido().tiempoEsperaRestaurante(calificacion);
+
+        cliente.getReserva().getMesa().getPedido().getFactura().aplicarDescuento(calificacion);
 
         System.out.println(cliente.getReserva().getMesa().getPedido().getFactura());
 
-        
+        Mesero.organizarMeserosPorCalificacion();
+
+
     }
 }
