@@ -9,6 +9,7 @@ public class Mesa implements Serializable{
     private int capacidad;
     private Mesero mesero;
     private String tipo;
+    private String decoracion;
     private Pedido pedido;
     private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
     
@@ -16,6 +17,11 @@ public class Mesa implements Serializable{
         this.numero = numero;
         this.capacidad = capacidad;
         this.tipo = tipo;
+        
+        if (tipo == "basic") {
+        	this.decoracion = "normal";
+        }
+        
         restaurante.agregarMesa(this);
     }
         
@@ -36,7 +42,7 @@ public class Mesa implements Serializable{
     }
     
     
-    //Asigna un mesero a la reserva y añade la reserva al ArrayList reservas.
+    //Asigna un mesero a la reserva y añade la reserva al ArrayList reservas.true si es exitoso, false, si no puedo asignar
     public boolean reservar(Reserva reserva) {
     	Mesero.organizarMeserosPorCalificacion();
     	
@@ -77,5 +83,13 @@ public class Mesa implements Serializable{
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
+    }
+    
+    public void setDecoracion(String decoracion) {
+    	this.decoracion = decoracion;
+    }
+    
+    public String getDecoracion() {
+    	return this.decoracion;
     }
 }

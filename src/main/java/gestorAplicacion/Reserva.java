@@ -3,6 +3,8 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 
 public class Reserva implements Serializable{
+	private static int contador;
+	private int id;
     private Mesa mesa;
     private LocalDateTime fechaHora;
     private LocalDateTime fechaDeGeneracion;
@@ -20,6 +22,7 @@ public class Reserva implements Serializable{
     	this.fechaHora = fechaHora;
     	this.numeroPersonas = numeroPersonas;
     	this.fechaDeGeneracion = fechaDeGeneracion;
+    	this.id = ++contador;
     	this.calcularRecargo();
     }
     
@@ -59,6 +62,14 @@ public class Reserva implements Serializable{
     
     public Mesero getMesero() {
     	return this.mesero;
+    }
+    
+    public int getRecargo() {
+    	return this.recargo;
+    }
+    
+    public void setRecargo(int recargo) {
+    	this.recargo = recargo;
     }
 
 }
