@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Main {
+public class Main implements Utilidad {
 
     public static void main(String[] args) {
         //Creacion del restaurante
@@ -35,6 +35,8 @@ public class Main {
         Mesero mesero9 = new Mesero(9, "Mariana Gómez", 3, 16, restaurante);
         Mesero mesero10 = new Mesero(10, "Felipe Morales", 4, 19, restaurante);
 
+        Reserva reserva = new Reserva(mesa6);
+        Cliente cliente = new Cliente("kevin",123, reserva, restaurante);
         menuPrincipal(restaurante);
     }
 
@@ -226,15 +228,15 @@ public class Main {
                             }
                         }
                     }while(encendido2);
-                    System.out.print("Para realizar la calificación porfavor conteste la siguiente encuesta:" + "\n" +
-                            "1. Del 1 al 5 puntee la calidad de la comida: ");
-                    calidadComida = valorEntrada1.nextInt();
+                    System.out.println("Para realizar la calificación porfavor conteste la siguiente encuesta:" + "\n" +
+                            "1. Para puntuar la calidad de la comida: ");
+                            calidadComida = Utilidad.solicitarEntero();
 
-                    System.out.print("2. Del 1 al 5 puntee la calidad del mesero: ");
-                    calidadMesero = valorEntrada1.nextInt();
+                    System.out.println("2. Para puntuar la calidad del mesero");
+                    calidadMesero = Utilidad.solicitarEntero();
 
-                    System.out.print("3. Del 1 al 5 puntee el tiempo de espera: ");
-                    tiempoEspera = valorEntrada1.nextInt();
+                    System.out.println("3. Para puntuar el tiempo de espera: ");
+                    tiempoEspera = Utilidad.solicitarEntero();
 
                     System.out.print("Por ultimo, ¿desea dejar un comentario?" + "\n" +
                             "1. Sí." + "\n" +
@@ -264,8 +266,6 @@ public class Main {
         while (encendido1);
 
         Cliente cliente = restaurante.indicarCliente(idCliente, restaurante);
-
-
-
+        
     }
 }

@@ -7,10 +7,9 @@ public class Pedido implements Serializable{
     private Calificacion calificacion;
     private double promCalificacion;
 
-    public Pedido(int id, Cliente cliente, Calificacion calificacion) {
+    public Pedido(int id, Cliente cliente) {
         this.id = id;
         this.cliente = cliente;
-        this.calificacion = calificacion;
     }
 
     public void setCalificacion(Calificacion calificacion) {

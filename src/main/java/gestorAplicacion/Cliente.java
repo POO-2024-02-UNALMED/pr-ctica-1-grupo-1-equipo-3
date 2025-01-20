@@ -50,8 +50,8 @@ public class Cliente extends Persona implements Serializable{
         pedido.setCalificacion(nuevaCalificacion); //Se asocia la calificaión al pedido
         pedido.promediarCalificacion(nuevaCalificacion); // El pedido obtiene su calificacion numerica promediada
         restaurante.getCalificacionesRestaurante().add(nuevaCalificacion.getPromedioCalificacion()); // La calificacion se añade a la lista de califiaciones del restaurante
-        this.reserva.getMesa().getMesero().getCalificaciones().add(calidadMesero);  //La calificaión se añáde a lista de calificaciones del mesero
-        this.reserva.getMesa().getMesero().actualizarDesempenoMesero(nuevaCalificacion); //se Actualiza el desempeño del mesero
+        this.reserva.getMesero().getCalificaciones().add(calidadMesero);  //La calificaión se añáde a lista de calificaciones del mesero
+        this.reserva.getMesero().actualizarDesempenoMesero(nuevaCalificacion); //se Actualiza el desempeño del mesero
         return nuevaCalificacion;
     }
 
@@ -69,5 +69,9 @@ public class Cliente extends Persona implements Serializable{
 
     public void setIdentificación(long identificación) {
         super.setIdentificacion(identificación);
+    }
+
+    public Reserva getReserva() {
+        return reserva;
     }
 }

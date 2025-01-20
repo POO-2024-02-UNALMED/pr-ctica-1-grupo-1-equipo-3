@@ -24,7 +24,7 @@ public class Mesero extends Persona implements Serializable{
     public void actualizarDesempenoMesero(Calificacion calificacion){
         double sumaAcumalada = this.promCalificaciones * this.totalCalificaciones;
         totalCalificaciones++;
-        promCalificaciones = (Math.round((sumaAcumalada + calificacion.getPromedioCalificacion() / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
+        this.promCalificaciones = (Math.round(((sumaAcumalada + calificacion.getCalidadMesero()) / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
     }
     
     //Organiza a los meseros en base a su atributo promCalificaciones

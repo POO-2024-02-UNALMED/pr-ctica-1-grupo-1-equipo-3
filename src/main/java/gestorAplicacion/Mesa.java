@@ -9,6 +9,7 @@ public class Mesa implements Serializable{
     private int capacidad;
     private Mesero mesero;
     private String tipo;
+    private Pedido pedido;
     private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
     
     public Mesa(int numero, int capacidad, String tipo, Restaurante restaurante) {
@@ -69,5 +70,12 @@ public class Mesa implements Serializable{
     public Mesero getMesero() {
         return mesero;
     }
-    
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
 }
