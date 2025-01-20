@@ -1,6 +1,7 @@
 package gestorAplicacion;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Cliente extends Persona implements Serializable{
     private Reserva reserva;
@@ -8,6 +9,9 @@ public class Cliente extends Persona implements Serializable{
     private int visitas;
     private HashMap<String, Integer> puntos;
 
+    //Constructor sin parametros para Cliente
+    public Cliente() {
+    }
 
     public Cliente(String nombre, long identificación, Reserva reserva, Restaurante restaurante) {
         super(nombre, identificación);
@@ -81,5 +85,33 @@ public class Cliente extends Persona implements Serializable{
 
     public Reserva getReserva() {
         return reserva;
+    }
+    
+ // Método para mostrar información del cliente
+    public void mostrarInformacion() {
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Identificación: " + identificacion);
+    }
+
+    // Método basico para ingresar datos del cliente (MODIFICABLE) 
+    public void ingresarDatos() {
+        Scanner scanner = new Scanner(System.in);
+
+        // Ingreso del nombre
+        System.out.print("Ingrese su nombre: ");
+        this.nombre = scanner.nextLine();
+
+        // Ingreso y validación de la identificación
+        boolean identificacionValida = false;
+        while (!identificacionValida) {
+            try {
+                System.out.print("Ingrese su identificación (número): ");
+                this.identificacion = Long.parseLong(scanner.nextLine());
+                identificacionValida = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Error: La identificación debe ser un número. Intente nuevamente.");
+            }
+        }
+        System.out.println("Datos ingresados correctamente.");
     }
 }

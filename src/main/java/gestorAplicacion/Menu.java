@@ -3,7 +3,7 @@ import java.io.Serializable;
 
 public enum Menu implements Serializable{
     LANGOSTA("Langosta", 120000, new String[]{"Langosta", "Mantequilla", "Limón"}),
-    SALMON_AHUMADO("Salmón Ahumado", 85000, new String[]{"Salmón", "Hierbas finas", "Aceite de Oliva"}),
+    SALMON_AHUMADO("Salmón Ahumado", 85000, new String[]{"Salmón", "Hierbas Finas", "Aceite de Oliva"}),
     CORDERO("Cordero", 95000, new String[]{"Cordero", "Hierbas Finas", "Ajo"}),
     PULPO_A_LA_GALLEGA("Pulpo a la Gallega", 110000, new String[]{"Pulpo", "Pimentón", "Aceite de Oliva"}),
     PASTA_FRESCA("Pasta Fresca", 60000, new String[]{"Pasta", "Tomate", "Albahaca"}),
