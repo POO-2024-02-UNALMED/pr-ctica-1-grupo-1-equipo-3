@@ -1,9 +1,9 @@
  package uiMain;
-import java.util.Scanner;
 import gestorAplicacion.*;
-import java.time.LocalTime;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
@@ -45,7 +45,7 @@ public class Main {
                                 "1. Realizar una reserva." + "\n" +
                                 "2. Realizar un domicilio." + "\n" +
                                 "3. Realizar un pedido." + "\n" +
-                                "4. Realizar un pago." + "\n" +
+                                "4. Gestionar recompensas" + "\n" +
                                 "5. Calificar el servicio." + "\n" +
                                 "6. Salir." + "\n" +
                                 "Ingrese un número para elegir una opción: ");
@@ -66,7 +66,7 @@ public class Main {
                     encendido = false;
                     break;
                 case 4:
-                    //encadenar la funcionalidad 4
+                gestionarRecompensas(restaurante); 
                     encendido = false;
                     break;
                 case 5:
@@ -168,6 +168,88 @@ public class Main {
             
         }
     }
+   
+    //FUNCIONALIDAD 4
+public static void gestionarRecompensas(Restaurante restaurante) {
+    Scanner scanner = new Scanner(System.in);
+    boolean continuar = true;
+    int idCliente = -1;
+    
+    // Solicitar la identificación del cliente
+    System.out.print("Ingrese su número de identificación para gestionar sus recompensas: ");
+    idCliente = scanner.nextInt();
+
+    // Validar si el cliente existe
+    Cliente cliente = restaurante.indicarCliente(idCliente, restaurante);
+    if (cliente == null) {
+        System.out.println("Cliente no encontrado. Asegúrese de ingresar una identificación válida.");
+        return;
+    }
+
+    // Mostrar puntos disponibles del cliente
+    int puntosTotales = cliente.getPuntosGenerales();
+    System.out.println("Usted tiene " + puntosTotales + " puntos disponibles.");
+
+    // Menú de recompensas
+    do {
+        System.out.println("\n¿Qué desea hacer con sus puntos?");
+        System.out.println("1. Redimir puntos para una reserva.");
+        System.out.println("2. Redimir puntos para productos.");
+        System.out.println("3. Redimir puntos para servicios exclusivos.");
+        System.out.println("4. Salir.");
+        System.out.print("Ingrese una opción: ");
+        
+        int opcion = scanner.nextInt();
+
+        switch (opcion) {
+            case 1:
+                // Redimir puntos para reserva
+                System.out.print("¿Cuántos puntos desea redimir para una reserva? ");
+                int puntosReserva = scanner.nextInt();
+                if (restaurante.redimirPuntosParaReserva(cliente, puntosReserva)) {
+                    System.out.println("¡Reserva realizada con éxito utilizando " + puntosReserva + " puntos!");
+                } else {
+                    System.out.println("No tiene suficientes puntos para redimir una reserva.");
+                }
+                break;
+
+            case 2:
+                // Redimir puntos para productos
+                System.out.print("¿Cuántos puntos desea redimir para productos? ");
+                int puntosProducto = scanner.nextInt();
+                if (restaurante.redimirPuntosParaProducto(cliente, puntosProducto)) {
+                    System.out.println("¡Productos adquiridos con éxito utilizando " + puntosProducto + " puntos!");
+                } else {
+                    System.out.println("No tiene suficientes puntos para redimir productos.");
+                }
+                break;
+
+            case 3:
+                // Redimir puntos para servicios exclusivos
+                System.out.print("¿Cuántos puntos desea redimir para servicios exclusivos? ");
+                int puntosServicio = scanner.nextInt();
+                if (restaurante.redimirPuntosParaServicio(cliente, puntosServicio)) {
+                    System.out.println("¡Servicio exclusivo obtenido con éxito utilizando " + puntosServicio + " puntos!");
+                } else {
+                    System.out.println("No tiene suficientes puntos para redimir servicios exclusivos.");
+                }
+                break;
+
+            case 4:
+                // Salir
+                continuar = false;
+                break;
+
+            default:
+                System.out.println("Opción no válida. Por favor, elija una opción correcta.");
+                break;
+        }
+
+    } while (continuar);
+}
+
+   
+
 
     //FUNCIONALIDAD 5
     public static void calificar(Restaurante restaurante) {
