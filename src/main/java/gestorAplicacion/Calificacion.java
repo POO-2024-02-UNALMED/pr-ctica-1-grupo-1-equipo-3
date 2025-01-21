@@ -26,6 +26,38 @@ public class Calificacion implements Serializable{
     public double getPromedioCalificacion() {
         return promedioCalificacion;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public int getCalidadMesero() {
+        return calidadMesero;
+    }
+
+    public void setCalidadMesero(int calidadMesero) {
+        this.calidadMesero = calidadMesero;
+    }
+
+    public int getCalidadComida() {
+        return calidadComida;
+    }
+
+    public void setCalidadComida(int calidadComida) {
+        this.calidadComida = calidadComida;
+    }
+
+    public int getTiempoEspera() {
+        return tiempoEspera;
+    }
+
+    public void setTiempoEspera(int tiempoEspera) {
+        this.tiempoEspera = tiempoEspera;
+    }
 }
 //private void asignarPuntosPorCalificacion() {
  //   int puntosAsignados = (int) Math.round(promedioCalificacion);

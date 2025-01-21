@@ -1,7 +1,6 @@
 package gestorAplicacion;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +18,15 @@ public class Almacen implements Serializable {
 
     // Método para inicializar el inventario con cantidades predeterminadas
     private void inicializarInventario() {
+    	agregarProducto("Salmón", 5);
+    	agregarProducto("Cordero", 5);
         agregarProducto("Langosta", 5);
         agregarProducto("Mantequilla", 10);
         agregarProducto("Limón", 8);
         agregarProducto("Pasta", 15);
         agregarProducto("Tomate", 20);
         agregarProducto("Albahaca", 10);
-        agregarProducto("Hierbas finas", 12);
+        agregarProducto("Hierbas Finas", 12);
         agregarProducto("Aceite de Oliva", 18);
         agregarProducto("Cordero", 6);
         agregarProducto("Ajo", 14);
@@ -64,6 +65,25 @@ public class Almacen implements Serializable {
         return true;
     }
 
+    // Método para sugerir menús disponibles
+    public List<String> sugerirMenus() {
+        List<String> menusSugeridos = new ArrayList<>();
+        for (Menu menu : Menu.values()) {
+            if (verificarDisponibilidad(menu)) {
+                menusSugeridos.add(menu.nombre);
+            }
+        }
+        return menusSugeridos;
+    }
+
+    // Método para mostrar el inventario actual
+    public void mostrarInventario() {
+        System.out.println("Inventario actual:");
+        for (int i = 0; i < nombres.size(); i++) {
+            System.out.println("Producto: " + nombres.get(i) + ", Cantidad: " + cantidades.get(i));
+        }
+    }
+
     // Método para preparar un menú (reducir ingredientes del inventario)
     public boolean prepararMenu(Menu menu) {
         if (verificarDisponibilidad(menu)) {
@@ -75,14 +95,6 @@ public class Almacen implements Serializable {
         } else {
             System.out.println("No hay suficientes ingredientes para preparar " + menu.nombre);
             return false;
-        }
-    }
-
-    // Método para mostrar el inventario actual
-    public void mostrarInventario() {
-        System.out.println("Inventario actual:");
-        for (int i = 0; i < nombres.size(); i++) {
-            System.out.println("Producto: " + nombres.get(i) + ", Cantidad: " + cantidades.get(i));
         }
     }
 }

@@ -1,9 +1,12 @@
 package gestorAplicacion;
+
 import java.util.Map;
+import java.util.Scanner;
 import java.io.Serializable;
-public class Domicilio implements Serializable{
-	
-	// Atributos
+
+public class Domicilio implements Serializable {
+
+    // Atributos
     private Cliente cliente;
     private Map<String, Integer> pedidoDomicilio;
     private String direccion;
@@ -60,4 +63,24 @@ public class Domicilio implements Serializable{
         this.costoEnvio = costoEnvio;
     }
 
+    // Método para ingresar datos del cliente y del domicilio
+    public void ingresarDatosDomicilio() {
+        Scanner scanner = new Scanner(System.in);
+
+        // Crear un nuevo cliente y permitir al usuario ingresar sus datos
+        Cliente nuevoCliente = new Cliente();
+        System.out.println("Ingrese los datos del cliente:");
+        nuevoCliente.ingresarDatos();
+        this.cliente = nuevoCliente;
+
+        // Ingresar la dirección del domicilio
+        System.out.print("Ingrese la dirección del domicilio: ");
+        this.direccion = scanner.nextLine();
+
+        // Ingresar si es un domicilio prioritario
+        System.out.print("¿El domicilio es prioritario? (true/false): ");
+        this.domicilioPrioritario = scanner.nextBoolean();
+
+        System.out.println("Datos del domicilio ingresados correctamente.");
+    }
 }
