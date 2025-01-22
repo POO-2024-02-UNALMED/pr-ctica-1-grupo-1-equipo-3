@@ -2,6 +2,7 @@ package gestorAplicacion;
 
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.io.Serializable;
 
 public class Domicilio implements Serializable {
@@ -82,5 +83,78 @@ public class Domicilio implements Serializable {
         this.domicilioPrioritario = scanner.nextBoolean();
 
         System.out.println("Datos del domicilio ingresados correctamente.");
+    }
+    
+    public void seleccionarAlimentos(Almacen almacen) {
+        Scanner scanner = new Scanner(System.in);
+        Map<String, Integer> pedido = new TreeMap<>(); // Utilizamos Map con TreeMap como implementación
+        boolean continuarSeleccion = true;
+        double costoTotal = 0; // Variable para acumular el costo total
+
+        System.out.println("\nSeleccione los alimentos del menú:");
+
+        // Mostrar el menú con números asociados
+        Menu[] menuItems = Menu.values();
+        while (continuarSeleccion) {
+            System.out.println("\nMenú disponible:");
+            for (int i = 0; i < menuItems.length; i++) {
+                System.out.println((i + 1) + ". " + menuItems[i].name() + " (Precio: " + menuItems[i].getPrecio() + ")");
+            }
+
+            System.out.print("\nIngrese el número del alimento que desea (o escriba 0 para finalizar): ");
+            int opcion;
+            try {
+                opcion = Integer.parseInt(scanner.nextLine());
+                if (opcion == 0) { // Salir si el usuario ingresa 0
+                    continuarSeleccion = false;
+                    break;
+                }
+
+                if (opcion < 1 || opcion > menuItems.length) {
+                    System.out.println("Opción inválida. Intente nuevamente.");
+                    continue;
+                }
+
+                // Obtener el alimento seleccionado
+                Menu alimentoSeleccionado = menuItems[opcion - 1];
+
+                // Verificar disponibilidad en el almacén
+                if (!almacen.verificarDisponibilidad(alimentoSeleccionado)) {
+                    System.out.println("Lo sentimos, el plato " + alimentoSeleccionado.name() + " no está disponible actualmente. Por favor, seleccione otra opción.");
+                    continue;
+                }
+
+                // Solicitar la cantidad
+                System.out.print("Ingrese la cantidad que desea de " + alimentoSeleccionado.name() + ": ");
+                int cantidad;
+                try {
+                    cantidad = Integer.parseInt(scanner.nextLine());
+                    if (cantidad <= 0) {
+                        System.out.println("La cantidad debe ser un número mayor a 0. Intente nuevamente.");
+                        continue;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: La cantidad debe ser un número. Intente nuevamente.");
+                    continue;
+                }
+
+                // Agregar al pedido
+                pedido.put(alimentoSeleccionado.name(), pedido.getOrDefault(alimentoSeleccionado.name(), 0) + cantidad);
+                costoTotal += alimentoSeleccionado.getPrecio() * cantidad; // Sumar al costo total
+                System.out.println("Agregado: " + cantidad + " de " + alimentoSeleccionado.name());
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Ingrese un número válido.");
+            }
+        }
+
+        // Mostrar el resumen del pedido
+        System.out.println("\nPedido finalizado. Resumen:");
+        pedido.forEach((alimento, cantidad) -> {
+            System.out.println("- " + alimento + ": " + cantidad + " unidades");
+        });
+
+        // Mostrar el costo total del pedido
+        System.out.printf("\nCosto total del pedido: $%.2f\n", costoTotal);
+        System.out.println("Gracias por su pedido.");
     }
 }
