@@ -92,9 +92,23 @@ public class Main implements Utilidad {
     	System.out.println("Ingrese su nombre: ");
     	String nombre = scannerFuncionalidad1.nextLine();
     	
+    	int identificacion = 0;
+    	while (true) {
     	System.out.println("Ingrese su número de identificacion(Sin espacios, puntos o comas, sólo el número): ");
-    	int identificacion = scannerFuncionalidad1.nextInt();
-    	scannerFuncionalidad1.nextLine();
+    	String input = scannerFuncionalidad1.nextLine();
+    	//verifica que la entrada sea solo digitos
+    	if (input.matches("\\d+")) {
+    		identificacion = Integer.parseInt(input);
+    		break; }
+    	else {
+    		System.out.println("La identificacion ingresa no es valida, intentelo de nuevo");
+    	    try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+    	}	
+    }
     	
     	System.out.println("Número de personas: ");
     	int numeroPersonas = scannerFuncionalidad1.nextInt();
@@ -253,101 +267,90 @@ public class Main implements Utilidad {
 					System.out.println("Reserva realizada con éxito");
 					reservaExitosa = true;
 					restaurante.addIdConReserva(identificacion); //agregar id a la lista de reservas
-					System.out.println(restaurante.getIdConReservas());
 				}
 			}
 		} while (!reservaExitosa);
     }
    
     //FUNCIONALIDAD 4
-    public static void gestionarRecompensas(Restaurante restaurante) {
-        Scanner scanner = new Scanner(System.in);
-        boolean continuar = true;
-        int idCliente = -1;
+public static void gestionarRecompensas(Restaurante restaurante) {
+    Scanner scanner = new Scanner(System.in);
+    boolean continuar = true;
+    int idCliente = -1;
     
-        // Solicitar la identificación del cliente
-        while (true) {
-            System.out.print("Ingrese su número de identificación (8 a 10 dígitos): ");
-            String input = scanner.nextLine();
-    
-            // Validar que el input sea un número y tenga entre 8 y 10 dígitos
-            if (input.matches("\\d{8,10}")) {
-                idCliente = Integer.parseInt(input);
-                break; // Salir del bucle si la identificación es válida
-            } else {
-                System.out.println("Identificación no válida. Asegúrese de ingresar un número entre 8 y 10 dígitos.");
-            }
-        }
-    
-        // Validar si el cliente existe
-        Cliente cliente = restaurante.indicarCliente(idCliente, restaurante);
-        if (cliente == null) {
-            System.out.println("Cliente no encontrado. Asegúrese de ingresar una identificación válida.");
-            return;
-        }
-    
-        // Mostrar puntos disponibles del cliente
-        int puntosTotales = cliente.getPuntosGenerales();
-        System.out.println("Usted tiene " + puntosTotales + " puntos disponibles.");
-    
-        // Menú de recompensas
-        do {
-            System.out.println("\n¿Qué desea hacer con sus puntos?");
-            System.out.println("1. Redimir puntos para una reserva.");
-            System.out.println("2. Redimir puntos para productos.");
-            System.out.println("3. Redimir puntos para servicios exclusivos.");
-            System.out.println("4. Salir.");
-            System.out.print("Ingrese una opción: ");
-    
-            int opcion = scanner.nextInt();
-    
-            switch (opcion) {
-                case 1:
-                    // Redimir puntos para reserva
-                    System.out.print("¿Cuántos puntos desea redimir para una reserva? ");
-                    int puntosReserva = scanner.nextInt();
-                    if (restaurante.redimirPuntosParaReserva(cliente, puntosReserva)) {
-                        System.out.println("¡Reserva realizada con éxito utilizando " + puntosReserva + " puntos!");
-                    } else {
-                        System.out.println("No tiene suficientes puntos para redimir una reserva.");
-                    }
-                    break;
-    
-                case 2:
-                    // Redimir puntos para productos
-                    System.out.print("¿Cuántos puntos desea redimir para productos? ");
-                    int puntosProducto = scanner.nextInt();
-                    if (restaurante.redimirPuntosParaProducto(cliente, puntosProducto)) {
-                        System.out.println("¡Productos adquiridos con éxito utilizando " + puntosProducto + " puntos!");
-                    } else {
-                        System.out.println("No tiene suficientes puntos para redimir productos.");
-                    }
-                    break;
-    
-                case 3:
-                    // Redimir puntos para servicios exclusivos
-                    System.out.print("¿Cuántos puntos desea redimir para servicios exclusivos? ");
-                    int puntosServicio = scanner.nextInt();
-                    if (restaurante.redimirPuntosParaServicio(cliente, puntosServicio)) {
-                        System.out.println("¡Servicio exclusivo obtenido con éxito utilizando " + puntosServicio + " puntos!");
-                    } else {
-                        System.out.println("No tiene suficientes puntos para redimir servicios exclusivos.");
-                    }
-                    break;
-    
-                case 4:
-                    // Salir
-                    continuar = false;
-                    break;
-    
-                default:
-                    System.out.println("Opción no válida. Por favor, elija una opción correcta.");
-                    break;
-            }
-    
-        } while (continuar);
+    // Solicitar la identificación del cliente
+    System.out.print("Ingrese su número de identificación para gestionar sus recompensas: ");
+    idCliente = scanner.nextInt();
+
+    // Validar si el cliente existe
+    Cliente cliente = restaurante.indicarCliente(idCliente, restaurante);
+    if (cliente == null) {
+        System.out.println("Cliente no encontrado. Asegúrese de ingresar una identificación válida.");
+        return;
     }
-    
+
+    // Mostrar puntos disponibles del cliente
+    int puntosTotales = cliente.getPuntosGenerales();
+    System.out.println("Usted tiene " + puntosTotales + " puntos disponibles.");
+
+    // Menú de recompensas
+    do {
+        System.out.println("\n¿Qué desea hacer con sus puntos?");
+        System.out.println("1. Redimir puntos para una reserva.");
+        System.out.println("2. Redimir puntos para productos.");
+        System.out.println("3. Redimir puntos para servicios exclusivos.");
+        System.out.println("4. Salir.");
+        System.out.print("Ingrese una opción: ");
+        
+        int opcion = scanner.nextInt();
+
+        switch (opcion) {
+            case 1:
+                // Redimir puntos para reserva
+                System.out.print("¿Cuántos puntos desea redimir para una reserva? ");
+                int puntosReserva = scanner.nextInt();
+                if (restaurante.redimirPuntosParaReserva(cliente, puntosReserva)) {
+                    System.out.println("¡Reserva realizada con éxito utilizando " + puntosReserva + " puntos!");
+                } else {
+                    System.out.println("No tiene suficientes puntos para redimir una reserva.");
+                }
+                break;
+
+            case 2:
+                // Redimir puntos para productos
+                System.out.print("¿Cuántos puntos desea redimir para productos? ");
+                int puntosProducto = scanner.nextInt();
+                if (restaurante.redimirPuntosParaProducto(cliente, puntosProducto)) {
+                    System.out.println("¡Productos adquiridos con éxito utilizando " + puntosProducto + " puntos!");
+                } else {
+                    System.out.println("No tiene suficientes puntos para redimir productos.");
+                }
+                break;
+
+            case 3:
+                // Redimir puntos para servicios exclusivos
+                System.out.print("¿Cuántos puntos desea redimir para servicios exclusivos? ");
+                int puntosServicio = scanner.nextInt();
+                if (restaurante.redimirPuntosParaServicio(cliente, puntosServicio)) {
+                    System.out.println("¡Servicio exclusivo obtenido con éxito utilizando " + puntosServicio + " puntos!");
+                } else {
+                    System.out.println("No tiene suficientes puntos para redimir servicios exclusivos.");
+                }
+                break;
+
+            case 4:
+                // Salir
+                continuar = false;
+                break;
+
+            default:
+                System.out.println("Opción no válida. Por favor, elija una opción correcta.");
+                break;
+        }
+
+    } while (continuar);
+}
+
    
 
 
