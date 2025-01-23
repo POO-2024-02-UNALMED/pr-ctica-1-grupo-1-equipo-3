@@ -1,6 +1,9 @@
 package gestorAplicacion;
 import java.util.ArrayList;
 import java.util.Comparator;
+
+import uiMain.CreacionPedido;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.io.Serializable;
@@ -13,7 +16,7 @@ public class Restaurante implements Serializable{
     private int ingresos;
     private LocalTime horarioServicio;
     private ArrayList<Mesa> mesas;
-    private ArrayList<Integer> idConReservas = new ArrayList<>(); //Lista donde se guardaran los id de las reservas exitosas y se utilizara para confirmar la existencia de la reserva antes de hacer pedido
+    private static ArrayList<Integer> idConReservas = new ArrayList<>(); //Lista donde se guardaran los id de las reservas exitosas y se utilizara para confirmar la existencia de la reserva antes de hacer pedido
 	private ArrayList<Mesero> meseros;
     private ArrayList<Double> calificacionesRestaurante = new ArrayList<>();
     private ArrayList<Cliente> ListaClientes;
@@ -148,7 +151,22 @@ public class Restaurante implements Serializable{
     public void agregarMesero(Mesero mesero) {
         meseros.add(mesero);
     }
-
+    
+   //metodo para iniciar la creacion de un pedido
+    public static void crearPedido(Restaurante restaurante) {
+    	CreacionPedido.pedirId(restaurante);
+    }
+    
+    //metodo para buscar si el id ingresado esta asociado a una reserva
+    public static boolean BuscarId(int id) {
+    	 for (int idReserva : idConReservas) {
+             if (idReserva==id) {
+                 return true; //Si se encuentra el id
+             }
+         }
+         return false; // Si no se encuentra el id
+     }
+    
     public String getNombre() {
         return nombre;
     }

@@ -41,6 +41,7 @@ public class Main implements Utilidad {
     static void menuPrincipal(Restaurante restaurante){
         boolean encendido = true;
         do {
+        	System.out.println();
             System.out.print("¿Qué desea hacer?" + "\n" +
                                 "1. Realizar una reserva." + "\n" +
                                 "2. Realizar un domicilio." + "\n" +
@@ -62,7 +63,7 @@ public class Main implements Utilidad {
                     encendido = false;
                     break;
                 case 3:
-                    //encadenar la funcionalidad 3
+                    Restaurante.crearPedido(restaurante);
                     encendido = false;
                     break;
                 case 4:
@@ -79,10 +80,9 @@ public class Main implements Utilidad {
                     break;
             }
         } while(encendido);
-
-
     }
-
+ 
+        
     //FUNCIONALIDAD 1
     public static void reservar(Restaurante restaurante) {
     	
