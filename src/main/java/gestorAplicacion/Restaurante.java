@@ -13,8 +13,8 @@ public class Restaurante implements Serializable{
     private int ingresos;
     private LocalTime horarioServicio;
     private ArrayList<Mesa> mesas;
-    private ArrayList<Reserva> reservas;
-    private ArrayList<Mesero> meseros;
+    private ArrayList<Integer> idConReservas = new ArrayList<>(); //Lista donde se guardaran los id de las reservas exitosas y se utilizara para confirmar la existencia de la reserva antes de hacer pedido
+	private ArrayList<Mesero> meseros;
     private ArrayList<Double> calificacionesRestaurante = new ArrayList<>();
     private ArrayList<Cliente> ListaClientes;
 
@@ -31,7 +31,6 @@ public class Restaurante implements Serializable{
         this.ingresos = 0;
         this.horarioServicio = horarioServicio;
         this.mesas = new ArrayList<>();
-        this.reservas = new ArrayList<>();
         this.meseros = new ArrayList<>();
         this.calificacionesRestaurante = new ArrayList<>();
         this.ListaClientes = new ArrayList<>();
@@ -189,8 +188,26 @@ public class Restaurante implements Serializable{
     public  void agregarCliente(Cliente cliente) {
         this.getListaClientes().add(cliente);
     }
+    
+    public ArrayList<Integer> getIdConReservas() {
+		return idConReservas;
+	}
 
-    //valida si un cliente está en la lista de los clientes del restaurante por medio del iD
+	public void setIdConReservas(ArrayList<Integer> idConReservas) {
+		this.idConReservas = idConReservas;
+	}
+	
+	//metodo para agregar la identificación a la lista de reservas cuando esta sea realice exitosamente
+    public void addIdConReserva(int id) {
+    	idConReservas.add(id); 
+    }
+    
+   //metodo para eliminar la identificación de la lista de reservas una vez esta se complete
+    public void removeIdConReserva(int id) {
+        idConReservas.remove(Integer.valueOf(id));
+    }
+    
+    //valida si un cliente está en la lista de los clientes del restaurante por medio del id
     public boolean validarCliente(int id, Restaurante restaurante) {
         for (Cliente cliente : restaurante.getListaClientes()) {
             if (cliente.getIdentificación() == id) {
@@ -200,7 +217,7 @@ public class Restaurante implements Serializable{
         return false;
     }
 
-    //Retorna un cliente según su iD
+    //Retorna un cliente según su id
     public Cliente indicarCliente(int id, Restaurante restaurante){
         for (Cliente cliente : restaurante.getListaClientes()) {
             if (cliente.getIdentificación() == id) {

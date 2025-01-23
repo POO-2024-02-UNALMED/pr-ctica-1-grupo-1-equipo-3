@@ -1,5 +1,5 @@
 
-//La intención de esta interface es poder reutialzar funciones en cualquiera de las interacciones
+//La intención de esta interface es poder reutilizar funciones en cualquiera de las interacciones
 
 
 package uiMain;

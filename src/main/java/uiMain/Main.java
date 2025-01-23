@@ -44,7 +44,7 @@ public class Main implements Utilidad {
             System.out.print("¿Qué desea hacer?" + "\n" +
                                 "1. Realizar una reserva." + "\n" +
                                 "2. Realizar un domicilio." + "\n" +
-                                "3. Realizar un pedido." + "\n" +
+                                "3. Realizar el pedido de mi reserva." + "\n" +
                                 "4. Gestionar recompensas" + "\n" +
                                 "5. Calificar el servicio." + "\n" +
                                 "6. Salir." + "\n" +
@@ -74,7 +74,7 @@ public class Main implements Utilidad {
                     encendido = false;
                     break;
                 case 6:
-                    //cerrar el prograama
+                    //cerrar el programa
                     encendido = false;
                     break;
             }
@@ -92,7 +92,7 @@ public class Main implements Utilidad {
     	System.out.println("Ingrese su nombre: ");
     	String nombre = scannerFuncionalidad1.nextLine();
     	
-    	System.out.println("Ingrese su número de identificacion(Sin espacios, puntos o comas, sólo el número: ");
+    	System.out.println("Ingrese su número de identificacion(Sin espacios, puntos o comas, sólo el número): ");
     	int identificacion = scannerFuncionalidad1.nextInt();
     	scannerFuncionalidad1.nextLine();
     	
@@ -229,7 +229,7 @@ public class Main implements Utilidad {
 			            }
 			        }else {
 			        	// Recomendación de platos más caros.
-			            System.out.println("\nNo ha indicado alergias. Aquí están los platos más caros de nuestro menú:");
+			            System.out.println("\nNo ha indicado alergias. Como recomendación le dejamos los platos más caros de nuestro menú:");
 			            Menu[] platosOrdenados = Menu.values();
 
 			            // Ordenar manualmente los platos por precio de mayor a menor.
@@ -252,6 +252,8 @@ public class Main implements Utilidad {
 					
 					System.out.println("Reserva realizada con éxito");
 					reservaExitosa = true;
+					restaurante.addIdConReserva(identificacion); //agregar id a la lista de reservas
+					System.out.println(restaurante.getIdConReservas());
 				}
 			}
 		} while (!reservaExitosa);
