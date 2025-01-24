@@ -102,7 +102,7 @@ public class Restaurante implements Serializable{
             String tipo = mesa.getTipo();
 
             if (estado == true) {
-                if (mesa.getTipo().equals(tipo)) {
+                if (tipo.equals(tipoMesa)) {
                     if (capacidad == personas || capacidad == personas + 1) {
                         mesasDisponibles.add(mesa);
                     }

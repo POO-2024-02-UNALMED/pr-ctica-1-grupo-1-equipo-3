@@ -2,14 +2,14 @@ package gestorAplicacion;
 import java.io.Serializable;
 
 public enum Menu implements Serializable{
-    LANGOSTA("Langosta", 120000, new String[]{"Langosta", "Mantequilla", "Limón"}),
-    SALMON_AHUMADO("Salmón Ahumado", 85000, new String[]{"Salmón", "Hierbas Finas", "Aceite de Oliva"}),
-    CORDERO("Cordero", 95000, new String[]{"Cordero", "Hierbas Finas", "Ajo"}),
-    PULPO_A_LA_GALLEGA("Pulpo a la Gallega", 110000, new String[]{"Pulpo", "Pimentón", "Aceite de Oliva"}),
-    PASTA_FRESCA("Pasta Fresca", 60000, new String[]{"Pasta", "Tomate", "Albahaca"}),
-    LOMO_DE_BUEY("Lomo de Buey", 135000, new String[]{"Lomo de Buey", "Sal", "Pimienta"}),
-    TARTAR_DE_ATUN("Tartar de Atún", 98000, new String[]{"Atún", "Aguacate", "Salsa de Soya"}),
-    RAVIOLI_DE_TRUFA("Ravioli de Trufa", 115000, new String[]{"Ravioli", "Trufa", "Queso Parmesano"});
+    LANGOSTA("Langosta", 120000, new String[]{"langosta", "mantequilla", "limon"}),
+    SALMON_AHUMADO("Salmón Ahumado", 85000, new String[]{"salmon", "hierbas finas", "aceite de oliva"}),
+    CORDERO("Cordero", 95000, new String[]{"cordero", "hierbas finas", "ajo"}),
+    PULPO_A_LA_GALLEGA("Pulpo a la Gallega", 110000, new String[]{"pulpo", "pimenton", "aceite de oliva"}),
+    PASTA_FRESCA("Pasta Fresca", 60000, new String[]{"pasta", "tomate", "albahaca"}),
+    LOMO_DE_BUEY("Lomo de Buey", 135000, new String[]{"lomo de buey", "sal", "pimienta"}),
+    TARTAR_DE_ATUN("Tartar de Atún", 98000, new String[]{"atun", "aguacate", "salsa de soya"}),
+    RAVIOLI_DE_TRUFA("Ravioli de Trufa", 115000, new String[]{"ravioli", "trufa", "queso parmesano"});
 	
     final String nombre;
     private final double precio;

@@ -114,7 +114,7 @@ public class Main implements Utilidad {
     	int numeroPersonas = scannerFuncionalidad1.nextInt();
     	scannerFuncionalidad1.nextLine();
     	
-    	System.out.println("Mesa deluxe o normal (escriba el tipo de mesa en minúsculas, por favor): ");
+    	System.out.println("Mesa deluxe o basic (escriba el tipo de mesa en minúsculas, por favor): ");
     	System.out.println("Mesa deluxe con costo adicional de $30.000");
     	String tipoMesa = scannerFuncionalidad1.nextLine();
     	  
@@ -196,7 +196,7 @@ public class Main implements Utilidad {
 						String estilo = scannerFuncionalidad1.nextLine();
 						reserva.getMesa().setDecoracion(estilo);
 						
-						System.out.println("Desea agregar 1 hora a su reserva?(S/N)");
+						System.out.println("Desea agregar 1 hora a su reserva?(Incluida en el pago de la mesa deluxe(S/N)");
 						String respuesta = scannerFuncionalidad1.nextLine();
 						
 						if (respuesta == "S") {
@@ -215,7 +215,7 @@ public class Main implements Utilidad {
 					System.out.println("¿Desea agregar restricciones alimentarias a ingredientes específicos?(S/N)");
 					String respuesta2 = scannerFuncionalidad1.nextLine();
 					
-					if(respuesta2 == "S") {
+					if(respuesta2.equals("S")) {
 						// Muestra los ingredientes únicos.
 			            System.out.println("Estos son los ingredientes disponibles en nuestros platos:");
 			            String[] todosIngredientes = Menu.obtenerTodosLosIngredientes();
@@ -226,7 +226,7 @@ public class Main implements Utilidad {
 			            }
 
 			            // Solicitar restricciones del usuario.
-			            System.out.println("Por favor, ingrese los ingredientes a los que es alérgico, separados por comas:");
+			            System.out.println("Por favor, ingrese los ingredientes a los que es alérgico, separados por comas, escriba tal cual como aparecen en la lista:");
 			            String[] alergias = scannerFuncionalidad1.nextLine().split(",");
 
 			            // Elimina espacios en los ingredientes ingresados.
@@ -242,8 +242,8 @@ public class Main implements Utilidad {
 			                }
 			            }
 			        }else {
-			        	// Recomendación de platos más caros.
-			            System.out.println("\nNo ha indicado alergias. Como recomendación le dejamos los platos más caros de nuestro menú:");
+			        	// Recomendación de platos más caros :).
+			            System.out.println("\nNo ha indicado alergias. Como recomendación le dejamos los platos más sabrosos de nuestro menú:");
 			            Menu[] platosOrdenados = Menu.values();
 
 			            // Ordenar manualmente los platos por precio de mayor a menor.

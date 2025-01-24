@@ -42,7 +42,7 @@ public class Mesa implements Serializable{
     }
     
     
-    //Asigna un mesero a la reserva y añade la reserva al ArrayList reservas.true si es exitoso, false, si no puedo asignar
+    //Asigna un mesero a la reserva y añade la reserva al ArrayList reservas.true si es exitoso, false, si no pudo asignar
     public boolean reservar(Reserva reserva) {
     	Mesero.organizarMeserosPorCalificacion();
     	
