@@ -494,7 +494,10 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
             // Mostrar los alimentos con números
             for (int i = 0; i < menuItems.length; i++) {
-                System.out.printf("%d. %s - Precio: %.2f%n", i + 1, menuItems[i].name(), menuItems[i].getPrecio());
+                System.out.printf("%d. %s - Precio: %s%n", 
+                    i + 1, 
+                    menuItems[i].name(), 
+                    Utilidad.formatoPrecio(menuItems[i].getPrecio()));
             }
 
             System.out.print("Seleccione el número del alimento que desea pedir: ");
@@ -549,7 +552,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         for (Map.Entry<String, Integer> entry : pedidoDomicilio.entrySet()) {
             System.out.printf("- %s: %d unidad(es)%n", entry.getKey(), entry.getValue());
         }
-        System.out.println("Costo total: " + domicilio.getCosto());
+        System.out.println("Costo total: " + Utilidad.formatoPrecio(domicilio.getCosto()));
         
         int pago;
         do {
@@ -570,7 +573,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         // Mostrar los billetes entregados
         System.out.println("Cambio entregado:");
         for (int billete : billetesEntregados) {
-            System.out.println("- Billete de " + billete);
+            System.out.println("- Billete de " + Utilidad.formatoPrecio(billete));
         }
 
         System.out.println("Gracias por su pedido. El domiciliario " + domiciliario.getNombre() + " se encargará de la entrega.");

@@ -4,6 +4,8 @@
 
 package uiMain;
 import java.util.Scanner;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public interface Utilidad {
 
@@ -26,6 +28,11 @@ public interface Utilidad {
                 System.out.println("Entrada no válida. Por favor, ingresa un número entero en el rango establecido.");
             }
         }
+    }
+    
+    public static String formatoPrecio(double precio) {
+        NumberFormat formato = NumberFormat.getNumberInstance(Locale.getDefault());
+        return formato.format(precio);
     }
 }
 
