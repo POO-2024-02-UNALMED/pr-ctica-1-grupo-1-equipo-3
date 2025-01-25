@@ -465,7 +465,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
     }
     
     public static void domicilio(Restaurante restaurante) {
-    	Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         Almacen almacen = new Almacen();
 
         // Solicitar datos del cliente
@@ -480,6 +480,10 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         long identificacion = scanner.nextLong();
         scanner.nextLine(); // Consumir salto de línea
 
+        // Solicitar si el pedido es prioritario
+        System.out.print("¿Desea que su pedido sea prioritario? (si/no): ");
+        boolean esPrioritario = scanner.nextLine().equalsIgnoreCase("si");
+
         // Crear el cliente
         Cliente cliente = new Cliente(nombre, identificacion, restaurante);
 
@@ -489,10 +493,8 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
         while (continuar) {
             System.out.println("Menú disponible:");
-            int index = 1; // Índice para numerar los alimentos
             Menu[] menuItems = Menu.values(); // Obtener los elementos del menú
 
-            // Mostrar los alimentos con números
             for (int i = 0; i < menuItems.length; i++) {
                 System.out.printf("%d. %s - Precio: %s%n", 
                     i + 1, 
@@ -510,13 +512,11 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
             Menu menuSeleccionado = menuItems[seleccion - 1];
 
-            // Verificar disponibilidad en el almacén
             if (almacen.verificarDisponibilidad(menuSeleccionado)) {
                 System.out.print("Ingrese la cantidad que desea pedir: ");
                 int cantidad = scanner.nextInt();
                 scanner.nextLine(); // Consumir salto de línea
 
-                // Agregar al pedido y actualizar el inventario
                 pedidoDomicilio.put(menuSeleccionado.nombre, cantidad);
                 almacen.actualizarInventario(menuSeleccionado, cantidad);
                 System.out.println("El alimento fue agregado a su pedido.");
@@ -541,13 +541,33 @@ public static void gestionarRecompensas(Restaurante restaurante) {
             }
         }
 
+        // Incrementar el costo total en un 5% si el pedido es prioritario
+        if (esPrioritario) {
+            int recargo = (int) (costoTotal * 0.05); // Calcular el 5% del costo total
+            costoTotal += recargo;
+            System.out.println("Se ha aplicado un recargo del 5% por ser un pedido prioritario: " + Utilidad.formatoPrecio(recargo));
+        }
+
         // Crear el pedido a domicilio
-        Domicilio domicilio = new Domicilio(cliente, pedidoDomicilio, direccion, false, costoTotal);
+        Domicilio domicilio = new Domicilio(cliente, pedidoDomicilio, direccion, esPrioritario, costoTotal);
+
+        // Seleccionar el domiciliario adecuado
+        List<Domiciliario> listaDomiciliarios = Domiciliario.getListaDomiciliarios();
+        Domiciliario domiciliario;
+        if (esPrioritario && listaDomiciliarios.size() > 0) {
+            domiciliario = listaDomiciliarios.get(0); // Domiciliario 1
+        } else if (!esPrioritario && listaDomiciliarios.size() > 1) {
+            domiciliario = listaDomiciliarios.get(1); // Domiciliario 2
+        } else {
+            System.out.println("No hay suficientes domiciliarios disponibles para asignar.");
+            return;
+        }
 
         // Mostrar el resumen del pedido
         System.out.println("\nResumen del pedido:");
         System.out.println("Cliente: " + cliente.getNombre());
         System.out.println("Dirección: " + domicilio.getDireccion());
+        System.out.println("Prioridad: " + (domicilio.isDomicilioPrioritario() ? "Prioritario" : "Normal"));
         System.out.println("Pedido:");
         for (Map.Entry<String, Integer> entry : pedidoDomicilio.entrySet()) {
             System.out.printf("- %s: %d unidad(es)%n", entry.getKey(), entry.getValue());
@@ -567,7 +587,6 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         int cambio = pago - costoTotal;
 
         // Seleccionar un domiciliario y entregar el cambio
-        Domiciliario domiciliario = Domiciliario.getListaDomiciliarios().get(0); // Ejemplo: Seleccionamos el primero
         List<Integer> billetesEntregados = domiciliario.entregarCambio(cambio);
 
         // Mostrar los billetes entregados
@@ -576,8 +595,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
             System.out.println("- Billete de " + Utilidad.formatoPrecio(billete));
         }
 
-        System.out.println("Gracias por su pedido. El domiciliario " + domiciliario.getNombre() + " se encargará de la entrega.");
+        System.out.println("Gracias por su pedido. El domiciliario " + domiciliario.getNombre() + "(" + (domicilio.isDomicilioPrioritario() ? "Prioritario" : "No prioritario") + ")" + " se encargará de la entrega.");
     }
-    
-    
+
 }
