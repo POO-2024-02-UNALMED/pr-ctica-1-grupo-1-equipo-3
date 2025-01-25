@@ -11,7 +11,7 @@ public enum Menu implements Serializable{
     TARTAR_DE_ATUN("Tartar de Atún", 98000, new String[]{"atun", "aguacate", "salsa de soya"}),
     RAVIOLI_DE_TRUFA("Ravioli de Trufa", 115000, new String[]{"ravioli", "trufa", "queso parmesano"});
 	
-    final String nombre;
+    public final String nombre;
     private final double precio;
     final String[] ingredientes;
 	

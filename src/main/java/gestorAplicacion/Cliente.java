@@ -10,6 +10,14 @@ public class Cliente extends Persona implements Serializable{
     private Restaurante restaurante;
     private int visitas;
     private HashMap<String, Integer> puntos;
+    
+    //Constructor con 3 paramentros para cliente
+    public Cliente(String nombre, long identificacion, Restaurante restaurante) {
+        this.nombre = nombre;
+        this.identificacion = identificacion;
+        this.restaurante = restaurante;
+        restaurante.agregarCliente(this);
+    }
 
     //Constructor sin parametros para Cliente
     public Cliente() {

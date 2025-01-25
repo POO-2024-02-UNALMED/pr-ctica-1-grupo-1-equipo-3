@@ -19,29 +19,28 @@ public class Almacen implements Serializable {
 
     // Método para inicializar el inventario con cantidades predeterminadas
     private void inicializarInventario() {
-    	agregarProducto("Salmón", 5);
-    	agregarProducto("Cordero", 5);
-        agregarProducto("Langosta", 5);
-        agregarProducto("Mantequilla", 10);
-        agregarProducto("Limón", 8);
-        agregarProducto("Pasta", 15);
-        agregarProducto("Tomate", 20);
-        agregarProducto("Albahaca", 10);
-        agregarProducto("Hierbas Finas", 12);
-        agregarProducto("Aceite de Oliva", 18);
-        agregarProducto("Cordero", 6);
-        agregarProducto("Ajo", 14);
-        agregarProducto("Pulpo", 4);
-        agregarProducto("Pimentón", 7);
-        agregarProducto("Lomo de Buey", 5);
-        agregarProducto("Sal", 25);
-        agregarProducto("Pimienta", 20);
-        agregarProducto("Atún", 9);
-        agregarProducto("Aguacate", 8);
-        agregarProducto("Salsa de Soya", 10);
-        agregarProducto("Ravioli", 6);
-        agregarProducto("Trufa", 5);
-        agregarProducto("Queso Parmesano", 15);
+    	agregarProducto("salmon", 5);
+    	agregarProducto("cordero", 5);
+        agregarProducto("langosta", 5);
+        agregarProducto("mantequilla", 10);
+        agregarProducto("limon", 8);
+        agregarProducto("pasta", 15);
+        agregarProducto("tomate", 20);
+        agregarProducto("albahaca", 10);
+        agregarProducto("hierbas finas", 12);
+        agregarProducto("aceite de oliva", 18);
+        agregarProducto("ajo", 14);
+        agregarProducto("pulpo", 4);
+        agregarProducto("pimentón", 7);
+        agregarProducto("lomo de buey", 5);
+        agregarProducto("sal", 25);
+        agregarProducto("pimienta", 20);
+        agregarProducto("atun", 9);
+        agregarProducto("aguacate", 8);
+        agregarProducto("aalsa de soya", 10);
+        agregarProducto("ravioli", 6);
+        agregarProducto("trufa", 5);
+        agregarProducto("queso parmesano", 15);
     }
 
     // Método para agregar productos al inventario
@@ -101,5 +100,14 @@ public class Almacen implements Serializable {
 
     public static ArrayList<Almacen> getAlmacen() {
         return almacen;
+    }
+    
+    public void actualizarInventario(Menu menu, int cantidad) {
+        for (String ingrediente : menu.ingredientes) {
+            int index = nombres.indexOf(ingrediente);
+            if (index != -1) {
+                cantidades.set(index, cantidades.get(index) - cantidad);
+            }
+        }
     }
 }
