@@ -27,6 +27,7 @@ public class Serializador {
         Serializador.serializar(Almacen.getAlmacen(), "almacen");
         Serializador.serializar(Calificacion.getCalificaciones(), "calificaciones");
         Serializador.serializar(Cliente.getClientes(),"clientes");
+        Serializador.serializar(Domiciliario.getListaDomiciliarios(), "listaDomiciliarios");
         Serializador.serializar(Domicilio.getDomicilios(),"domicilios");
         Serializador.serializar(Factura.getFacturas(),"facturas");
         Serializador.serializar(Mesa.getMesas(),"mesas");

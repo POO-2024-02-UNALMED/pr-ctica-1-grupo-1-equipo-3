@@ -45,9 +45,9 @@ public class Main implements Utilidad {
     
     public static void inicializarDomiciliarios() {
         if (Domiciliario.getListaDomiciliarios().isEmpty()) {
-            new Domiciliario("Carlos");
-            new Domiciliario("María");
-            new Domiciliario("Luis");
+            new Domiciliario("Carlos", (long) 123);
+            new Domiciliario("María", (long) 456);
+            new Domiciliario("Luis", (long) 789);
             System.out.println("Se han inicializado los domiciliarios por defecto.");
         }
     }

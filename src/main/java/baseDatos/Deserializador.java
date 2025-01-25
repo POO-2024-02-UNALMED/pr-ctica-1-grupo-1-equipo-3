@@ -33,6 +33,7 @@ public class Deserializador {
         Deserializador.deserializar(Almacen.getAlmacen(), "almacen");
         Deserializador.deserializar(Calificacion.getCalificaciones(), "calificaciones");
         Deserializador.deserializar(Cliente.getClientes(),"clientes");
+        Deserializador.deserializar(Domiciliario.getListaDomiciliarios(), "listaDomiciliarios");
         Deserializador.deserializar(Domicilio.getDomicilios(),"domicilios");
         Deserializador.deserializar(Factura.getFacturas(),"facturas");
         Deserializador.deserializar(Mesa.getMesas(),"mesas");

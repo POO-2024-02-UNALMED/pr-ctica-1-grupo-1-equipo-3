@@ -4,15 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Domiciliario implements Serializable {
+public class Domiciliario extends Persona implements Serializable {
 
-    public static List<Domiciliario> listaDomiciliarios = new ArrayList<>();
+    public static ArrayList<Domiciliario> listaDomiciliarios = new ArrayList<Domiciliario>();
     private List<Integer> billetera;
-    private String nombre;
+
+
 
     // Constructor
-    public Domiciliario(String nombre) {
-        this.nombre = nombre;
+    public Domiciliario(String nombre, Long identificacion) {
+        super(nombre, identificacion);
         this.billetera = new ArrayList<>();
         inicializarBilletera();
         listaDomiciliarios.add(this);
@@ -68,7 +69,7 @@ public class Domiciliario implements Serializable {
     }
 
     // Getter para obtener la lista de domiciliarios
-    public static List<Domiciliario> getListaDomiciliarios() {
+    public static ArrayList<Domiciliario> getListaDomiciliarios() {
         return listaDomiciliarios;
     }
 
