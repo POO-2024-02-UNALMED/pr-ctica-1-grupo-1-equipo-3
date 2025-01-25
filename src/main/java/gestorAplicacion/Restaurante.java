@@ -234,7 +234,7 @@ public class Restaurante implements Serializable{
     //valida si un cliente está en la lista de los clientes del restaurante por medio del id
     public boolean validarCliente(int id, Restaurante restaurante) {
         for (Cliente cliente : restaurante.getListaClientes()) {
-            if (cliente.getIdentificación() == id) {
+            if (cliente.getIdentificacion() == id) {
                 return true;
             }
         }
@@ -244,7 +244,7 @@ public class Restaurante implements Serializable{
     //Retorna un cliente según su id
     public Cliente indicarCliente(int id, Restaurante restaurante){
         for (Cliente cliente : restaurante.getListaClientes()) {
-            if (cliente.getIdentificación() == id) {
+            if (cliente.getIdentificacion() == id) {
                 return cliente;
             }
         }

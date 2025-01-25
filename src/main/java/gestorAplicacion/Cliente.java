@@ -85,12 +85,12 @@ public class Cliente extends Persona implements Serializable{
         super.setNombre(nombre);
     }
 
-    public long getIdentificación() {
-        return super.getIdentificacion();
+    public long getIdentificacion() {
+        return identificacion;
     }
 
-    public void setIdentificación(long identificación) {
-        super.setIdentificacion(identificación);
+    public void setIdentificacion(long identificación) {
+        super.setIdentificacion(identificacion);
     }
 
     public Reserva getReserva() {

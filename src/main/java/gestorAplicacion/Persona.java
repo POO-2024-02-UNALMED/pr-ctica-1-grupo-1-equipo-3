@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public class Persona implements Serializable {
-    private String nombre;
-    private long identificacion;
+    protected String nombre;
+    protected long identificacion;
     private static ArrayList<Persona> personas = new ArrayList<Persona>();
 
     //Constructor sin parametros Persona
