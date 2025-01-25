@@ -52,6 +52,8 @@ public class Mesa implements Serializable{
     			this.mesero = mesero;
     			reserva.setMesero(mesero);
     			reservas.add(reserva);
+    			//Adición de la fecha a la disponibilidad del mesero
+    			mesero.agregarFecha(reserva.getFechaHora());
     			return true; //Si la reserva se realizó con éxito
     		}
     	}
