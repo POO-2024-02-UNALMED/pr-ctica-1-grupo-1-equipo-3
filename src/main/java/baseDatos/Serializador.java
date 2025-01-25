@@ -8,7 +8,7 @@ public class Serializador {
     public static void serializar(ArrayList<?extends Serializable> lista, String nombre){
         File archivo = new File("");
         try {
-            File ruta = new File(archivo.getAbsolutePath()+"/src/baseDatos/temp/"+nombre+".txt");
+            File ruta = new File(archivo.getAbsolutePath()+"/src/main/java/baseDatos/temp/"+nombre+".txt");
             FileOutputStream fileOut = new FileOutputStream(ruta);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(lista);
@@ -31,6 +31,7 @@ public class Serializador {
         Serializador.serializar(Factura.getFacturas(),"facturas");
         Serializador.serializar(Mesa.getMesas(),"mesas");
         Serializador.serializar(Mesero.getMeseros(),"meseros");
+        Serializador.serializar(Persona.getPersonas(), "personas");
         Serializador.serializar(Pedido.getPedidos(),"pedidos");
         Serializador.serializar(Reserva.getReservas(),"reservas");
         Serializador.serializar(Restaurante.getRestaurante(),"restaurante");

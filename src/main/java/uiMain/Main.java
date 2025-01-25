@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.List;
+import baseDatos.Deserializador;
+import baseDatos.Serializador;
 
 public class Main implements Utilidad {
 
@@ -90,6 +92,7 @@ public class Main implements Utilidad {
                     break;
                 case 6:
                     //cerrar el programa
+                    Serializador.serializarListas();
                     System.exit(0);
             }
         } while(encendido);

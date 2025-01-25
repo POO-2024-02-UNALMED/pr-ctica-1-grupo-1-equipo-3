@@ -1,5 +1,7 @@
 package gestorAplicacion;
+import javax.swing.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public enum Menu implements Serializable{
     LANGOSTA("Langosta", 120000, new String[]{"langosta", "mantequilla", "limon"}),
@@ -14,11 +16,13 @@ public enum Menu implements Serializable{
     public final String nombre;
     private final double precio;
     final String[] ingredientes;
+
 	
 	Menu(String nombre, double precio, String[] ingredientes) {
         this.nombre = nombre;
         this.precio = precio;
         this.ingredientes = ingredientes;
+
     }
 	
 	public static String[] obtenerTodosLosIngredientes() {

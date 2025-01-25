@@ -64,7 +64,7 @@ public class Mesero extends Persona implements Serializable{
     }
 
     public String getNombre() {
-        return super.getNombre();
+        return nombre;
     }
 
     public double getPromCalificaciones() {

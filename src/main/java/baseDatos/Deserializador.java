@@ -8,13 +8,13 @@ import java.io.*;
 
 public class Deserializador {
 
-    public static <T extends Serializable> void deserializar(ArrayList<T> lista, String nombre){
+    private static <T extends Serializable> void deserializar(ArrayList<T> lista, String nombre){
         File archivo = new File("");
         FileInputStream fis = null;
         ObjectInputStream ois = null;
 
         try {
-            File ruta = new File(archivo.getAbsolutePath() + "/src/baseDatos/temp/" + nombre + ".txt");
+            File ruta = new File(archivo.getAbsolutePath()+"/src/main/java/baseDatos/temp/"+nombre+".txt");
             fis = new FileInputStream(ruta);
             ois = new ObjectInputStream(fis);
             lista.addAll((ArrayList<T>) ois.readObject()) ;
@@ -37,6 +37,7 @@ public class Deserializador {
         Deserializador.deserializar(Factura.getFacturas(),"facturas");
         Deserializador.deserializar(Mesa.getMesas(),"mesas");
         Deserializador.deserializar(Mesero.getMeseros(),"meseros");
+        Deserializador.deserializar(Persona.getPersonas(), "personas");
         Deserializador.deserializar(Pedido.getPedidos(),"pedidos");
         Deserializador.deserializar(Reserva.getReservas(),"reservas");
         Deserializador.deserializar(Restaurante.getRestaurante(),"restaurante");

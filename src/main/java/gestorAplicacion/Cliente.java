@@ -13,8 +13,7 @@ public class Cliente extends Persona implements Serializable{
     
     //Constructor con 3 paramentros para cliente
     public Cliente(String nombre, long identificacion, Restaurante restaurante) {
-        this.nombre = nombre;
-        this.identificacion = identificacion;
+        super(nombre, identificacion);
         this.restaurante = restaurante;
         restaurante.agregarCliente(this);
     }
@@ -24,8 +23,8 @@ public class Cliente extends Persona implements Serializable{
         clientes.add(this);
     }
 
-    public Cliente(String nombre, long identificación, Reserva reserva, Restaurante restaurante) {
-        super(nombre, identificación);
+    public Cliente(String nombre, long identificacion, Reserva reserva, Restaurante restaurante) {
+        super(nombre, identificacion);
         this.reserva = reserva;
         this.restaurante = restaurante;
         this.visitas = 0;
