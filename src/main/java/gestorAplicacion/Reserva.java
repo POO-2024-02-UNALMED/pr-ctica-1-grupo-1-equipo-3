@@ -78,4 +78,8 @@ public class Reserva implements Serializable{
     public static ArrayList<Reserva> getReservas() {
         return reservas;
     }
+    
+    public int getId() {
+    	return this.id;
+    }
 }

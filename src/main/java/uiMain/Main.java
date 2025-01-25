@@ -100,48 +100,51 @@ public class Main implements Utilidad {
  
         
     //FUNCIONALIDAD 1
-    public static void reservar(Restaurante restaurante) {
-    	
-    	//Recopilación de información
-    	Scanner scannerFuncionalidad1 = new Scanner(System.in);
-    	System.out.println("Bienvenido/a al restaurante "+ restaurante.getNombre()+", por favor digite la siguiente información para realizar su reserva");
-    	System.out.println("Ingrese su nombre: ");
-    	String nombre = scannerFuncionalidad1.nextLine();
-    	
-    	int identificacion = 0;
-    	while (true) {
-    	System.out.println("Ingrese su número de identificacion(Sin espacios, puntos o comas, sólo el número): ");
-    	String input = scannerFuncionalidad1.nextLine();
-    	//verifica que la entrada sea solo digitos
-    	if (input.matches("\\d+")) {
-    		identificacion = Integer.parseInt(input);
-    		break; }
-    	else {
-    		System.out.println("La identificacion ingresa no es valida, intentelo de nuevo");
-    	    try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-    	}	
-    }
-    	
-    	System.out.println("Número de personas: ");
-    	int numeroPersonas = scannerFuncionalidad1.nextInt();
-    	scannerFuncionalidad1.nextLine();
-    	
-    	System.out.println("Mesa deluxe o basic (escriba el tipo de mesa en minúsculas, por favor): ");
-    	System.out.println("Mesa deluxe con costo adicional de $30.000");
-    	String tipoMesa = scannerFuncionalidad1.nextLine();
-    	  
-    	boolean reservaExitosa = false;
+	public static void reservar(Restaurante restaurante) {
+
+		// Recopilación de información
+		Scanner scannerFuncionalidad1 = new Scanner(System.in);
+		System.out.println("Bienvenido/a al restaurante " + restaurante.getNombre()+ ", por favor digite la siguiente información para realizar su reserva");
+		System.out.println("Ingrese su nombre: ");
+		String nombre = scannerFuncionalidad1.nextLine();
+
+		int identificacion = 0;
+		while (true) {
+			System.out.println("Ingrese su número de identificacion(Sin espacios, puntos o comas, sólo el número): ");
+			String input = scannerFuncionalidad1.nextLine();
+			
+			// verifica que la entrada sea solo digitos
+			if (input.matches("\\d+")) {
+				identificacion = Integer.parseInt(input);
+				break;
+			} else {
+				System.out.println("La identificacion ingresa no es valida, intentelo de nuevo");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		System.out.println("Número de personas: ");
+		int numeroPersonas = scannerFuncionalidad1.nextInt();
+		scannerFuncionalidad1.nextLine();
+
+		System.out.println("Mesa deluxe o basic (escriba el tipo de mesa en minúsculas, por favor): ");
+		System.out.println("Mesa deluxe con costo adicional de $30.000");
+		String tipoMesa = scannerFuncionalidad1.nextLine();
+
+		boolean reservaExitosa = false;
 		do {
 			String fecha;
 			String hora;
 			boolean fechaHoraValida;
 
+			//Validación fecha y hora con formato correcto.
 			do {
-				System.out.println("Fecha de la reserva (Por favor, ingrese la fecha en formato dia/mes/año, incluyendo el '/'): ");
+				System.out.println(
+						"Fecha de la reserva (Por favor, ingrese la fecha en formato dia/mes/año, incluyendo el '/'): ");
 				fecha = scannerFuncionalidad1.nextLine();
 
 				System.out.println("Hora de la reserva (Por favor, ingrese la hora en formato militar así; hora:minutos, incluyendo el ':'): ");
@@ -150,22 +153,17 @@ public class Main implements Utilidad {
 
 				fechaHoraValida = restaurante.validarFechaHora(fecha, hora);
 				if (!fechaHoraValida) {
-					System.out.println(
-							"Fecha u hora mal ingresadas, inténtelo de nuevo (tenga en cuenta las recomendaciones).");
+					System.out.println("Fecha u hora mal ingresadas, inténtelo de nuevo (tenga en cuenta las recomendaciones).");
 				}
 			} while (!fechaHoraValida);
 
+			//Conversión de la fecha y hora a un LocalDateTime
 			LocalDateTime fechaReserva = restaurante.convertirFechaHora(fecha, hora);
 
-			// Pruebas
-			System.out.println(nombre);
-			System.out.println(identificacion);
-			System.out.println(numeroPersonas);
-			System.out.println(tipoMesa);
-			System.out.println(fechaReserva);
-
+			//Obtención de las mesas disponibles
 			ArrayList<Mesa> mesasDisponibles = restaurante.hacerReserva(fechaReserva, numeroPersonas, tipoMesa);
-
+			
+			//Impresión de las mesas disponibles.
 			if (mesasDisponibles.isEmpty()) {
 				System.out.println("No hay mesas disponibles para las especificaciones dadas.");
 			} else {
@@ -180,6 +178,7 @@ public class Main implements Utilidad {
 				int numeroMesaEscogida = scannerFuncionalidad1.nextInt();
 				scannerFuncionalidad1.nextLine();
 
+				// Validacion que la mesa esté entre las opciones
 				while (!numeroMesas.contains(numeroMesaEscogida)) {
 					System.out.println("Numero de mesa incorrecto, escoja una de las mesas disponibles");
 					numeroMesaEscogida = scannerFuncionalidad1.nextInt();
@@ -187,6 +186,7 @@ public class Main implements Utilidad {
 
 				Mesa mesaEscogida = null;
 
+				//Asignacion de la mesa escogida.
 				for (Mesa i : mesasDisponibles) {
 					if (i.getNumero() == numeroMesaEscogida) {
 						mesaEscogida = i;
@@ -197,6 +197,7 @@ public class Main implements Utilidad {
 				Reserva reserva = new Reserva(mesaEscogida, fechaReserva, numeroPersonas, fechaActual);
 				boolean meseroAsignado = mesaEscogida.reservar(reserva);
 
+				//Asignación de mesero a la mesa y creación del Cliente 
 				if (meseroAsignado == false) {
 					System.out.println("Lo sentimos, no hay meseros que puedan atender su reserva a la hora indicada");
 					reservaExitosa = false;
@@ -207,86 +208,105 @@ public class Main implements Utilidad {
 					// Asignación de clases
 					reserva.setCliente(cliente);
 
-					if (reserva.getMesa().getTipo()=="deluxe") {
+					//Datos adicionales para mesa "deluxe"
+					if (reserva.getMesa().getTipo() == "deluxe") {
 						System.out.println("Ingrese el tipo de decoracion que desea: elegante, rústico o moderno");
 						String estilo = scannerFuncionalidad1.nextLine();
 						reserva.getMesa().setDecoracion(estilo);
-						
+
 						System.out.println("Desea agregar 1 hora a su reserva?(Incluida en el pago de la mesa deluxe(S/N)");
 						String respuesta = scannerFuncionalidad1.nextLine();
-						
+
+						//Validación adición de tiempo(1 hora)
 						if (respuesta == "S") {
 							boolean validacion = mesaEscogida.estaDisponible(fechaReserva.plusHours(1));
 							if (validacion == true) {
 								System.out.println("Hora añadida con éxito");
 								int recargoReserva = reserva.getRecargo();
 								reserva.setRecargo(recargoReserva + 30000);
-							}else {
+							} else {
 								System.out.println("Lo sentimos, la hora adicional interrumpe otra reserva, la decoración será cortesía de la casa");
 							}
 						}
 					}
-					
-					//Interaccion si el usuario tiene restricciones alimentarias
+
+					// Interaccion si el usuario tiene restricciones alimentarias
 					System.out.println("¿Desea agregar restricciones alimentarias a ingredientes específicos?(S/N)");
 					String respuesta2 = scannerFuncionalidad1.nextLine();
-					
-					if(respuesta2.equals("S")) {
+
+					if (respuesta2.equals("S")) {
 						// Muestra los ingredientes únicos.
-			            System.out.println("Estos son los ingredientes disponibles en nuestros platos:");
-			            String[] todosIngredientes = Menu.obtenerTodosLosIngredientes();
-			            for (String ingrediente : todosIngredientes) {
-			                if (!Menu.ingredienteEstaDuplicado(ingrediente, todosIngredientes)) {
-			                    System.out.println(ingrediente);
-			                }
-			            }
+						System.out.println("Estos son los ingredientes disponibles en nuestros platos:");
+						String[] todosIngredientes = Menu.obtenerTodosLosIngredientes();
+						for (String ingrediente : todosIngredientes) {
+							if (!Menu.ingredienteEstaDuplicado(ingrediente, todosIngredientes)) {
+								System.out.println(ingrediente);
+							}
+						}
 
-			            // Solicitar restricciones del usuario.
-			            System.out.println("Por favor, ingrese los ingredientes a los que es alérgico, separados por comas, escriba tal cual como aparecen en la lista:");
-			            String[] alergias = scannerFuncionalidad1.nextLine().split(",");
+						// Solicitar restricciones del usuario.
+						System.out.println("Por favor, ingrese los ingredientes a los que es alérgico, separados por comas, escriba tal cual como aparecen en la lista:");
+						String[] alergias = scannerFuncionalidad1.nextLine().split(",");
 
-			            // Elimina espacios en los ingredientes ingresados.
-			            for (int i = 0; i < alergias.length; i++) {
-			                alergias[i] = alergias[i].trim();
-			            }
+						// Elimina espacios en los ingredientes ingresados.
+						for (int i = 0; i < alergias.length; i++) {
+							alergias[i] = alergias[i].trim();
+						}
 
-			            // Recomendaciones.
-			            System.out.println("\nRecomendaciones de platos que no contienen los ingredientes restringidos:");
-			            for (Menu plato : Menu.values()) {
-			                if (!Menu.platoContieneAlergia(plato, alergias)) {
-			                    System.out.println("- " + plato.getNombre() + " ($" + plato.getPrecio() + ")");
-			                }
-			            }
-			        }else {
-			        	// Recomendación de platos más caros :).
-			            System.out.println("\nNo ha indicado alergias. Como recomendación le dejamos los platos más sabrosos de nuestro menú:");
-			            Menu[] platosOrdenados = Menu.values();
+						// Recomendaciones platos restringidos
+						System.out.println("\nRecomendaciones de platos que no contienen los ingredientes restringidos:");
+						for (Menu plato : Menu.values()) {
+							if (!Menu.platoContieneAlergia(plato, alergias)) {
+								System.out.println("- " + plato.getNombre() + " ($" + plato.getPrecio() + ")");
+							}
+						}
+					} else {
+						// Recomendación de platos más caros :).
+						System.out.println("\nNo ha indicado alergias. Como recomendación le dejamos los platos más sabrosos de nuestro menú:");
+						Menu[] platosOrdenados = Menu.values();
 
-			            // Ordenar manualmente los platos por precio de mayor a menor.
-			            for (int i = 0; i < platosOrdenados.length - 1; i++) {
-			                for (int j = i + 1; j < platosOrdenados.length; j++) {
-			                    if (platosOrdenados[i].getPrecio() < platosOrdenados[j].getPrecio()) {
-			                        // Intercambiar los elementos
-			                        Menu temp = platosOrdenados[i];
-			                        platosOrdenados[i] = platosOrdenados[j];
-			                        platosOrdenados[j] = temp;
-			                    }
-			                }
-			            }
+						// Ordenar manualmente los platos por precio de mayor a menor.
+						for (int i = 0; i < platosOrdenados.length - 1; i++) {
+							for (int j = i + 1; j < platosOrdenados.length; j++) {
+								if (platosOrdenados[i].getPrecio() < platosOrdenados[j].getPrecio()) {
+									// Intercambiar los elementos
+									Menu temp = platosOrdenados[i];
+									platosOrdenados[i] = platosOrdenados[j];
+									platosOrdenados[j] = temp;
+								}
+							}
+						}
 
-			            // Imprimir los platos más caros.
-			            for (Menu plato : platosOrdenados) {
-			                System.out.println("- " + plato.getNombre() + " ($" + plato.getPrecio() + ")");
-			            }
-			        }
-					
-					System.out.println("Reserva realizada con éxito");
-					reservaExitosa = true;
-					restaurante.addIdConReserva(identificacion); //agregar id a la lista de reservas
+						// Imprimir los platos más caros.
+						for (Menu plato : platosOrdenados) {
+							System.out.println("- " + plato.getNombre() + " ($" + plato.getPrecio() + ")");
+						}
+					}
+
+					//Resumen de la Reserva
+					System.out.println("===== Resumen de Reserva =====");
+					System.out.println("Nombre del Cliente: " + reserva.getCliente().getNombre());
+					System.out.println("Número de Reserva: " + reserva.getId());
+					System.out.println("Fecha: " + reserva.getFechaHora());
+					System.out.println("Numero de Mesa: " + reserva.getMesa().getNumero());
+					System.out.println("Mesero Asignado: $" + reserva.getMesa().getMesero().getNombre());
+					System.out.println("Recargos: $" + reserva.getRecargo());
+					System.out.println("==============================");
+					System.out.println("¿Desea confirmar su reserva(S)");
+					System.out.println("¿Desea volver a ingresar los datos?(N)");
+					String confirmacion = scannerFuncionalidad1.nextLine();
+
+					if (confirmacion.equals("S")) {
+						System.out.println("Reserva realizada con éxito, gracias por Reservar en "+restaurante.getNombre());
+						reservaExitosa = true;
+						restaurante.addIdConReserva(identificacion); // agregar id a la lista de reservas
+					} else {
+						reservaExitosa = false;
+					}
 				}
 			}
 		} while (!reservaExitosa);
-    }
+	}
    
     //FUNCIONALIDAD 4
 public static void gestionarRecompensas(Restaurante restaurante) {
