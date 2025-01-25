@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.List;
 
 public class Main implements Utilidad {
 
@@ -39,6 +40,16 @@ public class Main implements Utilidad {
 
         menuPrincipal(restaurante);
     }
+    
+    public static void inicializarDomiciliarios() {
+        if (Domiciliario.getListaDomiciliarios().isEmpty()) {
+            new Domiciliario("Carlos");
+            new Domiciliario("María");
+            new Domiciliario("Luis");
+            System.out.println("Se han inicializado los domiciliarios por defecto.");
+        }
+    }
+
 
     static void menuPrincipal(Restaurante restaurante){
         boolean encendido = true;
@@ -61,6 +72,7 @@ public class Main implements Utilidad {
                     encendido = false;
                     break;
                 case 2:
+                	inicializarDomiciliarios();
                     domicilio(restaurante);
                     encendido = false;
                     break;
@@ -535,5 +547,31 @@ public static void gestionarRecompensas(Restaurante restaurante) {
             System.out.printf("- %s: %d unidad(es)%n", entry.getKey(), entry.getValue());
         }
         System.out.println("Costo total: " + domicilio.getCosto());
+        
+        int pago;
+        do {
+            System.out.print("Ingrese el monto con el que desea pagar: ");
+            pago = scanner.nextInt();
+            if (pago < costoTotal) {
+                System.out.println("El monto ingresado es insuficiente. Intente nuevamente.");
+            }
+        } while (pago < costoTotal);
+
+        // Calcular el cambio
+        int cambio = pago - costoTotal;
+
+        // Seleccionar un domiciliario y entregar el cambio
+        Domiciliario domiciliario = Domiciliario.getListaDomiciliarios().get(0); // Ejemplo: Seleccionamos el primero
+        List<Integer> billetesEntregados = domiciliario.entregarCambio(cambio);
+
+        // Mostrar los billetes entregados
+        System.out.println("Cambio entregado:");
+        for (int billete : billetesEntregados) {
+            System.out.println("- Billete de " + billete);
+        }
+
+        System.out.println("Gracias por su pedido. El domiciliario " + domiciliario.getNombre() + " se encargará de la entrega.");
     }
+    
+    
 }
