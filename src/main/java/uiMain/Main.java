@@ -3,6 +3,8 @@ import gestorAplicacion.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main implements Utilidad {
@@ -59,7 +61,7 @@ public class Main implements Utilidad {
                     encendido = false;
                     break;
                 case 2:
-                    //encadenar la funcionalidad 2
+                    domicilio(restaurante);
                     encendido = false;
                     break;
                 case 3:
@@ -444,5 +446,93 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         Mesero.organizarMeserosPorCalificacion();
 
 
+    }
+    
+    public static void domicilio(Restaurante restaurante) {
+    	Scanner scanner = new Scanner(System.in);
+        Almacen almacen = new Almacen();
+
+        // Solicitar datos del cliente
+        System.out.println("Bienvenido al sistema de pedidos a domicilio.");
+        System.out.print("Ingrese su nombre: ");
+        String nombre = scanner.nextLine();
+
+        System.out.print("Ingrese su dirección: ");
+        String direccion = scanner.nextLine();
+
+        System.out.print("Ingrese su identificación: ");
+        long identificacion = scanner.nextLong();
+        scanner.nextLine(); // Consumir salto de línea
+
+        // Crear el cliente
+        Cliente cliente = new Cliente(nombre, identificacion, restaurante);
+
+        // Solicitar el pedido del cliente
+        Map<String, Integer> pedidoDomicilio = new HashMap<>();
+        boolean continuar = true;
+
+        while (continuar) {
+            System.out.println("Menú disponible:");
+            int index = 1; // Índice para numerar los alimentos
+            Menu[] menuItems = Menu.values(); // Obtener los elementos del menú
+
+            // Mostrar los alimentos con números
+            for (int i = 0; i < menuItems.length; i++) {
+                System.out.printf("%d. %s - Precio: %.2f%n", i + 1, menuItems[i].name(), menuItems[i].getPrecio());
+            }
+
+            System.out.print("Seleccione el número del alimento que desea pedir: ");
+            int seleccion = scanner.nextInt();
+
+            if (seleccion < 1 || seleccion > menuItems.length) {
+                System.out.println("Selección inválida. Inténtelo nuevamente.");
+                continue;
+            }
+
+            Menu menuSeleccionado = menuItems[seleccion - 1];
+
+            // Verificar disponibilidad en el almacén
+            if (almacen.verificarDisponibilidad(menuSeleccionado)) {
+                System.out.print("Ingrese la cantidad que desea pedir: ");
+                int cantidad = scanner.nextInt();
+                scanner.nextLine(); // Consumir salto de línea
+
+                // Agregar al pedido y actualizar el inventario
+                pedidoDomicilio.put(menuSeleccionado.nombre, cantidad);
+                almacen.actualizarInventario(menuSeleccionado, cantidad);
+                System.out.println("El alimento fue agregado a su pedido.");
+            } else {
+                System.out.println("Lo sentimos, no hay suficientes ingredientes disponibles para este alimento.");
+            }
+
+            System.out.print("¿Desea agregar otro alimento a su pedido? (si/no): ");
+            String respuesta = scanner.nextLine();
+            continuar = respuesta.equalsIgnoreCase("si");
+        }
+
+        // Calcular el costo total
+        int costoTotal = 0;
+        for (Map.Entry<String, Integer> entry : pedidoDomicilio.entrySet()) {
+            String alimento = entry.getKey();
+            int cantidad = entry.getValue();
+            for (Menu menu : Menu.values()) {
+                if (menu.nombre.equals(alimento)) {
+                    costoTotal += menu.getPrecio() * cantidad;
+                }
+            }
+        }
+
+        // Crear el pedido a domicilio
+        Domicilio domicilio = new Domicilio(cliente, pedidoDomicilio, direccion, false, costoTotal);
+
+        // Mostrar el resumen del pedido
+        System.out.println("\nResumen del pedido:");
+        System.out.println("Cliente: " + cliente.getNombre());
+        System.out.println("Dirección: " + domicilio.getDireccion());
+        System.out.println("Pedido:");
+        for (Map.Entry<String, Integer> entry : pedidoDomicilio.entrySet()) {
+            System.out.printf("- %s: %d unidad(es)%n", entry.getKey(), entry.getValue());
+        }
+        System.out.println("Costo total: " + domicilio.getCosto());
     }
 }
