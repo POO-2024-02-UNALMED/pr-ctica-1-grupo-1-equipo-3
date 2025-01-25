@@ -31,13 +31,13 @@ public class Almacen implements Serializable {
         agregarProducto("aceite de oliva", 18);
         agregarProducto("ajo", 14);
         agregarProducto("pulpo", 4);
-        agregarProducto("pimentón", 7);
+        agregarProducto("pimenton", 7);
         agregarProducto("lomo de buey", 5);
         agregarProducto("sal", 25);
         agregarProducto("pimienta", 20);
         agregarProducto("atun", 9);
         agregarProducto("aguacate", 8);
-        agregarProducto("aalsa de soya", 10);
+        agregarProducto("salsa de soya", 10);
         agregarProducto("ravioli", 6);
         agregarProducto("trufa", 5);
         agregarProducto("queso parmesano", 15);

@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.List;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
+import java.util.InputMismatchException;
 
 public class Main implements Utilidad {
 
@@ -488,21 +489,65 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         Scanner scanner = new Scanner(System.in);
         Almacen almacen = new Almacen();
 
-        // Solicitar datos del cliente
         System.out.println("Bienvenido al sistema de pedidos a domicilio.");
-        System.out.print("Ingrese su nombre: ");
-        String nombre = scanner.nextLine();
 
-        System.out.print("Ingrese su dirección: ");
-        String direccion = scanner.nextLine();
+        // Validar el nombre
+        String nombre;
+        while (true) {
+            System.out.print("Ingrese su nombre: ");
+            nombre = scanner.nextLine();
+            if (nombre.trim().isEmpty()) {
+                System.out.println("El nombre no puede estar vacío. Intente nuevamente.");
+            } else {
+                break;
+            }
+        }
 
-        System.out.print("Ingrese su identificación: ");
-        long identificacion = scanner.nextLong();
-        scanner.nextLine(); // Consumir salto de línea
+        // Validar la dirección
+        String direccion;
+        while (true) {
+            System.out.print("Ingrese su dirección (formato: Calle/Carrera/cll/cr seguido de un número, # y otro número): ");
+            direccion = scanner.nextLine();
+            if (direccion.matches("(?i)^(calle|carrera|cll|cr|CLL|CR)\\s\\d+\\s#\\s\\d+$")) {
+                break;
+            } else {
+                System.out.println("Formato de dirección inválido. Ejemplo válido: Calle 45 # 32.");
+            }
+        }
+
+        // Validar la identificación
+        long identificacion;
+        while (true) {
+            System.out.print("Ingrese su identificación: ");
+            try {
+                identificacion = scanner.nextLong();
+                scanner.nextLine(); // Consumir el salto de línea
+                if (identificacion > 0) {
+                    break;
+                } else {
+                    System.out.println("La identificación debe ser un número positivo. Intente nuevamente.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. La identificación debe ser un número. Intente nuevamente.");
+                scanner.nextLine(); // Consumir la entrada inválida
+            }
+        }
 
         // Solicitar si el pedido es prioritario
-        System.out.print("¿Desea que su pedido sea prioritario? (si/no): ");
-        boolean esPrioritario = scanner.nextLine().equalsIgnoreCase("si");
+        boolean esPrioritario;
+        while (true) {
+            System.out.print("¿Desea que su pedido sea prioritario? (si/no): ");
+            String prioridadInput = scanner.nextLine().trim().toLowerCase();
+            if (prioridadInput.equals("si")) {
+                esPrioritario = true;
+                break;
+            } else if (prioridadInput.equals("no")) {
+                esPrioritario = false;
+                break;
+            } else {
+                System.out.println("Respuesta inválida. Por favor, responda con 'si' o 'no'.");
+            }
+        }
 
         // Crear el cliente
         Cliente cliente = new Cliente(nombre, identificacion, restaurante);
@@ -513,7 +558,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
         while (continuar) {
             System.out.println("Menú disponible:");
-            Menu[] menuItems = Menu.values(); // Obtener los elementos del menú
+            Menu[] menuItems = Menu.values();
 
             for (int i = 0; i < menuItems.length; i++) {
                 System.out.printf("%d. %s - Precio: %s%n", 
@@ -522,20 +567,41 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                     Utilidad.formatoPrecio(menuItems[i].getPrecio()));
             }
 
-            System.out.print("Seleccione el número del alimento que desea pedir: ");
-            int seleccion = scanner.nextInt();
-
-            if (seleccion < 1 || seleccion > menuItems.length) {
-                System.out.println("Selección inválida. Inténtelo nuevamente.");
-                continue;
+            int seleccion;
+            while (true) {
+                System.out.print("Seleccione el número del alimento que desea pedir: ");
+                try {
+                    seleccion = scanner.nextInt();
+                    if (seleccion >= 1 && seleccion <= menuItems.length) {
+                        break;
+                    } else {
+                        System.out.println("Selección inválida. Elija un número dentro del rango mostrado.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Entrada inválida. Ingrese un número válido.");
+                    scanner.nextLine(); // Consumir la entrada inválida
+                }
             }
 
             Menu menuSeleccionado = menuItems[seleccion - 1];
 
             if (almacen.verificarDisponibilidad(menuSeleccionado)) {
-                System.out.print("Ingrese la cantidad que desea pedir: ");
-                int cantidad = scanner.nextInt();
-                scanner.nextLine(); // Consumir salto de línea
+                int cantidad;
+                while (true) {
+                    System.out.print("Ingrese la cantidad que desea pedir: ");
+                    try {
+                        cantidad = scanner.nextInt();
+                        scanner.nextLine(); // Consumir salto de línea
+                        if (cantidad > 0) {
+                            break;
+                        } else {
+                            System.out.println("La cantidad debe ser mayor a cero. Intente nuevamente.");
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Entrada inválida. La cantidad debe ser un número entero. Intente nuevamente.");
+                        scanner.nextLine(); // Consumir la entrada inválida
+                    }
+                }
 
                 pedidoDomicilio.put(menuSeleccionado.nombre, cantidad);
                 almacen.actualizarInventario(menuSeleccionado, cantidad);
@@ -551,71 +617,104 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
         // Calcular el costo total
         int costoTotal = 0;
-        for (Map.Entry<String, Integer> entry : pedidoDomicilio.entrySet()) {
-            String alimento = entry.getKey();
-            int cantidad = entry.getValue();
-            for (Menu menu : Menu.values()) {
-                if (menu.nombre.equals(alimento)) {
-                    costoTotal += menu.getPrecio() * cantidad;
+
+        try {
+            // Calcular el costo total del pedido
+            for (Map.Entry<String, Integer> entry : pedidoDomicilio.entrySet()) {
+                String alimento = entry.getKey();
+                int cantidad = entry.getValue();
+
+                boolean alimentoEncontrado = false;
+                for (Menu menu : Menu.values()) {
+                    if (menu.nombre.equals(alimento)) {
+                        costoTotal += menu.getPrecio() * cantidad;
+                        alimentoEncontrado = true;
+                        break;
+                    }
+                }
+
+                if (!alimentoEncontrado) {
+                    System.out.println("Advertencia: El alimento '" + alimento + "' no se encuentra en el menú.");
                 }
             }
-        }
 
-        // Incrementar el costo total en un 5% si el pedido es prioritario
-        if (esPrioritario) {
-            int recargo = (int) (costoTotal * 0.05); // Calcular el 5% del costo total
-            costoTotal += recargo;
-            System.out.println("Se ha aplicado un recargo del 5% por ser un pedido prioritario: " + Utilidad.formatoPrecio(recargo));
-        }
-
-        // Crear el pedido a domicilio
-        Domicilio domicilio = new Domicilio(cliente, pedidoDomicilio, direccion, esPrioritario, costoTotal);
-
-        // Seleccionar el domiciliario adecuado
-        List<Domiciliario> listaDomiciliarios = Domiciliario.getListaDomiciliarios();
-        Domiciliario domiciliario;
-        if (esPrioritario && listaDomiciliarios.size() > 0) {
-            domiciliario = listaDomiciliarios.get(0); // Domiciliario 1
-        } else if (!esPrioritario && listaDomiciliarios.size() > 1) {
-            domiciliario = listaDomiciliarios.get(1); // Domiciliario 2
-        } else {
-            System.out.println("No hay suficientes domiciliarios disponibles para asignar.");
-            return;
-        }
-
-        // Mostrar el resumen del pedido
-        System.out.println("\nResumen del pedido:");
-        System.out.println("Cliente: " + cliente.getNombre());
-        System.out.println("Dirección: " + domicilio.getDireccion());
-        System.out.println("Prioridad: " + (domicilio.isDomicilioPrioritario() ? "Prioritario" : "Normal"));
-        System.out.println("Pedido:");
-        for (Map.Entry<String, Integer> entry : pedidoDomicilio.entrySet()) {
-            System.out.printf("- %s: %d unidad(es)%n", entry.getKey(), entry.getValue());
-        }
-        System.out.println("Costo total: " + Utilidad.formatoPrecio(domicilio.getCosto()));
-        
-        int pago;
-        do {
-            System.out.print("Ingrese el monto con el que desea pagar: ");
-            pago = scanner.nextInt();
-            if (pago < costoTotal) {
-                System.out.println("El monto ingresado es insuficiente. Intente nuevamente.");
+            // Incrementar el costo total en un 5% si el pedido es prioritario
+            if (esPrioritario) {
+                int recargo = (int) (costoTotal * 0.05); // Calcular el 5% del costo total
+                costoTotal += recargo;
+                System.out.println("Se ha aplicado un recargo del 5% por ser un pedido prioritario: " + Utilidad.formatoPrecio(recargo));
             }
-        } while (pago < costoTotal);
 
-        // Calcular el cambio
-        int cambio = pago - costoTotal;
+            // Validar que el costo total no sea cero
+            if (costoTotal <= 0) {
+                System.out.println("El costo total del pedido es inválido. No se puede procesar el pedido.");
+                return;
+            }
 
-        // Seleccionar un domiciliario y entregar el cambio
-        List<Integer> billetesEntregados = domiciliario.entregarCambio(cambio);
+            // Crear el pedido a domicilio
+            Domicilio domicilio = new Domicilio(cliente, pedidoDomicilio, direccion, esPrioritario, costoTotal);
 
-        // Mostrar los billetes entregados
-        System.out.println("Cambio entregado:");
-        for (int billete : billetesEntregados) {
-            System.out.println("- Billete de " + Utilidad.formatoPrecio(billete));
+            // Seleccionar el domiciliario adecuado
+            List<Domiciliario> listaDomiciliarios = Domiciliario.getListaDomiciliarios();
+            if (listaDomiciliarios.isEmpty()) {
+                System.out.println("No hay domiciliarios disponibles para asignar.");
+                return;
+            }
+
+            Domiciliario domiciliario;
+            if (esPrioritario && listaDomiciliarios.size() > 0) {
+                domiciliario = listaDomiciliarios.get(0); // Domiciliario 1
+            } else if (!esPrioritario && listaDomiciliarios.size() > 1) {
+                domiciliario = listaDomiciliarios.get(1); // Domiciliario 2
+            } else {
+                System.out.println("No hay suficientes domiciliarios disponibles para asignar.");
+                return;
+            }
+
+            // Mostrar el resumen del pedido
+            System.out.println("\nResumen del pedido:");
+            System.out.println("Cliente: " + cliente.getNombre());
+            System.out.println("Dirección: " + domicilio.getDireccion());
+            System.out.println("Prioridad: " + (domicilio.isDomicilioPrioritario() ? "Prioritario" : "Normal"));
+            System.out.println("Pedido:");
+            for (Map.Entry<String, Integer> entry : pedidoDomicilio.entrySet()) {
+                System.out.printf("- %s: %d unidad(es)%n", entry.getKey(), entry.getValue());
+            }
+            System.out.println("Costo total: " + Utilidad.formatoPrecio(domicilio.getCosto()));
+
+            // Validar el pago
+            int pago = 0;
+            do {
+                System.out.print("Ingrese el monto con el que desea pagar: ");
+                try {
+                    pago = scanner.nextInt();
+                    if (pago < costoTotal) {
+                        System.out.println("El monto ingresado es insuficiente. Intente nuevamente.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Entrada inválida. Por favor, ingrese un número entero válido.");
+                    scanner.nextLine(); // Consumir entrada inválida
+                }
+            } while (pago < costoTotal);
+
+            // Calcular el cambio
+            int cambio = pago - costoTotal;
+
+            // Entregar el cambio
+            List<Integer> billetesEntregados = domiciliario.entregarCambio(cambio);
+
+            // Mostrar los billetes entregados
+            System.out.println("Cambio entregado:");
+            for (int billete : billetesEntregados) {
+                System.out.println("- Billete de " + Utilidad.formatoPrecio(billete));
+            }
+
+            System.out.println("Gracias por su pedido. El domiciliario " + domiciliario.getNombre() + 
+                               " (" + (domicilio.isDomicilioPrioritario() ? "Prioritario" : "No prioritario") + ")" + 
+                               " se encargará de la entrega.");
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error inesperado al procesar el pedido: " + e.getMessage());
         }
-
-        System.out.println("Gracias por su pedido. El domiciliario " + domiciliario.getNombre() + "(" + (domicilio.isDomicilioPrioritario() ? "Prioritario" : "No prioritario") + ")" + " se encargará de la entrega.");
-    }
-
+    }       
 }
+
