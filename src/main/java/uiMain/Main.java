@@ -411,6 +411,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                                     "2. No." + "\n" +
                                     "Ingrese un número para elegir una opción: ");
                     int eleccion3 = valorEntrada1.nextInt();
+                    valorEntrada1.nextLine();
                     switch (eleccion3) {
                         case 1:
                             System.out.print("Deje su comentario:");
