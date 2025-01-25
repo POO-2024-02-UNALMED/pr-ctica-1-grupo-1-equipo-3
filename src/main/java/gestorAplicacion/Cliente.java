@@ -1,9 +1,11 @@
 package gestorAplicacion;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class Cliente extends Persona implements Serializable{
+    private static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
     private Reserva reserva;
     private Restaurante restaurante;
     private int visitas;
@@ -11,6 +13,7 @@ public class Cliente extends Persona implements Serializable{
 
     //Constructor sin parametros para Cliente
     public Cliente() {
+        clientes.add(this);
     }
 
     public Cliente(String nombre, long identificación, Reserva reserva, Restaurante restaurante) {
@@ -113,5 +116,9 @@ public class Cliente extends Persona implements Serializable{
             }
         }
         System.out.println("Datos ingresados correctamente.");
+    }
+
+    public static ArrayList<Cliente> getClientes() {
+        return clientes;
     }
 }

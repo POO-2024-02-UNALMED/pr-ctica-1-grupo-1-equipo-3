@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.io.Serializable;
 
 public class Restaurante implements Serializable{
-
+    private static ArrayList<Restaurante> restaurante = new ArrayList<Restaurante>();
     private String nombre;
     private double reputacion;
     private int totalCalificaciones;
@@ -24,6 +24,7 @@ public class Restaurante implements Serializable{
     public Restaurante(String nombre) {
         this.nombre = nombre;
         this.ListaClientes = new ArrayList<>();
+        restaurante.add(this);
     }
 
     public Restaurante(String nombre,LocalTime horarioServicio) {
@@ -37,6 +38,7 @@ public class Restaurante implements Serializable{
         this.meseros = new ArrayList<>();
         this.calificacionesRestaurante = new ArrayList<>();
         this.ListaClientes = new ArrayList<>();
+        restaurante.add(this);
     }
     // Registrar visita del cliente
     public void registrarVisita(Cliente cliente) {
@@ -201,6 +203,10 @@ public class Restaurante implements Serializable{
 
     public void setReputacion(double reputacion) {
         this.reputacion = reputacion;
+    }
+
+    public static ArrayList<Restaurante> getRestaurante() {
+        return restaurante;
     }
 
     public  void agregarCliente(Cliente cliente) {

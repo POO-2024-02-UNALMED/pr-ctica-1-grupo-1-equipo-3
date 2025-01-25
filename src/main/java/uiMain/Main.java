@@ -34,7 +34,7 @@ public class Main implements Utilidad {
         Mesero mesero8 = new Mesero(8, "Santiago Ramírez", 5, 30, restaurante);
         Mesero mesero9 = new Mesero(9, "Mariana Gómez", 3, 16, restaurante);
         Mesero mesero10 = new Mesero(10, "Felipe Morales", 4, 19, restaurante);
-        
+
         menuPrincipal(restaurante);
     }
 
@@ -76,8 +76,7 @@ public class Main implements Utilidad {
                     break;
                 case 6:
                     //cerrar el programa
-                    encendido = false;
-                    break;
+                    System.exit(0);
             }
         } while(encendido);
     }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Almacen implements Serializable {
-
+    private static ArrayList<Almacen> almacen = new ArrayList<Almacen>();
     private List<String> nombres;
     private List<Integer> cantidades;
 
@@ -14,6 +14,7 @@ public class Almacen implements Serializable {
         this.nombres = new ArrayList<>();
         this.cantidades = new ArrayList<>();
         inicializarInventario();
+        almacen.add(this);
     }
 
     // Método para inicializar el inventario con cantidades predeterminadas
@@ -96,5 +97,9 @@ public class Almacen implements Serializable {
             System.out.println("No hay suficientes ingredientes para preparar " + menu.nombre);
             return false;
         }
+    }
+
+    public static ArrayList<Almacen> getAlmacen() {
+        return almacen;
     }
 }

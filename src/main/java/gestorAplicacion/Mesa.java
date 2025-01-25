@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 
 public class Mesa implements Serializable{
-
+    private static ArrayList<Mesa> mesas = new ArrayList<Mesa>();
     private int numero;
     private int capacidad;
     private Mesero mesero;
@@ -17,6 +17,7 @@ public class Mesa implements Serializable{
         this.numero = numero;
         this.capacidad = capacidad;
         this.tipo = tipo;
+        mesas.add(this);
         
         if (tipo == "basic") {
         	this.decoracion = "normal";
@@ -91,5 +92,9 @@ public class Mesa implements Serializable{
     
     public String getDecoracion() {
     	return this.decoracion;
+    }
+
+    public static ArrayList<Mesa> getMesas() {
+        return mesas;
     }
 }

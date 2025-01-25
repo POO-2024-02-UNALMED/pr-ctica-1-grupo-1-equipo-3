@@ -1,9 +1,11 @@
 package gestorAplicacion;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Reserva implements Serializable{
-	private static int contador;
+    private static ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+    private static int contador;
 	private int id;
     private Mesa mesa;
     private LocalDateTime fechaHora;
@@ -24,6 +26,7 @@ public class Reserva implements Serializable{
     	this.fechaDeGeneracion = fechaDeGeneracion;
     	this.id = ++contador;
     	this.calcularRecargo();
+        reservas.add(this);
     }
     
     public void calcularRecargo() {
@@ -72,4 +75,7 @@ public class Reserva implements Serializable{
     	this.recargo = recargo;
     }
 
+    public static ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
 }

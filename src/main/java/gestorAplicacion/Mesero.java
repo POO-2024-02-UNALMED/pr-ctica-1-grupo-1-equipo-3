@@ -17,7 +17,7 @@ public class Mesero extends Persona implements Serializable{
         this.totalCalificaciones = totalCalificaciones;
         this.calificaciones = new ArrayList<>();
         this.disponibilidad = new ArrayList<>();
-        Mesero.meseros.add(this);
+        meseros.add(this);
         restaurante.agregarMesero(this);
     }
 

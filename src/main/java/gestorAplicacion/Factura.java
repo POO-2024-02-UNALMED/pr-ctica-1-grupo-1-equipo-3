@@ -1,8 +1,10 @@
 package gestorAplicacion;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Factura implements Serializable{
+    private static ArrayList<Factura> facturas = new ArrayList<Factura>();
     private int descuento;
     private Calificacion calificacion;
     private Mesero mesero;
@@ -17,6 +19,7 @@ public class Factura implements Serializable{
         this.cliente = cliente;
         this.totalFactura = totalFactura;
         this.propina = propina;
+        facturas.add(this);
     }
 
     @Override
@@ -41,6 +44,10 @@ public class Factura implements Serializable{
 
     public void setCalificacion(Calificacion calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public static ArrayList<Factura> getFacturas() {
+        return facturas;
     }
 
     public void calcularPuntosPorGasto() {

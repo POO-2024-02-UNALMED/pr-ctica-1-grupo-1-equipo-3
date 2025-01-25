@@ -1,7 +1,9 @@
 package gestorAplicacion;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Pedido implements Serializable{
+    private static ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
     private int id;
     private Cliente cliente;
     private Calificacion calificacion;
@@ -14,6 +16,7 @@ public class Pedido implements Serializable{
         this.cliente = cliente;
         this.factura = factura;
         this.restaurante = restaurante;
+        pedidos.add(this);
     }
     //Este metodo se encarga de tomar la calificacion del tiempo de espera del cliente para determinar la calificacion general del restaurante
     public void tiempoEsperaRestaurante(Calificacion calificacion){
@@ -45,5 +48,9 @@ public class Pedido implements Serializable{
 
     public void promediarCalificacion(Calificacion calificacion) {
         this.promCalificacion = calificacion.calcularPromCalificacion();
+    }
+
+    public static ArrayList<Pedido> getPedidos() {
+        return pedidos;
     }
 }

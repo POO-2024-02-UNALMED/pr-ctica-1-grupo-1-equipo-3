@@ -1,5 +1,6 @@
 package gestorAplicacion;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 public class Domicilio implements Serializable {
 
     // Atributos
+    private static ArrayList<Domicilio> domicilios = new ArrayList<Domicilio>();
     private Cliente cliente;
     private Map<String, Integer> pedidoDomicilio;
     private String direccion;
@@ -21,6 +23,7 @@ public class Domicilio implements Serializable {
         this.direccion = direccion;
         this.domicilioPrioritario = domicilioPrioritario;
         this.costoEnvio = costoEnvio;
+        domicilios.add(this);
     }
 
     // Getters y Setters
@@ -62,6 +65,10 @@ public class Domicilio implements Serializable {
 
     public void setCostoEnvio(int costoEnvio) {
         this.costoEnvio = costoEnvio;
+    }
+
+    public static ArrayList<Domicilio> getDomicilios() {
+        return domicilios;
     }
 
     // Método para ingresar datos del cliente y del domicilio

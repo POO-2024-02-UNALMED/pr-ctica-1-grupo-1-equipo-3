@@ -1,7 +1,9 @@
 package gestorAplicacion;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Calificacion implements Serializable{
+    private static ArrayList<Calificacion> calificaciones = new ArrayList<Calificacion>();
     private Cliente cliente;
     private Pedido pedido;
     private int calidadComida;
@@ -18,6 +20,7 @@ public class Calificacion implements Serializable{
         this.tiempoEspera = tiempoEspera;
         this.comentario = comentario;
         this.promedioCalificacion = this.calcularPromCalificacion();
+        calificaciones.add(this);
     }
     public double calcularPromCalificacion() {
         return (this.calidadComida + this.calidadMesero + this.tiempoEspera) / 3.0;
@@ -57,6 +60,10 @@ public class Calificacion implements Serializable{
 
     public void setTiempoEspera(int tiempoEspera) {
         this.tiempoEspera = tiempoEspera;
+    }
+
+    public static ArrayList<Calificacion> getCalificaciones() {
+        return calificaciones;
     }
 }
 //private void asignarPuntosPorCalificacion() {

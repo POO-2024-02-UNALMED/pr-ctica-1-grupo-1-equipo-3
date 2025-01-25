@@ -1,6 +1,6 @@
 package gestorAplicacion;
 
-public class Persona {
+public class Persona{
     String nombre;
     long identificacion;
 
