@@ -50,7 +50,7 @@ public class Restaurante implements Serializable{
     	cliente.incrementarVisitas();
     	int visitas = cliente.getVisitasParaDescuentos();
     	int descuento = 0;
-    	if (visitas == 1) {
+    	if (visitas == 5) {
     		descuento = 10; //asigna descuento del 10% cuando el cliente visite 5 veces
     	}
     	else if (visitas == 10) {
