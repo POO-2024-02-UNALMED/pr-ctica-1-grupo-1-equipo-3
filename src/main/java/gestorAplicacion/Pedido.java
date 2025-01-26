@@ -48,7 +48,7 @@ public class Pedido implements Serializable{
     }
 
     public void promediarCalificacion(Calificacion calificacion) {
-        this.promCalificacion = calificacion.calcularPromCalificacion();
+        this.promCalificacion = calificacion.calcularPromCalificacionDomicilio();
     }
 
     public static ArrayList<Pedido> getPedidos() {

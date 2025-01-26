@@ -60,8 +60,8 @@ public class Cliente extends Persona implements Serializable{
         return puntos.get("frecuencia") + puntos.get("gasto");
     }
 
-    public Calificacion calificar(Pedido pedido, int CalidadComida, int calidadMesero, int tiempoEspera, String comentario) {
-        Calificacion nuevaCalificacion = new Calificacion(this, pedido, CalidadComida,calidadMesero,  tiempoEspera,  comentario);
+    public Calificacion calificarPorReserva(Pedido pedido, int calidadComida, int calidadMesero, int tiempoEspera, String comentario) {
+        Calificacion nuevaCalificacion = new Calificacion(this, pedido, calidadComida,calidadMesero,  tiempoEspera,  comentario);
 
         pedido.setCalificacion(nuevaCalificacion); //Se asocia la calificaión al pedido
 
@@ -74,6 +74,22 @@ public class Cliente extends Persona implements Serializable{
         this.reserva.getMesero().actualizarDesempenoMesero(nuevaCalificacion); //se Actualiza el desempeño del mesero
 
         this.reserva.getMesa().getPedido().getFactura().setCalificacion(nuevaCalificacion);
+
+        return nuevaCalificacion;
+    }
+
+    public Calificacion calificarPorDomicilio(Domicilio domicilio, int calidadComida, int tiempoEspera, String comentario){
+        Calificacion nuevaCalificacion = new Calificacion(this, domicilio, calidadComida, tiempoEspera, comentario);
+
+        domicilio.setCalificacion(nuevaCalificacion);  //Se asocia la calificación al domicilio
+
+        domicilio.promediarCalificacion(nuevaCalificacion);  //El domicilio obtiene su calificacion promediada
+
+        restaurante.getCalificacionesRestaurante().add(nuevaCalificacion.getPromedioCalificacion()); // La calificacion se añade a la lista de califiaciones del restaurante
+
+        //this.reserva.getMesero().getCalificaciones().add(calidadMesero); //La calificaión se añáde a lista de calificaciones del domiciliario
+
+        //this.reserva.getMesero().actualizarDesempenoMesero(nuevaCalificacion); //se Actualiza el desempeño del domiciliario
 
         return nuevaCalificacion;
     }

@@ -32,8 +32,8 @@ public class Restaurante implements Serializable{
     public Restaurante(String nombre,LocalTime horarioServicio) {
 
         this.nombre = nombre;
-        this.reputacion = 3.5;
-        this.totalCalificaciones = calificacionesRestaurante.size();
+        this.reputacion = 3.8;
+        this.totalCalificaciones = calificacionesRestaurante.size() + 30;
         this.ingresos = 0;
         this.horarioServicio = horarioServicio;
         this.mesas = new ArrayList<>();
@@ -93,7 +93,8 @@ public class Restaurante implements Serializable{
 
     public void actualizarReputacion(Calificacion calificacion) {
         double sumaAcumalada = this.reputacion * this.totalCalificaciones;
-        reputacion = (Math.round((sumaAcumalada + calificacion.getPromedioCalificacion() / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
+        totalCalificaciones++;
+        this.reputacion = (Math.round(((sumaAcumalada + calificacion.getPromedioCalificacion()) / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
     }
 
   //Retorna un ArrayList con las mesas que estan disponibles para una fecha y hora determinada
