@@ -7,14 +7,16 @@ public class Reserva implements Serializable{
     private static final long serialVersionUID = 1L;
     private static ArrayList<Reserva> reservas = new ArrayList<Reserva>();
     private static int contador;
+    private static final int PRECIO = 30000;
 	private int id;
+	private Factura factura;
     private Mesa mesa;
     private LocalDateTime fechaHora;
     private LocalDateTime fechaDeGeneracion;
     private Mesero mesero;
     private int numeroPersonas;
     private Cliente cliente;
-    private int recargo;
+    private int precioTotal;
 
     public Reserva(Mesa mesa) {
         this.mesa = mesa;
@@ -29,7 +31,9 @@ public class Reserva implements Serializable{
     	this.numeroPersonas = numeroPersonas;
     	this.fechaDeGeneracion = fechaDeGeneracion;
     	this.id = ++contador;
+    	this.precioTotal += PRECIO;
     	this.calcularRecargo();
+    	this.factura = new Factura();
         reservas.add(this);
     }
     
@@ -39,7 +43,7 @@ public class Reserva implements Serializable{
         int mesesDiferencia = (añosDiferencia * 12) + (fechaHora.getMonthValue() - fechaDeGeneracion.getMonthValue());
 
         if (mesesDiferencia > 1) {
-            this.recargo = 50000;
+            this.precioTotal += 50000;
         }
     }
 
@@ -71,12 +75,17 @@ public class Reserva implements Serializable{
     	return this.mesero;
     }
     
-    public int getRecargo() {
-    	return this.recargo;
+    public Factura getFactura() {
+    	return this.factura;
     }
     
-    public void setRecargo(int recargo) {
-    	this.recargo = recargo;
+    public int getPrecioTotal() {
+    	return precioTotal;
+    }
+    
+    //Suma costos al precio total
+    public void sumarPrecio(int precio) {
+    	this.precioTotal += precio;
     }
 
     public static ArrayList<Reserva> getReservas() {

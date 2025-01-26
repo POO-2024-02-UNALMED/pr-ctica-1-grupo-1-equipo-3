@@ -22,6 +22,9 @@ public class Factura implements Serializable{
         this.propina = propina;
         facturas.add(this);
     }
+    
+    public Factura() {
+    }
 
     @Override
     public String toString(){
@@ -49,6 +52,10 @@ public class Factura implements Serializable{
 
     public static ArrayList<Factura> getFacturas() {
         return facturas;
+    }
+    
+    public void sumarValor(int precio) {
+    	this.totalFactura += precio;
     }
 
     public void calcularPuntosPorGasto() {
