@@ -1,8 +1,7 @@
  package uiMain;
-import baseDatos.Serializador;
 import baseDatos.Deserializador;
+import baseDatos.Serializador;
 import gestorAplicacion.*;
-import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -284,8 +283,7 @@ public class Main implements Utilidad {
 public static void gestionarRecompensas(Restaurante restaurante) {
     Scanner scanner = new Scanner(System.in);
         
-        // Deserializar la lista de clientes para cargarla al iniciar
-        
+      
         
         // Solicitar la identificación del cliente
         System.out.print("Ingrese la identificación del cliente que desea buscar: ");
@@ -299,62 +297,110 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         // Recorrer la lista de domicilios para encontrar los datos del cliente
         for (Domicilio d : Domicilio.getDomicilios()) {
             if (d.getCliente().getIdentificacion() == identificacionBuscada) {
-                visitas++; // Contamos la cantidad de veces que ha pedido un domicilio
-                totalGastado += d.getCosto(); // Sumamos el costo total de sus domicilios
-                ultimoDomicilio = d; // Guardamos el último domicilio encontrado
+                visitas++; // 
+                totalGastado += d.getCosto(); 
+                ultimoDomicilio = d; 
             }
         }
     
-        // Si se encuentra un domicilio, preguntar confirmación antes de mostrar el costo
+        
         if (ultimoDomicilio != null) {
             System.out.println("\nÚltimo domicilio del cliente con ID " + identificacionBuscada + ":");
             System.out.println("Cliente: " + ultimoDomicilio.getCliente().getNombre() +
                                " | Dirección: " + ultimoDomicilio.getDireccion() +
                                " | Costo total: $" + ultimoDomicilio.getCosto());
-    
-            // Preguntar si confirma el domicilio
-            System.out.print("\n¿Desea confirmar su domicilio? (si/no): ");
-            String confirmacion = scanner.next();
-    
-            if (confirmacion.equalsIgnoreCase("si")) {
-                System.out.println("\nEl costo total de su pedido es: $" + ultimoDomicilio.getCosto());
-    
-                // Preguntar método de pago
-                System.out.println("Seleccione su método de pago:");
-                System.out.println("1. Tarjeta");
-                System.out.println("2. Efectivo");
-                System.out.print("Ingrese la opción (1 o 2): ");
-                int opcionPago = scanner.nextInt();
-    
-                if (opcionPago == 1) {
-                    System.out.println("\nHa seleccionado pagar con tarjeta. ¡Gracias por su compra!");
-                } else if (opcionPago == 2) {
-                    System.out.println("\nHa seleccionado pagar en efectivo. ¡Gracias por su compra!");
-                } else {
-                    System.out.println("\nOpción no válida. Pago no procesado.");
-                }
+            
+            
+            int opcionUso = -1;
+            while (opcionUso != 0) {  // Repetir hasta que elija una opción válida o salga
+                System.out.println("\n¿Para qué desea utilizar este domicilio?");
+                System.out.println("1. Reserva");
+                System.out.println("2. Servicios exclusivos");
+                System.out.println("3. Productos del menú");
+                System.out.println("0. Salir");
+                System.out.print("Ingrese la opción (1, 2, 3 o 0 para salir): ");
+                opcionUso = scanner.nextInt();
     
                 // Calcular los puntos por costo (1 punto por cada 10 unidades gastadas)
                 int puntosPorCosto = (int) (totalGastado / 10);
-    
+                
                 // Calcular los puntos por visitas (1 punto por cada visita)
                 int puntosPorVisitas = visitas;
-    
+                
                 // Calcular el total de puntos acumulados
                 int puntosTotales = puntosPorCosto + puntosPorVisitas;
+                
+                if (opcionUso == 1) {
+                    System.out.println("\nHa seleccionado utilizarlo para una reserva.");
+                    System.out.print("Ingrese la cantidad de puntos que desea usar para la reserva: ");
+                    int puntosReserva = scanner.nextInt();
+                    if (puntosTotales >= puntosReserva) {
+                        System.out.println("\nA continuación podrá realizar una nueva reserva.");
+                        puntosTotales -= puntosReserva;
+                        break;  // Salir del bucle si la reserva es exitosa
+                    } else {
+                        System.out.println("\nNo tiene suficientes puntos para la reserva.");
+                    }
+                } else if (opcionUso == 2) {
+                    System.out.println("\nHa seleccionado utilizarlo para servicios exclusivos.");
+                    System.out.println("\nMesas deluxe disponibles:");
+                    for (Mesa mesa : restaurante.getMesas()) {
+                        if (mesa.getTipo().equalsIgnoreCase("deluxe")) {
+                            System.out.println("Mesa " + mesa.getNumero() + " | Capacidad: " + mesa.getCapacidad());
+                        }
+                    }
+                    break;  // Salir después de mostrar mesas
+                } else if (opcionUso == 3) {
+                    System.out.println("\nHa seleccionado utilizarlo para productos del menú.");
+                    System.out.println("\nMenú disponible (puntos requeridos):");
+                    for (Menu plato : Menu.values()) {
+                        int puntosRequeridos = (int) (plato.getPrecio() / 1000); // 1 punto por cada 1000 en precio
+                        System.out.println("- " + plato.getNombre() + " | Puntos: " + puntosRequeridos);
+                    }
+                    
+                    System.out.print("Ingrese el nombre del producto que desea canjear: ");
+                    scanner.nextLine(); // Consumir el salto de línea
+                    String productoElegido = scanner.nextLine();
+                    
+                    Menu productoSeleccionado = null;
+                    for (Menu plato : Menu.values()) {
+                        if (plato.getNombre().equalsIgnoreCase(productoElegido)) {
+                            productoSeleccionado = plato;
+                            break;
+                        }
+                    }
+                    
+                    if (productoSeleccionado != null) {
+                        int puntosRequeridos = (int) (productoSeleccionado.getPrecio() / 1000);
+                        if (puntosTotales >= puntosRequeridos) {
+                            System.out.println("\n¡Ha canjeado " + productoSeleccionado.getNombre() + " con éxito!");
+                            puntosTotales -= puntosRequeridos;
+                            break;  // Salir después de canjear el producto
+                        } else {
+                            System.out.println("\nNo tiene suficientes puntos para canjear este producto.");
+                        }
+                    } else {
+                        System.out.println("\nEl producto ingresado no es válido.");
+                    }
+                } else if (opcionUso == 0) {
+                    System.out.println("\nVolviendo al menú principal...");
+                    break;  // Salir si elige salir
+                } else {
+                    System.out.println("\nOpción no válida. Por favor, elija una opción correcta.");
+                }
     
-                // Mostrar desglose de puntos
+                // Mostrar desglose de puntos solo si la opción no fue válida o si no tiene puntos suficientes
                 System.out.println("\nResumen de puntos acumulados:");
                 System.out.println("- Puntos por visitas: " + puntosPorVisitas + " puntos");
                 System.out.println("- Puntos por costo total: " + puntosPorCosto + " puntos");
                 System.out.println("=> Sus puntos acumulados hasta el momento son: " + puntosTotales + " puntos");
-    
-            } else {
-                System.out.println("\nPedido no confirmado. Regresando al menú principal...");
             }
         } else {
             System.out.println("\nNo se encontraron domicilios para la identificación ingresada.");
         }
+        
+        // Volver al menú principal
+        menuPrincipal(restaurante);
     }
 
    
