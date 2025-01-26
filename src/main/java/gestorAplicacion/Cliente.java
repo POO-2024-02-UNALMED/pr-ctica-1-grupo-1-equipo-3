@@ -16,6 +16,7 @@ public class Cliente extends Persona implements Serializable{
     public Cliente(String nombre, long identificacion, Restaurante restaurante) {
         super(nombre, identificacion);
         this.restaurante = restaurante;
+        this.visitas = 0;
         restaurante.agregarCliente(this);
     }
 
@@ -36,12 +37,25 @@ public class Cliente extends Persona implements Serializable{
         this.puntos.put("especiales", 0);
         restaurante.agregarCliente(this);
     }
-    public void incrementarVisitas() {
-        this.visitas++;
-    }
 
-    public int getVisitas() {
+    public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
+	}
+
+    public Reserva getReserva() {
+        return reserva;
+    }
+    
+	public void setVisitas(int visitas) {
+		this.visitas = visitas;
+	}
+
+	public int getVisitas() {
         return visitas;
+    }
+	
+	public void incrementarVisitas() {
+	        this.visitas++;
     }
 
     public void acumularPuntos(String categoria, int cantidad) {
@@ -60,7 +74,13 @@ public class Cliente extends Persona implements Serializable{
         return puntos.get("frecuencia") + puntos.get("gasto");
     }
 
-    public Calificacion calificarPorReserva(Pedido pedido, int calidadComida, int calidadMesero, int tiempoEspera, String comentario) {
+    @Override
+	public String toString() {
+		return "Cliente [ reserva = " + reserva + ", restaurante = " + restaurante + ", visitas = " + visitas + ", puntos = "
+				+ puntos + ", nombre = " + nombre + ", id = " + identificacion + "]";
+	}
+
+	public Calificacion calificarPorReserva(Pedido pedido, int calidadComida, int calidadMesero, int tiempoEspera, String comentario) {
         Calificacion nuevaCalificacion = new Calificacion(this, pedido, calidadComida,calidadMesero,  tiempoEspera,  comentario);
 
         pedido.setCalificacion(nuevaCalificacion); //Se asocia la calificaión al pedido
@@ -106,12 +126,8 @@ public class Cliente extends Persona implements Serializable{
         return identificacion;
     }
 
-    public void setIdentificacion(long identificación) {
+    public void setIdentificacion(long identificacion) {
         super.setIdentificacion(identificacion);
-    }
-
-    public Reserva getReserva() {
-        return reserva;
     }
     
  // Método para mostrar información del cliente

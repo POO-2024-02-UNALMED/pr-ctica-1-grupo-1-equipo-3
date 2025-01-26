@@ -168,12 +168,14 @@ public class Main implements Utilidad {
 					reservaExitosa = false;
 				} else {
 
-					Cliente cliente = new Cliente(nombre, identificacion, reserva, restaurante);
+					Cliente cliente = restaurante.obtenerOcrearCliente(nombre, identificacion);
 
 					// Asignación de clases
 					reserva.setCliente(cliente);
+					cliente.setReserva(reserva);
 
 					//Datos adicionales para mesa "deluxe"
+					System.out.println(reserva.getMesa().getTipo());
 					if (reserva.getMesa().getTipo() == "deluxe") {
 						System.out.println("Ingrese el tipo de decoracion que desea: elegante, rústico o moderno");
 						String estilo = scannerFuncionalidad1.nextLine();
@@ -271,6 +273,8 @@ public class Main implements Utilidad {
 				}
 			}
 		} while (!reservaExitosa);
+		Serializador.serializarListas();
+        System.exit(0);
 	}
    
     //FUNCIONALIDAD 4
@@ -284,7 +288,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
     idCliente = scanner.nextInt();
 
     // Validar si el cliente existe
-    Cliente cliente = restaurante.indicarCliente(idCliente, restaurante);
+    Cliente cliente = restaurante.indicarCliente(idCliente);
     if (cliente == null) {
         System.out.println("Cliente no encontrado. Asegúrese de ingresar una identificación válida.");
         return;
@@ -434,7 +438,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         }
         while (encendido1);
 
-        Cliente cliente = restaurante.indicarCliente(idCliente, restaurante);
+        Cliente cliente = restaurante.indicarCliente(idCliente);
 
         //Estadisticas antes de la calificación
         double calificionActualMesero = cliente.getReserva().getMesero().getPromCalificaciones();
@@ -479,6 +483,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
     }
     
+    //FUNCIONALIDAD 2
     public static void domicilio(Restaurante restaurante) {
         Scanner scanner = new Scanner(System.in);
         Almacen almacen = new Almacen();

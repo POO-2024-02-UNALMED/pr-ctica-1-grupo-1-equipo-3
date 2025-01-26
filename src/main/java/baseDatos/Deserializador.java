@@ -43,5 +43,6 @@ public class Deserializador {
         Deserializador.deserializar(Reserva.getReservas(),"reservas");
         Deserializador.deserializar(Restaurante.getRestaurante(),"restaurante");
         Deserializador.deserializar(Restaurante.getIdConReservas(),"ListaIdConReservas");
+        Deserializador.deserializar(Restaurante.getListaClientes(), "ListaClientes");
     }
 }

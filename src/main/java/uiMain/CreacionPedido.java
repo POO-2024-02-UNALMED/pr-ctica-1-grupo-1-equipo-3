@@ -18,9 +18,12 @@ public class CreacionPedido {
 	if (input.matches("\\d+")) {
 		id = Integer.parseInt(input);
 		
+		System.out.println(Restaurante.getListaClientes());
+		System.out.println(Restaurante.getIdConReservas());
 		boolean reservaEncontrada = Restaurante.BuscarId(id); //llama el metodo BuscarId para confirmar si está o no en la lista de reservas
 		if (reservaEncontrada==true) { //Si el id se encuentra
 			//...
+			System.out.println("idendificacion encontrada "+id);
 			break;
 			
 		} else { //Si el id no se encuentra

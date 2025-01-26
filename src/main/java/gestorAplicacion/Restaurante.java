@@ -1,10 +1,8 @@
 package gestorAplicacion;
 import java.util.ArrayList;
 import java.util.Comparator;
-
 import baseDatos.Serializador;
 import uiMain.CreacionPedido;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.io.Serializable;
@@ -21,11 +19,11 @@ public class Restaurante implements Serializable{
     private static ArrayList<Integer> idConReservas = new ArrayList<>(); //Lista donde se guardaran los id de las reservas exitosas y se utilizara para confirmar la existencia de la reserva antes de hacer pedido
 	private ArrayList<Mesero> meseros;
     private ArrayList<Double> calificacionesRestaurante = new ArrayList<>();
-    private ArrayList<Cliente> ListaClientes;
+    private static ArrayList<Cliente> ListaClientes = new ArrayList<Cliente>();
 
     public Restaurante(String nombre) {
         this.nombre = nombre;
-        this.ListaClientes = new ArrayList<>();
+        Restaurante.ListaClientes = new ArrayList<>();
         restaurante.add(this);
     }
 
@@ -39,7 +37,7 @@ public class Restaurante implements Serializable{
         this.mesas = new ArrayList<>();
         this.meseros = new ArrayList<>();
         this.calificacionesRestaurante = new ArrayList<>();
-        this.ListaClientes = new ArrayList<>();
+        Restaurante.ListaClientes = new ArrayList<>(); 
         restaurante.add(this);
     }
     // Registrar visita del cliente
@@ -214,7 +212,7 @@ public class Restaurante implements Serializable{
         return calificacionesRestaurante;
     }
 
-    public ArrayList<Cliente> getListaClientes() {
+    public static ArrayList<Cliente> getListaClientes() {
         return ListaClientes;
     }
 
@@ -227,12 +225,12 @@ public class Restaurante implements Serializable{
     }
 
     public  void agregarCliente(Cliente cliente) {
-        this.getListaClientes().add(cliente);
+        Restaurante.getListaClientes().add(cliente);
     }
     
     //valida si un cliente está en la lista de los clientes del restaurante por medio del id
-    public boolean validarCliente(int id, Restaurante restaurante) {
-        for (Cliente cliente : restaurante.getListaClientes()) {
+    public boolean validarCliente(long id, Restaurante restaurante) {
+        for (Cliente cliente : Restaurante.getListaClientes()) {
             if (cliente.getIdentificacion() == id) {
                 return true;
             }
@@ -240,9 +238,23 @@ public class Restaurante implements Serializable{
         return false;
     }
 
-    //Retorna un cliente según su id
-    public Cliente indicarCliente(int id, Restaurante restaurante){
-        for (Cliente cliente : restaurante.getListaClientes()) {
+    //Crea clientes nuevos y evita repetir clientes ya existentes
+    public Cliente obtenerOcrearCliente(String nombre, long id) {
+        Cliente clienteExistente = indicarCliente(id);
+
+        if (clienteExistente != null) { //si el cliente ya existe
+            System.out.println("Cliente encontrado: " + clienteExistente.nombre);
+            return clienteExistente;
+        } else { //si el cliente es nuevo
+            Cliente nuevoCliente = new Cliente(nombre, id, this);
+            System.out.println("Cliente creado: " + nuevoCliente.nombre);
+            return nuevoCliente;
+        }
+    }
+    
+    //Verifica si un cliente existe y lo retorna según su id
+    public Cliente indicarCliente(long id){
+        for (Cliente cliente : getListaClientes()) {
             if (cliente.getIdentificacion() == id) {
                 return cliente;
             }
