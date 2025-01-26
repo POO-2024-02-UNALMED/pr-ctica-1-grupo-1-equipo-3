@@ -107,8 +107,8 @@ public class Main implements Utilidad {
 
 			//Validación fecha y hora con formato correcto.
 			do {
-				System.out.println(
-						"Fecha de la reserva (Por favor, ingrese la fecha en formato dia/mes/año, incluyendo el '/'): ");
+				System.out.println("Fecha de la reserva (Por favor, ingrese la fecha en formato dia/mes/año, incluyendo el '/'): ");
+				System.out.println("Si su fecha supera el mes a partir de hoy, tendrá un costo adicional de $50.000");
 				fecha = scannerFuncionalidad1.nextLine();
 
 				System.out.println("Hora de la reserva (Por favor, ingrese la hora en formato militar así; hora:minutos, incluyendo el ':'): ");
@@ -158,6 +158,7 @@ public class Main implements Utilidad {
 				}
 
 				LocalDateTime fechaActual = LocalDateTime.now();
+				//Creación Reserva
 				Reserva reserva = new Reserva(mesaEscogida, fechaReserva, numeroPersonas, fechaActual);
 				boolean meseroAsignado = mesaEscogida.reservar(reserva);
 
@@ -188,8 +189,8 @@ public class Main implements Utilidad {
 							boolean validacion = mesaEscogida.estaDisponible(fechaReserva.plusHours(1));
 							if (validacion == true) {
 								System.out.println("Hora añadida con éxito");
-								int recargoReserva = reserva.getRecargo();
-								reserva.setRecargo(recargoReserva + 30000);
+								int recargoReserva = 30000;
+								reserva.sumarPrecio(recargoReserva);
 							} else {
 								System.out.println("Lo sentimos, la hora adicional interrumpe otra reserva, la decoración será cortesía de la casa");
 							}
@@ -256,7 +257,7 @@ public class Main implements Utilidad {
 					System.out.println("Fecha: " + reserva.getFechaHora());
 					System.out.println("Numero de Mesa: " + reserva.getMesa().getNumero());
 					System.out.println("Mesero Asignado: $" + reserva.getMesa().getMesero().getNombre());
-					System.out.println("Recargos: $" + reserva.getRecargo());
+					System.out.println("Total: $" + reserva.getPrecioTotal());
 					System.out.println("==============================");
 					System.out.println("¿Desea confirmar su reserva(S)");
 					System.out.println("¿Desea volver a ingresar los datos?(N)");
@@ -264,6 +265,7 @@ public class Main implements Utilidad {
 
 					if (confirmacion.equals("S")) {
 						System.out.println("Reserva realizada con éxito, gracias por Reservar en "+restaurante.getNombre());
+						reserva.getFactura().sumarValor(reserva.getPrecioTotal()); //Suma el valor de la reserva a la factura
 						reservaExitosa = true;
 						restaurante.addIdConReserva(identificacion); // agregar id a la lista de reservas
 					} else {
