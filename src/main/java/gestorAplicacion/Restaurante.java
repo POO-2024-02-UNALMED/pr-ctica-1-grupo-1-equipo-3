@@ -101,7 +101,7 @@ public class Restaurante implements Serializable{
         return false;
     }
 
-
+    //Actualiza la reputacion del restaurante respecto a una nueva calificacion
     public void actualizarReputacion(Calificacion calificacion) {
         double sumaAcumalada = this.reputacion * this.totalCalificaciones;
         totalCalificaciones++;

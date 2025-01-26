@@ -84,7 +84,7 @@ public class Domiciliario extends Persona implements Serializable {
     public void actualizarDesempenoDomiciliario(Calificacion calificacion){
         double sumaAcumalada = this.promCalificaciones * this.totalCalificaciones;
         totalCalificaciones++;
-        this.promCalificaciones = (Math.round(((sumaAcumalada + calificacion.getCalidadMesero()) / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
+        this.promCalificaciones = (Math.round(((sumaAcumalada + calificacion.getTiempoEspera()) / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
     }
 
     // Getter para obtener la lista de domiciliarios
@@ -100,5 +100,10 @@ public class Domiciliario extends Persona implements Serializable {
     // Setter para establecer el nombre del domiciliario
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    // Getter para obtner la lista de califiaciones del domiciliario
+    public ArrayList<Integer> getCalificaciones() {
+        return calificaciones;
     }
 }

@@ -130,9 +130,9 @@ public class Cliente extends Persona implements Serializable{
 
         restaurante.getCalificacionesRestaurante().add(nuevaCalificacion.getPromedioCalificacion()); // La calificacion se añade a la lista de califiaciones del restaurante
 
-        //this.reserva.getMesero().getCalificaciones().add(calidadMesero); //La calificaión se añáde a lista de calificaciones del domiciliario
+        domicilio.getDomiciliario().getCalificaciones().add(tiempoEspera); //La calificaión se añáde a lista de calificaciones del domiciliario
 
-        //this.reserva.getMesero().actualizarDesempenoMesero(nuevaCalificacion); //se Actualiza el desempeño del domiciliario
+        domicilio.getDomiciliario().actualizarDesempenoDomiciliario(nuevaCalificacion); //se Actualiza el desempeño del domiciliario
 
         return nuevaCalificacion;
     }
@@ -183,5 +183,13 @@ public class Cliente extends Persona implements Serializable{
 
     public static ArrayList<Cliente> getClientes() {
         return clientes;
+    }
+
+    // Metodo para saber si un clientes tiene reserva (true) o es de un domicilio(false)
+    public boolean tipoCliente (){
+        if(this.getReserva() != null){
+            return true;
+        }
+        return false;
     }
 }

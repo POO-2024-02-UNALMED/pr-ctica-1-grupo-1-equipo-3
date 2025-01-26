@@ -59,6 +59,16 @@ public class Mesero extends Persona implements Serializable{
         String stringPromCalificaciones = Double.toString(this.getPromCalificaciones());
         return "Nombre: " + this.getNombre() + ", Calificación: " + stringPromCalificaciones;
     }
+
+    //metodo que retorna la posicion en prioridad del mesero para ser escogido
+    public static int posicionPrioridadMesero(Mesero mesero){
+        for (int i = 0; i < meseros.size(); i++) {
+            if(meseros.get(i).equals(mesero)){
+                return i;
+            }
+        }
+        return -1;
+    }
     
     public long getIdentificacion() {
         return super.getIdentificacion();

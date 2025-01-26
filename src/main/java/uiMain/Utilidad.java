@@ -3,6 +3,8 @@
 
 
 package uiMain;
+import gestorAplicacion.Calificacion;
+
 import java.util.Scanner;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -33,6 +35,29 @@ public interface Utilidad {
     public static String formatoPrecio(double precio) {
         NumberFormat formato = NumberFormat.getNumberInstance(Locale.getDefault());
         return formato.format(precio);
+    }
+
+    public static int aplicarDescuento(Calificacion calificacion, int totalFactura) {
+        if (calificacion != null) {
+            double promedio  = calificacion.getPromedioCalificacion();
+            int descuento;
+
+            if (promedio <= 2) {
+                descuento = 10;  // 10% de descuento
+                totalFactura -= (totalFactura * descuento) / 100;
+                return totalFactura;
+            } else if (promedio <=3) {
+                descuento = 5;   // 5% de descuento
+                totalFactura -= (totalFactura * descuento) / 100;
+                return totalFactura;
+            } else {
+                descuento = 0;   // sin descuento
+                totalFactura -= (totalFactura * descuento) / 100;
+                return totalFactura;
+            }
+
+        }
+        return 0;
     }
 }
 
