@@ -1,9 +1,6 @@
 package gestorAplicacion;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
 import java.io.Serializable;
 
 public class Domicilio implements Serializable {
@@ -12,7 +9,7 @@ public class Domicilio implements Serializable {
     private static final long serialVersionUID = 1L;
     private static ArrayList<Domicilio> domicilios = new ArrayList<Domicilio>();
     private Cliente cliente;
-    private Map<String, Integer> pedidoDomicilio;
+    private ArrayList<PedidoItem> pedidoDomicilio; // Cambiado a ArrayList
     private String direccion;
     private boolean domicilioPrioritario;
     private int costoEnvio;
@@ -21,7 +18,7 @@ public class Domicilio implements Serializable {
     private Domiciliario domiciliario;
 
     // Constructor
-    public Domicilio(Cliente cliente, Map<String, Integer> pedidoDomicilio, String direccion, boolean domicilioPrioritario, int costoEnvio, Domiciliario domiciliario) {
+    public Domicilio(Cliente cliente, ArrayList<PedidoItem> pedidoDomicilio, String direccion, boolean domicilioPrioritario, int costoEnvio, Domiciliario domiciliario) {
         this.cliente = cliente;
         this.pedidoDomicilio = pedidoDomicilio;
         this.direccion = direccion;
@@ -44,11 +41,11 @@ public class Domicilio implements Serializable {
         this.cliente = cliente;
     }
 
-    public Map<String, Integer> getPedidoDomicilio() {
+    public ArrayList<PedidoItem> getPedidoDomicilio() {
         return pedidoDomicilio;
     }
 
-    public void setPedidoDomicilio(Map<String, Integer> pedidoDomicilio) {
+    public void setPedidoDomicilio(ArrayList<PedidoItem> pedidoDomicilio) {
         this.pedidoDomicilio = pedidoDomicilio;
     }
 
@@ -95,7 +92,7 @@ public class Domicilio implements Serializable {
     public void setPromCalificacion(double promCalificacion) {
         this.promCalificacion = promCalificacion;
     }
-    
+
     public Domiciliario getDomiciliario() {
         return domiciliario;
     }

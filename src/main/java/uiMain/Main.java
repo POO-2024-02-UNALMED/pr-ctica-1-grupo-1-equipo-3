@@ -672,9 +672,9 @@ public static void gestionarRecompensas(Restaurante restaurante) {
              System.out.println("No hay suficientes domiciliarios disponibles para asignar.");
              return;
          }
-
+         ArrayList<PedidoItem> pedidoItems = new ArrayList<>();
          // Crear el pedido a domicilio después de asignar el domiciliario
-         Domicilio domicilio = new Domicilio(cliente, pedidoDomicilio, direccion, esPrioritario, costoTotal, domiciliario);
+         Domicilio domicilio = new Domicilio(cliente, pedidoItems, direccion, esPrioritario, costoTotal, domiciliario);
          ArrayList<Domicilio> domicilios = Domicilio.getDomicilios();
         domicilios.add(domicilio);
         Serializador.serializarListas();
