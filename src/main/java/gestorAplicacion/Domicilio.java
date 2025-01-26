@@ -34,6 +34,25 @@ public class Domicilio implements Serializable {
     public void promediarCalificacion(Calificacion calificacion) {
         this.promCalificacion = calificacion.calcularPromCalificacion();
     }
+    //Metodo encagado de retonar un domicilio con base a un iD
+    public static Domicilio indicarDomicilio(long idCliente) {
+        for(int i = 0; i < domicilios.size(); i++){
+            if (domicilios.get(i).cliente.getIdentificacion() == idCliente){
+                return domicilios.get(i);
+            }
+        }
+        return null;
+    }
+
+    //Metodo encagado de retonar un cliente que tiene un domicilio con base a su iD
+    public static Cliente indicarCliente(long idCliente) {
+        for(int i = 0; i < domicilios.size(); i++){
+            if (domicilios.get(i).cliente.getIdentificacion() == idCliente){
+                return domicilios.get(i).cliente;
+            }
+        }
+        return null;
+    }
 
     // Getters y Setters
     public Cliente getCliente() {

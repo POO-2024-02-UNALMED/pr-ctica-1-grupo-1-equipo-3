@@ -95,7 +95,7 @@ public class Factura implements Serializable{
     }
 
     //Este metodo se encarga de organizar la lista de meseros respecto a su califacion en la factura
-    public void prioridadMeseros() {
+    public void prioridadMeseros(Restaurante restaurante) {
         restaurante.getMeseros().sort(new Comparator<Mesero>() {
             @Override
             public int compare(Mesero o1, Mesero o2) {
