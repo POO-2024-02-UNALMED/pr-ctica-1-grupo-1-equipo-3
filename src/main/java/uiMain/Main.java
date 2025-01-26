@@ -464,6 +464,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         Mesero.organizarMeserosPorCalificacion();
 
         if (cliente.getReserva().getMesa().tipoMesa()) {  //Valida si la mesa es deluxe
+            System.out.printf("¡Hola %s! Bienvenido al apartado exclusivo para clientes premium.%n", cliente.getNombre());
             System.out.print("Por los beneficios de haber estado en una de nuestras mesas deluxe," + "\n" +
                                 "se le proporciona la posibilidad de visualizar el impacto de su califiacación." + "\n" +
                                 "¿Desea verlo?" + "\n" +
@@ -473,13 +474,15 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                                 int eleccion4 = valorEntrada1.nextInt();
                                 switch (eleccion4) {
                                     case 1:
-                                        System.out.println("                  ANTES DE SU CALIFIACION     DESPUES DE SU CALIFACION");
+                                        System.out.println("                  ANTES DE SU CALIFICACIÓN     DESPUES DE SU CALIFICACIÓN");
                                         System.out.printf("Restaurante:              %.1f                          %.1f%n",reputacionActualRestaurante,restaurante.getReputacion());
                                         System.out.printf("Mesero:                   %.1f                          %.1f%n",calificionActualMesero,cliente.getReserva().getMesero().getPromCalificaciones());
 
                                     case 2:
                                         break;
                                 }
+        } else {
+            System.out.println("Consulta con nuestro equipo cómo acceder a una mesa deluxe en tu próxima visita y obtener tu apartado exclusivo.");
         }
 
 

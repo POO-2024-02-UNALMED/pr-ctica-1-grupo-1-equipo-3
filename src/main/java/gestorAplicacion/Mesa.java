@@ -62,7 +62,7 @@ public class Mesa implements Serializable{
     }
 
     public Boolean tipoMesa(){
-        if(this.tipo == "deluxe") {
+        if(this.tipo.equals("deluxe")) {
             return true;
         }
         return false;
