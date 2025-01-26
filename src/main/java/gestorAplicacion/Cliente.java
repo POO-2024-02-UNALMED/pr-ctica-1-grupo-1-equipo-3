@@ -10,9 +10,11 @@ public class Cliente extends Persona implements Serializable{
     private Reserva reserva;
     private Restaurante restaurante;
     private int visitas;
+    private int visitasParaDescuentos;
+    private int DescuentoPorVisitas;
     private HashMap<String, Integer> puntos;
-    
-    //Constructor con 3 paramentros para cliente
+
+	//Constructor con 3 paramentros para cliente
     public Cliente(String nombre, long identificacion, Restaurante restaurante) {
         super(nombre, identificacion);
         this.restaurante = restaurante;
@@ -54,8 +56,29 @@ public class Cliente extends Persona implements Serializable{
         return visitas;
     }
 	
+	public int getVisitasParaDescuentos() {
+		return visitasParaDescuentos;
+	}
+
+    public void setVisitasParaDescuentos(int visitasParaDescuentos) {
+		this.visitasParaDescuentos = visitasParaDescuentos;
+	}
+    
+	public int getDescuentoPorVisitas() {
+		return DescuentoPorVisitas;
+	}
+
+	public void setDescuentoPorVisitas(int descuentoPorVisitas) {
+		DescuentoPorVisitas = descuentoPorVisitas;
+	}
+
 	public void incrementarVisitas() {
 	        this.visitas++;
+	        this.visitasParaDescuentos++; //visitas necesarias para obtener descuentos adicionales
+	    	int visitas = this.getVisitasParaDescuentos();
+	    	if (visitas == 11) {
+	    		this.setVisitasParaDescuentos(1); //reiniciar el conteo al sobrepasar 10 visitas
+	    	}
     }
 
     public void acumularPuntos(String categoria, int cantidad) {

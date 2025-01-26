@@ -5,29 +5,36 @@ import java.util.ArrayList;
 public class Pedido implements Serializable{
     private static final long serialVersionUID = 1L;
     private static ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
-    private int id;
-    private Cliente cliente;
+    private Cliente titular;
     private Calificacion calificacion;
     private double promCalificacion;
     private Restaurante restaurante;
     private Factura factura;
 
-    public Pedido(int id, Cliente cliente, Factura factura, Restaurante restaurante) {
-        this.id = id;
-        this.cliente = cliente;
+    public Pedido(Cliente cliente, Factura factura, Restaurante restaurante) {
+        this.titular = cliente;
         this.factura = factura;
         this.restaurante = restaurante;
         pedidos.add(this);
     }
-    //Este metodo se encarga de tomar la calificacion del tiempo de espera del cliente para determinar la calificacion general del restaurante
+    public Pedido() {
+		// TODO Auto-generated constructor stub
+	}
+	//Este metodo se encarga de tomar la calificacion del tiempo de espera del cliente para determinar la calificacion general del restaurante
     public void tiempoEsperaRestaurante(Calificacion calificacion){
         double tiempoEspera = calificacion.getTiempoEspera();
         if (tiempoEspera < 3) {
             this.restaurante.setReputacion(this.restaurante.getReputacion()-0.1);
         }
     }
-
-    public void setCalificacion(Calificacion calificacion) {
+    
+    public Cliente getTitular() {
+		return titular;
+	}
+	public void setTitular(Cliente titular) {
+		this.titular = titular;
+	}
+	public void setCalificacion(Calificacion calificacion) {
         this.calificacion = calificacion;
     }
 

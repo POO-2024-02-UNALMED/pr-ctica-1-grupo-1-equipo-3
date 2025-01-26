@@ -45,6 +45,19 @@ public class Restaurante implements Serializable{
         cliente.incrementarVisitas();
         calcularPuntosPorFrecuencia(cliente);
     }
+    //Determinar descuentos por numero de visitas 
+    public int DeterminarDescuentos(Cliente cliente) {
+    	cliente.incrementarVisitas();
+    	int visitas = cliente.getVisitasParaDescuentos();
+    	int descuento = 0;
+    	if (visitas == 1) {
+    		descuento = 10; //asigna descuento del 10% cuando el cliente visite 5 veces
+    	}
+    	else if (visitas == 10) {
+    	   descuento = 15; //asigna descuento del 10% cuando el cliente visite 10 veces
+    	}
+    	return descuento;
+    }
 
     // Calcular puntos por frecuencia de visita
     private void calcularPuntosPorFrecuencia(Cliente cliente) {
@@ -237,7 +250,15 @@ public class Restaurante implements Serializable{
         }
         return false;
     }
-
+    ////valida si un cliente está en la lista de los clientes del restaurante por medio del id y lo retorna
+    public static Cliente retonarCliente(long id) {
+        for (Cliente cliente : Restaurante.getListaClientes()) {
+            if (cliente.getIdentificacion() == id) {
+                return cliente; }
+        }
+		return null;
+    }
+    
     //Crea clientes nuevos y evita repetir clientes ya existentes
     public Cliente obtenerOcrearCliente(String nombre, long id) {
         Cliente clienteExistente = indicarCliente(id);
