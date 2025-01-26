@@ -8,15 +8,20 @@ public class Domiciliario extends Persona implements Serializable {
     private static final long serialVersionUID = 1L;
     public static ArrayList<Domiciliario> listaDomiciliarios = new ArrayList<Domiciliario>();
     private List<Integer> billetera;
+    private double promCalificaciones;
+    private int totalCalificaciones;
+    private ArrayList<Integer> calificaciones;
 
 
 
     // Constructor
-    public Domiciliario(String nombre, Long identificacion) {
+    public Domiciliario(String nombre, Long identificacion, double promCalificaciones, int totalCalificaciones) {
         super(nombre, identificacion);
         this.billetera = new ArrayList<>();
         inicializarBilletera();
         listaDomiciliarios.add(this);
+        this.promCalificaciones = promCalificaciones;
+        this.totalCalificaciones = totalCalificaciones;
     }
 
     // Método para inicializar la billetera con billetes predeterminados
@@ -66,6 +71,12 @@ public class Domiciliario extends Persona implements Serializable {
         }
 
         return billetesEntregados;
+    }
+
+    public void actualizarDesempenoDomiciliario(Calificacion calificacion){
+        double sumaAcumalada = this.promCalificaciones * this.totalCalificaciones;
+        totalCalificaciones++;
+        this.promCalificaciones = (Math.round(((sumaAcumalada + calificacion.getCalidadMesero()) / totalCalificaciones) * 10.0))/10.0; //prom nuevo en una cifra decimal
     }
 
     // Getter para obtener la lista de domiciliarios

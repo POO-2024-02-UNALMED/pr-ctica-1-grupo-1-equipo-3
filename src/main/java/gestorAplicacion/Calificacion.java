@@ -12,6 +12,7 @@ public class Calificacion implements Serializable{
     private int tiempoEspera;
     private String comentario;
     private double promedioCalificacion;
+    private Domicilio domicilio;
 
     public Calificacion(Cliente cliente, Pedido pedido, int calidadComida, int calidadMesero, int tiempoEspera, String comentario) {
         this.cliente = cliente;
@@ -23,8 +24,21 @@ public class Calificacion implements Serializable{
         this.promedioCalificacion = this.calcularPromCalificacion();
         calificaciones.add(this);
     }
+    public Calificacion(Cliente cliente, Domicilio domicilio, int calidadComida, int tiempoEspera, String comentario) {
+        this.cliente = cliente;
+        this.domicilio = domicilio;
+        this.calidadComida = calidadComida;
+        this.tiempoEspera = tiempoEspera;
+        this.comentario = comentario;
+        this.promedioCalificacion = this.calcularPromCalificacionDomicilio();
+        calificaciones.add(this);
+    }
     public double calcularPromCalificacion() {
         return (this.calidadComida + this.calidadMesero + this.tiempoEspera) / 3.0;
+    }
+
+    public double calcularPromCalificacionDomicilio() {
+        return (this.calidadComida + this.tiempoEspera) / 2.0;
     }
 
     public double getPromedioCalificacion() {

@@ -16,6 +16,8 @@ public class Domicilio implements Serializable {
     private String direccion;
     private boolean domicilioPrioritario;
     private int costoEnvio;
+    private Calificacion calificacion;
+    private double promCalificacion;
 
     // Constructor
     public Domicilio(Cliente cliente, Map<String, Integer> pedidoDomicilio, String direccion, boolean domicilioPrioritario, int costoEnvio) {
@@ -25,6 +27,10 @@ public class Domicilio implements Serializable {
         this.domicilioPrioritario = domicilioPrioritario;
         this.costoEnvio = costoEnvio;
         domicilios.add(this);
+    }
+
+    public void promediarCalificacion(Calificacion calificacion) {
+        this.promCalificacion = calificacion.calcularPromCalificacion();
     }
 
     // Getters y Setters
@@ -70,5 +76,21 @@ public class Domicilio implements Serializable {
 
     public static ArrayList<Domicilio> getDomicilios() {
         return domicilios;
+    }
+
+    public Calificacion getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(Calificacion calificacion) {
+        this.calificacion = calificacion;
+    }
+
+    public double getPromCalificacion() {
+        return promCalificacion;
+    }
+
+    public void setPromCalificacion(double promCalificacion) {
+        this.promCalificacion = promCalificacion;
     }
 }

@@ -21,9 +21,9 @@ public class Main implements Utilidad {
     
     public static void inicializarDomiciliarios() {
         if (Domiciliario.getListaDomiciliarios().isEmpty()) {
-            new Domiciliario("Carlos", (long) 123);
-            new Domiciliario("María", (long) 456);
-            new Domiciliario("Luis", (long) 789);
+            new Domiciliario("Carlos", (long) 123, 4, 8);
+            new Domiciliario("María", (long) 456, 3, 12);
+            new Domiciliario("Luis", (long) 789, 5, 3);
             System.out.println("Se han inicializado los domiciliarios por defecto.");
         }
     }
@@ -453,15 +453,17 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
 
         //Calificacion y actualización de estadisticas
-        Calificacion calificacion = cliente.calificar((cliente.getReserva().getMesa().getPedido()), calidadComida, calidadMesero, tiempoEspera, comentario);
+        Calificacion calificacion = cliente.calificarPorReserva((cliente.getReserva().getMesa().getPedido()), calidadComida, calidadMesero, tiempoEspera, comentario);
 
         cliente.getReserva().getMesa().getPedido().tiempoEsperaRestaurante(calificacion);
 
         cliente.getReserva().getMesa().getPedido().getFactura().aplicarDescuento(calificacion);
 
+        restaurante.actualizarReputacion(calificacion);
+
         System.out.println(cliente.getReserva().getMesa().getPedido().getFactura());
 
-        Mesero.organizarMeserosPorCalificacion();
+        cliente.getReserva().getMesa().getPedido().getFactura().prioridadMeseros();
 
         if (cliente.getReserva().getMesa().tipoMesa()) {  //Valida si la mesa es deluxe
             System.out.printf("¡Hola %s! Bienvenido al apartado exclusivo para clientes premium.%n", cliente.getNombre());
