@@ -280,58 +280,78 @@ public class Main implements Utilidad {
 public static void gestionarRecompensas(Restaurante restaurante) {
     Scanner scanner = new Scanner(System.in);
         
-    // Deserializar la lista de clientes para cargarla al iniciar
-   
+        // Deserializar la lista de clientes para cargarla al iniciar
+        
+        
+        // Solicitar la identificación del cliente
+        System.out.print("Ingrese la identificación del cliente que desea buscar: ");
+        long identificacionBuscada = scanner.nextLong();
+        
+        // Variables para calcular puntos
+        Domicilio ultimoDomicilio = null;
+        int visitas = 0;
+        double totalGastado = 0;
     
-    // Solicitar la identificación del cliente
-    System.out.print("Ingrese la identificación del cliente que desea buscar: ");
-    long identificacionBuscada = scanner.nextLong();
+        // Recorrer la lista de domicilios para encontrar los datos del cliente
+        for (Domicilio d : Domicilio.getDomicilios()) {
+            if (d.getCliente().getIdentificacion() == identificacionBuscada) {
+                visitas++; // Contamos la cantidad de veces que ha pedido un domicilio
+                totalGastado += d.getCosto(); // Sumamos el costo total de sus domicilios
+                ultimoDomicilio = d; // Guardamos el último domicilio encontrado
+            }
+        }
     
-    // Contar cuántas veces aparece la identificación en la lista de clientes
-    int contador = 0;
-    for (Cliente c : Cliente.getClientes()) {
-        if (c.getIdentificacion() == identificacionBuscada) {
-            contador++;
+        // Si se encuentra un domicilio, preguntar confirmación antes de mostrar el costo
+        if (ultimoDomicilio != null) {
+            System.out.println("\nÚltimo domicilio del cliente con ID " + identificacionBuscada + ":");
+            System.out.println("Cliente: " + ultimoDomicilio.getCliente().getNombre() +
+                               " | Dirección: " + ultimoDomicilio.getDireccion() +
+                               " | Costo total: $" + ultimoDomicilio.getCosto());
+    
+            // Preguntar si confirma el domicilio
+            System.out.print("\n¿Desea confirmar su domicilio? (si/no): ");
+            String confirmacion = scanner.next();
+    
+            if (confirmacion.equalsIgnoreCase("si")) {
+                System.out.println("\nEl costo total de su pedido es: $" + ultimoDomicilio.getCosto());
+    
+                // Preguntar método de pago
+                System.out.println("Seleccione su método de pago:");
+                System.out.println("1. Tarjeta");
+                System.out.println("2. Efectivo");
+                System.out.print("Ingrese la opción (1 o 2): ");
+                int opcionPago = scanner.nextInt();
+    
+                if (opcionPago == 1) {
+                    System.out.println("\nHa seleccionado pagar con tarjeta. ¡Gracias por su compra!");
+                } else if (opcionPago == 2) {
+                    System.out.println("\nHa seleccionado pagar en efectivo. ¡Gracias por su compra!");
+                } else {
+                    System.out.println("\nOpción no válida. Pago no procesado.");
+                }
+    
+                // Calcular los puntos por costo (1 punto por cada 10 unidades gastadas)
+                int puntosPorCosto = (int) (totalGastado / 10);
+    
+                // Calcular los puntos por visitas (1 punto por cada visita)
+                int puntosPorVisitas = visitas;
+    
+                // Calcular el total de puntos acumulados
+                int puntosTotales = puntosPorCosto + puntosPorVisitas;
+    
+                // Mostrar desglose de puntos
+                System.out.println("\nResumen de puntos acumulados:");
+                System.out.println("- Puntos por visitas: " + puntosPorVisitas + " puntos");
+                System.out.println("- Puntos por costo total: " + puntosPorCosto + " puntos");
+                System.out.println("=> Sus puntos acumulados hasta el momento son: " + puntosTotales + " puntos");
+    
+            } else {
+                System.out.println("\nPedido no confirmado. Regresando al menú principal...");
+            }
+        } else {
+            System.out.println("\nNo se encontraron domicilios para la identificación ingresada.");
         }
     }
-    
-    // Verificar si se encontró la identificación y cuántas veces aparece
-    if (contador > 0) {
-        System.out.println("La identificación " + identificacionBuscada + " aparece " + contador + " veces en la lista de clientes.");
-        
-        // Asignar puntos si la identificación aparece más de una vez
-        int puntosGanadosPorFrecuencia = 0;
-        if (contador > 1) {
-            puntosGanadosPorFrecuencia = contador * 10; // Se asignan 10 puntos por cada vez que aparece la identificación
-            System.out.println("¡El cliente ha ganado " + puntosGanadosPorFrecuencia + " puntos por la frecuencia de aparición!");
-        }
-        
-        // Pedir el total de la factura para asignar puntos adicionales
-        System.out.print("Ingrese el total de la factura del cliente: $");
-        double totalFactura = scanner.nextDouble();
-        
-        // Calcular los puntos adicionales basados en el total de la factura
-        int puntosPorFactura = (int) (totalFactura / 10);  // 1 punto por cada 10 unidades monetarias gastadas
-        System.out.println("El cliente ha ganado " + puntosPorFactura + " puntos por la factura.");
-
-        // Calcular el total de puntos sumando los puntos de frecuencia y los de la factura
-        int puntosTotales = puntosGanadosPorFrecuencia + puntosPorFactura;
-        System.out.println("El cliente tiene un total de " + puntosTotales + " puntos (incluyendo los puntos ganados por frecuencia y factura).");
-        
-    } else {
-        System.out.println("La identificación " + identificacionBuscada + " no se encuentra en la lista de clientes.");
-    }
-    
-    // Preguntar si desea continuar
-    System.out.print("\n¿Desea buscar otra identificación? (si/no): ");
-    String respuesta = scanner.next();
-    if (respuesta.equalsIgnoreCase("si")) {
-        // Llamamos al método nuevamente para realizar otra búsqueda
-      gestionarRecompensas(restaurante);
-    } else {
-        System.out.println("Regresando al menú principal...");
-    }
-}
 
    
 
@@ -653,6 +673,9 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
          // Crear el pedido a domicilio después de asignar el domiciliario
          Domicilio domicilio = new Domicilio(cliente, pedidoDomicilio, direccion, esPrioritario, costoTotal, domiciliario);
+         ArrayList<Domicilio> domicilios = Domicilio.getDomicilios();
+        domicilios.add(domicilio);
+        Serializador.serializarListas();
             
             
 
