@@ -36,5 +36,7 @@ public class Serializador {
         Serializador.serializar(Pedido.getPedidos(),"pedidos");
         Serializador.serializar(Reserva.getReservas(),"reservas");
         Serializador.serializar(Restaurante.getRestaurante(),"restaurante");
+        Serializador.serializar(Restaurante.getIdConReservas(), "ListaIdConReservas");
     }
 }
+

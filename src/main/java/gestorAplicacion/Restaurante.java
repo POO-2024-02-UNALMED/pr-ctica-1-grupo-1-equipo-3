@@ -2,6 +2,7 @@ package gestorAplicacion;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import baseDatos.Serializador;
 import uiMain.CreacionPedido;
 
 import java.time.LocalDateTime;
@@ -159,6 +160,16 @@ public class Restaurante implements Serializable{
     public static void crearPedido(Restaurante restaurante) {
     	CreacionPedido.pedirId(restaurante);
     }
+    	
+   //metodo para agregar la identificación a la lista de reservas cuando esta sea realice exitosamente
+    public void addIdConReserva(int id) {
+        idConReservas.add(id); 
+   }
+        
+   //metodo para eliminar la identificación de la lista de reservas una vez esta se complete
+    public void removeIdConReserva(int id) {
+        idConReservas.remove(Integer.valueOf(id));
+    }
     
     //metodo para buscar si el id ingresado esta asociado a una reserva
     public static boolean BuscarId(int id) {
@@ -170,7 +181,11 @@ public class Restaurante implements Serializable{
          return false; // Si no se encuentra el id
      }
     
-    public String getNombre() {
+    public static ArrayList<Integer> getIdConReservas() {
+		return idConReservas;
+	}
+
+	public String getNombre() {
         return nombre;
     }
 
@@ -212,24 +227,6 @@ public class Restaurante implements Serializable{
 
     public  void agregarCliente(Cliente cliente) {
         this.getListaClientes().add(cliente);
-    }
-    
-    public ArrayList<Integer> getIdConReservas() {
-		return idConReservas;
-	}
-
-	public void setIdConReservas(ArrayList<Integer> idConReservas) {
-		this.idConReservas = idConReservas;
-	}
-	
-	//metodo para agregar la identificación a la lista de reservas cuando esta sea realice exitosamente
-    public void addIdConReserva(int id) {
-    	idConReservas.add(id); 
-    }
-    
-   //metodo para eliminar la identificación de la lista de reservas una vez esta se complete
-    public void removeIdConReserva(int id) {
-        idConReservas.remove(Integer.valueOf(id));
     }
     
     //valida si un cliente está en la lista de los clientes del restaurante por medio del id

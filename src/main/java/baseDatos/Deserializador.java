@@ -12,8 +12,8 @@ public class Deserializador {
         File archivo = new File("");
         FileInputStream fis = null;
         ObjectInputStream ois = null;
-
-        try {
+        
+       try {
             File ruta = new File(archivo.getAbsolutePath()+"/src/main/java/baseDatos/temp/"+nombre+".txt");
             fis = new FileInputStream(ruta);
             ois = new ObjectInputStream(fis);
@@ -42,5 +42,6 @@ public class Deserializador {
         Deserializador.deserializar(Pedido.getPedidos(),"pedidos");
         Deserializador.deserializar(Reserva.getReservas(),"reservas");
         Deserializador.deserializar(Restaurante.getRestaurante(),"restaurante");
+        Deserializador.deserializar(Restaurante.getIdConReservas(),"ListaIdConReservas");
     }
 }
