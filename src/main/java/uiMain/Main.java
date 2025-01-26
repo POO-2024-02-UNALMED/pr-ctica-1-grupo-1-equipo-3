@@ -267,6 +267,9 @@ public class Main implements Utilidad {
 						reservaExitosa = true;
 						restaurante.addIdConReserva(identificacion); // agregar id a la lista de reservas
 					} else {
+						reserva.eliminarReserva();
+						mesaEscogida.eliminarReserva();
+						reserva = null;
 						reservaExitosa = false;
 					}
 				}

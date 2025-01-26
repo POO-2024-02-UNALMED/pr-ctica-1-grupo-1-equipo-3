@@ -83,6 +83,11 @@ public class Reserva implements Serializable{
     	return precioTotal;
     }
     
+  //Elimina la última reserva registrada
+    public void eliminarReserva() {
+    	reservas.remove(reservas.size() - 1);
+    }
+    
     //Suma costos al precio total
     public void sumarPrecio(int precio) {
     	this.precioTotal += precio;

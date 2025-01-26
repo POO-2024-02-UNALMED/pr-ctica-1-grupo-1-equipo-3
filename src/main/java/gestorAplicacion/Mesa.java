@@ -67,6 +67,11 @@ public class Mesa implements Serializable{
         }
         return false;
     }
+    
+    //Elimina la última reserva registrada
+    public void eliminarReserva() {
+    	reservas.remove(reservas.size() - 1);
+    }
 
     public int getNumero() {
         return this.numero;
