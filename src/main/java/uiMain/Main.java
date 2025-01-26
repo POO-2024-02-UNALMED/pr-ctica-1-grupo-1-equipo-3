@@ -687,8 +687,9 @@ public static void gestionarRecompensas(Restaurante restaurante) {
             System.out.println("Dirección: " + domicilio.getDireccion());
             System.out.println("Prioridad: " + (domicilio.isDomicilioPrioritario() ? "Prioritario" : "Normal"));
             System.out.println("Pedido:");
-            for (Map.Entry<String, Integer> entry : pedidoDomicilio.entrySet()) {
-                System.out.printf("- %s: %d unidad(es)%n", entry.getKey(), entry.getValue());
+            
+            for (PedidoItem item : pedidoItems) {
+                System.out.printf("- %s: %d unidad(es)%n", item.getProducto(), item.getCantidad());
             }
             System.out.println("Costo total: " + Utilidad.formatoPrecio(domicilio.getCosto()));
 
