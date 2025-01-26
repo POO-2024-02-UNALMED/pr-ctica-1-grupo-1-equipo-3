@@ -1,14 +1,12 @@
 package baseDatos;
 
 import gestorAplicacion.*;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Deserializador {
 
-    private static <T extends Serializable> void deserializar(ArrayList<T> lista, String nombre){
+    private  static <T extends Serializable> void deserializar(ArrayList<T> lista, String nombre){
         File archivo = new File("");
         FileInputStream fis = null;
         ObjectInputStream ois = null;

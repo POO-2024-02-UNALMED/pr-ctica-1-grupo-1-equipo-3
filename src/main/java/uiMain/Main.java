@@ -1,15 +1,14 @@
  package uiMain;
-import gestorAplicacion.*;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.List;
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
+import gestorAplicacion.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Main implements Utilidad {
 
@@ -280,80 +279,58 @@ public class Main implements Utilidad {
     //FUNCIONALIDAD 4
 public static void gestionarRecompensas(Restaurante restaurante) {
     Scanner scanner = new Scanner(System.in);
-    boolean continuar = true;
-    int idCliente = -1;
+        
+    // Deserializar la lista de clientes para cargarla al iniciar
+   
     
     // Solicitar la identificación del cliente
-    System.out.print("Ingrese su número de identificación para gestionar sus recompensas: ");
-    idCliente = scanner.nextInt();
-
-    // Validar si el cliente existe
-    Cliente cliente = restaurante.indicarCliente(idCliente);
-    if (cliente == null) {
-        System.out.println("Cliente no encontrado. Asegúrese de ingresar una identificación válida.");
-        return;
-    }
-
-    // Mostrar puntos disponibles del cliente
-    int puntosTotales = cliente.getPuntosGenerales();
-    System.out.println("Usted tiene " + puntosTotales + " puntos disponibles.");
-
-    // Menú de recompensas
-    do {
-        System.out.println("\n¿Qué desea hacer con sus puntos?");
-        System.out.println("1. Redimir puntos para una reserva.");
-        System.out.println("2. Redimir puntos para productos.");
-        System.out.println("3. Redimir puntos para servicios exclusivos.");
-        System.out.println("4. Salir.");
-        System.out.print("Ingrese una opción: ");
-        
-        int opcion = scanner.nextInt();
-
-        switch (opcion) {
-            case 1:
-                // Redimir puntos para reserva
-                System.out.print("¿Cuántos puntos desea redimir para una reserva? ");
-                int puntosReserva = scanner.nextInt();
-                if (restaurante.redimirPuntosParaReserva(cliente, puntosReserva)) {
-                    System.out.println("¡Reserva realizada con éxito utilizando " + puntosReserva + " puntos!");
-                } else {
-                    System.out.println("No tiene suficientes puntos para redimir una reserva.");
-                }
-                break;
-
-            case 2:
-                // Redimir puntos para productos
-                System.out.print("¿Cuántos puntos desea redimir para productos? ");
-                int puntosProducto = scanner.nextInt();
-                if (restaurante.redimirPuntosParaProducto(cliente, puntosProducto)) {
-                    System.out.println("¡Productos adquiridos con éxito utilizando " + puntosProducto + " puntos!");
-                } else {
-                    System.out.println("No tiene suficientes puntos para redimir productos.");
-                }
-                break;
-
-            case 3:
-                // Redimir puntos para servicios exclusivos
-                System.out.print("¿Cuántos puntos desea redimir para servicios exclusivos? ");
-                int puntosServicio = scanner.nextInt();
-                if (restaurante.redimirPuntosParaServicio(cliente, puntosServicio)) {
-                    System.out.println("¡Servicio exclusivo obtenido con éxito utilizando " + puntosServicio + " puntos!");
-                } else {
-                    System.out.println("No tiene suficientes puntos para redimir servicios exclusivos.");
-                }
-                break;
-
-            case 4:
-                // Salir
-                continuar = false;
-                break;
-
-            default:
-                System.out.println("Opción no válida. Por favor, elija una opción correcta.");
-                break;
+    System.out.print("Ingrese la identificación del cliente que desea buscar: ");
+    long identificacionBuscada = scanner.nextLong();
+    
+    // Contar cuántas veces aparece la identificación en la lista de clientes
+    int contador = 0;
+    for (Cliente c : Cliente.getClientes()) {
+        if (c.getIdentificacion() == identificacionBuscada) {
+            contador++;
         }
+    }
+    
+    // Verificar si se encontró la identificación y cuántas veces aparece
+    if (contador > 0) {
+        System.out.println("La identificación " + identificacionBuscada + " aparece " + contador + " veces en la lista de clientes.");
+        
+        // Asignar puntos si la identificación aparece más de una vez
+        int puntosGanadosPorFrecuencia = 0;
+        if (contador > 1) {
+            puntosGanadosPorFrecuencia = contador * 10; // Se asignan 10 puntos por cada vez que aparece la identificación
+            System.out.println("¡El cliente ha ganado " + puntosGanadosPorFrecuencia + " puntos por la frecuencia de aparición!");
+        }
+        
+        // Pedir el total de la factura para asignar puntos adicionales
+        System.out.print("Ingrese el total de la factura del cliente: $");
+        double totalFactura = scanner.nextDouble();
+        
+        // Calcular los puntos adicionales basados en el total de la factura
+        int puntosPorFactura = (int) (totalFactura / 10);  // 1 punto por cada 10 unidades monetarias gastadas
+        System.out.println("El cliente ha ganado " + puntosPorFactura + " puntos por la factura.");
 
-    } while (continuar);
+        // Calcular el total de puntos sumando los puntos de frecuencia y los de la factura
+        int puntosTotales = puntosGanadosPorFrecuencia + puntosPorFactura;
+        System.out.println("El cliente tiene un total de " + puntosTotales + " puntos (incluyendo los puntos ganados por frecuencia y factura).");
+        
+    } else {
+        System.out.println("La identificación " + identificacionBuscada + " no se encuentra en la lista de clientes.");
+    }
+    
+    // Preguntar si desea continuar
+    System.out.print("\n¿Desea buscar otra identificación? (si/no): ");
+    String respuesta = scanner.next();
+    if (respuesta.equalsIgnoreCase("si")) {
+        // Llamamos al método nuevamente para realizar otra búsqueda
+      gestionarRecompensas(restaurante);
+    } else {
+        System.out.println("Regresando al menú principal...");
+    }
 }
 
    
@@ -550,6 +527,10 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
         // Crear el cliente
         Cliente cliente = new Cliente(nombre, identificacion, restaurante);
+        ArrayList<Cliente> clientes = Cliente.getClientes();
+        clientes.add(cliente);
+        Serializador.serializar(clientes, "clientes");
+    
 
         // Solicitar el pedido del cliente
         Map<String, Integer> pedidoDomicilio = new HashMap<>();
