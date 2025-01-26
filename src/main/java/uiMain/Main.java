@@ -4,10 +4,8 @@ import baseDatos.Serializador;
 import gestorAplicacion.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main implements Utilidad {
@@ -554,8 +552,8 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         Serializador.serializar(clientes, "clientes");
     
 
-        // Solicitar el pedido del cliente
-        Map<String, Integer> pedidoDomicilio = new HashMap<>();
+     // Solicitar el pedido del cliente
+        ArrayList<PedidoItem> pedidoItems = new ArrayList<>();
         boolean continuar = true;
 
         while (continuar) {
@@ -605,8 +603,13 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                     }
                 }
 
-                pedidoDomicilio.put(menuSeleccionado.nombre, cantidad);
+                // Crear y agregar un nuevo PedidoItem
+                PedidoItem item = new PedidoItem(menuSeleccionado.getNombre(), cantidad);
+                pedidoItems.add(item);
+
+                // Actualizar el inventario del almacén
                 almacen.actualizarInventario(menuSeleccionado, cantidad);
+
                 System.out.println("El alimento fue agregado a su pedido.");
             } else {
                 System.out.println("Lo sentimos, no hay suficientes ingredientes disponibles para este alimento.");
@@ -622,13 +625,13 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
         try {
             // Calcular el costo total del pedido
-            for (Map.Entry<String, Integer> entry : pedidoDomicilio.entrySet()) {
-                String alimento = entry.getKey();
-                int cantidad = entry.getValue();
+            for (PedidoItem item : pedidoItems) {
+                String alimento = item.getProducto();
+                int cantidad = item.getCantidad();
 
                 boolean alimentoEncontrado = false;
                 for (Menu menu : Menu.values()) {
-                    if (menu.nombre.equals(alimento)) {
+                    if (menu.getNombre().equals(alimento)) {
                         costoTotal += menu.getPrecio() * cantidad;
                         alimentoEncontrado = true;
                         break;
@@ -639,6 +642,13 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                     System.out.println("Advertencia: El alimento '" + alimento + "' no se encuentra en el menú.");
                 }
             }
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error al calcular el costo total del pedido.");
+        }
+
+        // Mostrar el costo total del pedido
+        System.out.println("El costo total del pedido es: " + Utilidad.formatoPrecio(costoTotal));
+
 
             // Incrementar el costo total en un 5% si el pedido es prioritario
             if (esPrioritario) {
@@ -672,7 +682,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
              System.out.println("No hay suficientes domiciliarios disponibles para asignar.");
              return;
          }
-         ArrayList<PedidoItem> pedidoItems = new ArrayList<>();
+         
          // Crear el pedido a domicilio después de asignar el domiciliario
          Domicilio domicilio = new Domicilio(cliente, pedidoItems, direccion, esPrioritario, costoTotal, domiciliario);
          ArrayList<Domicilio> domicilios = Domicilio.getDomicilios();
@@ -707,8 +717,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                     scanner.nextLine(); // Consumir entrada inválida
                 }
             } while (pago < costoTotal);
-
-            // Calcular el cambio
+            
             int cambio = pago - costoTotal;
 
             // Entregar el cambio
@@ -720,12 +729,9 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                 System.out.println("- Billete de " + Utilidad.formatoPrecio(billete));
             }
 
+            // Confirmar la entrega
             System.out.println("Gracias por su pedido. El domiciliario " + domiciliario.getNombre() + 
                                " (" + (domicilio.isDomicilioPrioritario() ? "Prioritario" : "No prioritario") + ")" + 
                                " se encargará de la entrega.");
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error inesperado al procesar el pedido: " + e.getMessage());
-        }
-    }       
+        } 
 }
-
