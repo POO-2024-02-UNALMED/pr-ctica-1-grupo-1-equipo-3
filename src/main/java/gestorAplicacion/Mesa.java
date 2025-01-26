@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 
 public class Mesa implements Serializable{
+    private static final long serialVersionUID = 1L;
     private static ArrayList<Mesa> mesas = new ArrayList<Mesa>();
     private int numero;
     private int capacidad;
@@ -58,6 +59,13 @@ public class Mesa implements Serializable{
     		}
     	}
     	return false; //Si la reserva no se pudo completar
+    }
+
+    public Boolean tipoMesa(){
+        if(this.tipo == "deluxe") {
+            return true;
+        }
+        return false;
     }
 
     public int getNumero() {

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 
 public class Mesero extends Persona implements Serializable{
+    private static final long serialVersionUID = 1L;
     private double promCalificaciones;
     private int totalCalificaciones;
     private ArrayList<LocalDateTime> disponibilidad;  //Fechas en las que el mesero debe atender una reserva

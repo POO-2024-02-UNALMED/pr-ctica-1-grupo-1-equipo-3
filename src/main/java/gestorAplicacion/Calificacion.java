@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Calificacion implements Serializable{
+    private static final long serialVersionUID = 1L;
     private static ArrayList<Calificacion> calificaciones = new ArrayList<Calificacion>();
     private Cliente cliente;
     private Pedido pedido;

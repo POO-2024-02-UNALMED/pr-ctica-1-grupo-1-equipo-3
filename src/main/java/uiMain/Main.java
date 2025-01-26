@@ -14,34 +14,9 @@ import java.util.InputMismatchException;
 public class Main implements Utilidad {
 
     public static void main(String[] args) {
-        //Creacion del restaurante
-        Restaurante restaurante = new Restaurante("Aura Gourmet",LocalTime.of(7, 0));
+        Deserializador.deserializarListas();
 
-        //Creación de las mesas
-        Mesa mesa1 = new Mesa(1, 2, "basic", restaurante);
-        Mesa mesa2 = new Mesa(2, 4, "deluxe", restaurante);
-        Mesa mesa3 = new Mesa(3, 6, "basic", restaurante);
-        Mesa mesa4 = new Mesa(4, 4, "basic", restaurante);
-        Mesa mesa5 = new Mesa(5, 6, "deluxe", restaurante);
-        Mesa mesa6 = new Mesa(6, 2, "deluxe", restaurante);
-        Mesa mesa7 = new Mesa(7, 4, "basic", restaurante);
-        Mesa mesa8 = new Mesa(8, 6, "basic", restaurante);
-        Mesa mesa9 = new Mesa(9, 4, "deluxe", restaurante);
-        Mesa mesa10 = new Mesa(10, 2, "deluxe", restaurante);
-        
-        //Creación de los meseros
-        Mesero mesero1 = new Mesero(1, "Carlos Martínez", 4, 20, restaurante);
-        Mesero mesero2 = new Mesero(2, "Juan Pérez", 3, 15, restaurante);
-        Mesero mesero3 = new Mesero(3, "Andrés Gómez", 5, 25, restaurante);
-        Mesero mesero4 = new Mesero(4, "Laura Rodríguez", 4, 18, restaurante);
-        Mesero mesero5 = new Mesero(5, "Ana María Sánchez", 2, 10, restaurante);
-        Mesero mesero6 = new Mesero(6, "Luis Fernández", 3, 14, restaurante);
-        Mesero mesero7 = new Mesero(7, "Valentina Díaz", 4, 22, restaurante);
-        Mesero mesero8 = new Mesero(8, "Santiago Ramírez", 5, 30, restaurante);
-        Mesero mesero9 = new Mesero(9, "Mariana Gómez", 3, 16, restaurante);
-        Mesero mesero10 = new Mesero(10, "Felipe Morales", 4, 19, restaurante);
-
-        menuPrincipal(restaurante);
+        menuPrincipal(Restaurante.getRestaurante().get(0));
     }
     
     public static void inicializarDomiciliarios() {
@@ -452,7 +427,7 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                     valorEntrada1.nextLine();
                     switch (eleccion3) {
                         case 1:
-                            System.out.print("Deje su comentario:");
+                            System.out.print("Deje su comentario: ");
                             comentario = valorEntrada1.nextLine();
                             encendido1 = false;
                             break;
@@ -472,6 +447,12 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
         Cliente cliente = restaurante.indicarCliente(idCliente, restaurante);
 
+        //Estadisticas antes de la calificación
+        double calificionActualMesero = cliente.getReserva().getMesero().getPromCalificaciones();
+        double reputacionActualRestaurante = restaurante.getReputacion();
+
+
+        //Calificacion y actualización de estadisticas
         Calificacion calificacion = cliente.calificar((cliente.getReserva().getMesa().getPedido()), calidadComida, calidadMesero, tiempoEspera, comentario);
 
         cliente.getReserva().getMesa().getPedido().tiempoEsperaRestaurante(calificacion);
@@ -481,6 +462,25 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         System.out.println(cliente.getReserva().getMesa().getPedido().getFactura());
 
         Mesero.organizarMeserosPorCalificacion();
+
+        if (cliente.getReserva().getMesa().tipoMesa()) {  //Valida si la mesa es deluxe
+            System.out.print("Por los beneficios de haber estado en una de nuestras mesas deluxe," + "\n" +
+                                "se le proporciona la posibilidad de visualizar el impacto de su califiacación." + "\n" +
+                                "¿Desea verlo?" + "\n" +
+                                "1. Sí." + "\n" +
+                                "2. No." + "\n" +
+                                "Ingrese un número para elegir una opción: ");
+                                int eleccion4 = valorEntrada1.nextInt();
+                                switch (eleccion4) {
+                                    case 1:
+                                        System.out.println("                  ANTES DE SU CALIFIACION     DESPUES DE SU CALIFACION");
+                                        System.out.printf("Restaurante:              %.1f                          %.1f%n",reputacionActualRestaurante,restaurante.getReputacion());
+                                        System.out.printf("Mesero:                   %.1f                          %.1f%n",calificionActualMesero,cliente.getReserva().getMesero().getPromCalificaciones());
+
+                                    case 2:
+                                        break;
+                                }
+        }
 
 
     }

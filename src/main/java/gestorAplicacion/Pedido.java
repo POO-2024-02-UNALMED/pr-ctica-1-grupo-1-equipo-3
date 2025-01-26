@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Pedido implements Serializable{
+    private static final long serialVersionUID = 1L;
     private static ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
     private int id;
     private Cliente cliente;

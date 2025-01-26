@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Factura implements Serializable{
+    private static final long serialVersionUID = 1L;
     private static ArrayList<Factura> facturas = new ArrayList<Factura>();
     private int descuento;
     private Calificacion calificacion;
@@ -25,7 +26,7 @@ public class Factura implements Serializable{
     @Override
     public String toString(){
         return "\n=====================================" + "\n" +
-                "         FACTURA DE CONSUMO          " + "\n" +
+                "         FACTURA DE CONSUMO AURA GOURMET         " + "\n" +
                 "Restaurante: " + this.restaurante.getNombre() + "\n" +
                 "Cliente: " + this.cliente.getNombre() + "\n" +
                 "Mesero encargado: " + this.cliente.getReserva().getMesero() + "\n" +

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Cliente extends Persona implements Serializable{
+    private static final long serialVersionUID = 1L;
     private static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
     private Reserva reserva;
     private Restaurante restaurante;

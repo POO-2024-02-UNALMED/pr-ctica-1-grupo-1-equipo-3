@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class Domicilio implements Serializable {
 
     // Atributos
+    private static final long serialVersionUID = 1L;
     private static ArrayList<Domicilio> domicilios = new ArrayList<Domicilio>();
     private Cliente cliente;
     private Map<String, Integer> pedidoDomicilio;

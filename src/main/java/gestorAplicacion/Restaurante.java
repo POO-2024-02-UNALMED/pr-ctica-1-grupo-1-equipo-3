@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.io.Serializable;
 
 public class Restaurante implements Serializable{
+    private static final long serialVersionUID = 1L;
     private static ArrayList<Restaurante> restaurante = new ArrayList<Restaurante>();
     private String nombre;
     private double reputacion;
@@ -30,7 +31,7 @@ public class Restaurante implements Serializable{
     public Restaurante(String nombre,LocalTime horarioServicio) {
 
         this.nombre = nombre;
-        this.reputacion = 0;
+        this.reputacion = 3.5;
         this.totalCalificaciones = calificacionesRestaurante.size();
         this.ingresos = 0;
         this.horarioServicio = horarioServicio;

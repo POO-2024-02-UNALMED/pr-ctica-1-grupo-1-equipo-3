@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public class Persona implements Serializable {
+    private static final long serialVersionUID = 1L;
     protected String nombre;
     protected long identificacion;
     private static ArrayList<Persona> personas = new ArrayList<Persona>();

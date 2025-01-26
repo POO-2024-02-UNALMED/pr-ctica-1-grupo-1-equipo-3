@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Domiciliario extends Persona implements Serializable {
-
+    private static final long serialVersionUID = 1L;
     public static ArrayList<Domiciliario> listaDomiciliarios = new ArrayList<Domiciliario>();
     private List<Integer> billetera;
 

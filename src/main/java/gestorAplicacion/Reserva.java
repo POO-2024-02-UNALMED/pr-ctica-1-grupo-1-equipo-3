@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Reserva implements Serializable{
+    private static final long serialVersionUID = 1L;
     private static ArrayList<Reserva> reservas = new ArrayList<Reserva>();
     private static int contador;
 	private int id;
