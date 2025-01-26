@@ -18,16 +18,6 @@ public class Main implements Utilidad {
 
         menuPrincipal(Restaurante.getRestaurante().get(0));
     }
-    
-    public static void inicializarDomiciliarios() {
-        if (Domiciliario.getListaDomiciliarios().isEmpty()) {
-            new Domiciliario("Carlos", (long) 123, 4, 8);
-            new Domiciliario("María", (long) 456, 3, 12);
-            new Domiciliario("Luis", (long) 789, 5, 3);
-            System.out.println("Se han inicializado los domiciliarios por defecto.");
-        }
-    }
-
 
     static void menuPrincipal(Restaurante restaurante){
         boolean encendido = true;
@@ -50,7 +40,6 @@ public class Main implements Utilidad {
                     encendido = false;
                     break;
                 case 2:
-                	inicializarDomiciliarios();
                     domicilio(restaurante);
                     encendido = false;
                     break;
@@ -655,26 +644,31 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                 System.out.println("El costo total del pedido es inválido. No se puede procesar el pedido.");
                 return;
             }
+            
+            Domiciliario.inicializarDomiciliarios();
+         // Seleccionar el domiciliario adecuado
+         List<Domiciliario> listaDomiciliarios = Domiciliario.getListaDomiciliarios();
+         if (listaDomiciliarios.isEmpty()) {
+             System.out.println("No hay domiciliarios disponibles para asignar.");
+             return;
+         }
 
-            // Crear el pedido a domicilio
-            Domicilio domicilio = new Domicilio(cliente, pedidoDomicilio, direccion, esPrioritario, costoTotal);
+         // Declarar e inicializar la variable domiciliario
+         Domiciliario domiciliario;
 
-            // Seleccionar el domiciliario adecuado
-            List<Domiciliario> listaDomiciliarios = Domiciliario.getListaDomiciliarios();
-            if (listaDomiciliarios.isEmpty()) {
-                System.out.println("No hay domiciliarios disponibles para asignar.");
-                return;
-            }
+         if (esPrioritario && listaDomiciliarios.size() > 0) {
+             domiciliario = listaDomiciliarios.get(0); // Domiciliario 1
+         } else if (!esPrioritario && listaDomiciliarios.size() > 1) {
+             domiciliario = listaDomiciliarios.get(1); // Domiciliario 2
+         } else {
+             System.out.println("No hay suficientes domiciliarios disponibles para asignar.");
+             return;
+         }
 
-            Domiciliario domiciliario;
-            if (esPrioritario && listaDomiciliarios.size() > 0) {
-                domiciliario = listaDomiciliarios.get(0); // Domiciliario 1
-            } else if (!esPrioritario && listaDomiciliarios.size() > 1) {
-                domiciliario = listaDomiciliarios.get(1); // Domiciliario 2
-            } else {
-                System.out.println("No hay suficientes domiciliarios disponibles para asignar.");
-                return;
-            }
+         // Crear el pedido a domicilio después de asignar el domiciliario
+         Domicilio domicilio = new Domicilio(cliente, pedidoDomicilio, direccion, esPrioritario, costoTotal, domiciliario);
+            
+            
 
             // Mostrar el resumen del pedido
             System.out.println("\nResumen del pedido:");

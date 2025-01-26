@@ -39,6 +39,14 @@ public class Domiciliario extends Persona implements Serializable {
             billetera.add(denominacion);
         }
     }
+    
+    public static void inicializarDomiciliarios() {
+        if (Domiciliario.getListaDomiciliarios().isEmpty()) {
+            new Domiciliario("Carlos", (long) 123, 4, 8);
+            new Domiciliario("María", (long) 456, 3, 12);
+            new Domiciliario("Luis", (long) 789, 5, 3);
+        }
+    }
 
     // Método para calcular el total de dinero en la billetera
     public int calcularTotalBilletera() {

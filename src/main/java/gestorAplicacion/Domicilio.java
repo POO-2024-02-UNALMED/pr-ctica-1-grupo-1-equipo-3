@@ -18,14 +18,16 @@ public class Domicilio implements Serializable {
     private int costoEnvio;
     private Calificacion calificacion;
     private double promCalificacion;
+    private Domiciliario domiciliario;
 
     // Constructor
-    public Domicilio(Cliente cliente, Map<String, Integer> pedidoDomicilio, String direccion, boolean domicilioPrioritario, int costoEnvio) {
+    public Domicilio(Cliente cliente, Map<String, Integer> pedidoDomicilio, String direccion, boolean domicilioPrioritario, int costoEnvio, Domiciliario domiciliario) {
         this.cliente = cliente;
         this.pedidoDomicilio = pedidoDomicilio;
         this.direccion = direccion;
         this.domicilioPrioritario = domicilioPrioritario;
         this.costoEnvio = costoEnvio;
+        this.domiciliario = domiciliario;
         domicilios.add(this);
     }
 
@@ -92,5 +94,13 @@ public class Domicilio implements Serializable {
 
     public void setPromCalificacion(double promCalificacion) {
         this.promCalificacion = promCalificacion;
+    }
+    
+    public Domiciliario getDomiciliario() {
+        return domiciliario;
+    }
+
+    public void setDomiciliario(Domiciliario domiciliario) {
+        this.domiciliario = domiciliario;
     }
 }
