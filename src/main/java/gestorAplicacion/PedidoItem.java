@@ -1,10 +1,12 @@
 package gestorAplicacion;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class PedidoItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static ArrayList<PedidoItem> pedidoItems = new ArrayList<PedidoItem>();
     private String producto;
     private int cantidad;
 
@@ -12,6 +14,7 @@ public class PedidoItem implements Serializable {
     public PedidoItem(String producto, int cantidad) {
         this.producto = producto;
         this.cantidad = cantidad;
+        pedidoItems.add(this);
     }
 
     // Getters y Setters
@@ -34,5 +37,9 @@ public class PedidoItem implements Serializable {
     @Override
     public String toString() {
         return producto + " x " + cantidad;
+    }
+
+    public static ArrayList<PedidoItem> getPedidoItems() {
+        return pedidoItems;
     }
 }

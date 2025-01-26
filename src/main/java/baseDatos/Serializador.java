@@ -34,10 +34,10 @@ public class Serializador {
         Serializador.serializar(Mesero.getMeseros(),"meseros");
         Serializador.serializar(Persona.getPersonas(), "personas");
         Serializador.serializar(Pedido.getPedidos(),"pedidos");
+        Serializador.serializar(PedidoItem.getPedidoItems(), "pedidoItems");
         Serializador.serializar(Reserva.getReservas(),"reservas");
         Serializador.serializar(Restaurante.getRestaurante(),"restaurante");
         Serializador.serializar(Restaurante.getIdConReservas(), "ListaIdConReservas");
         Serializador.serializar(Restaurante.getListaClientes(), "ListaClientes");
     }
 }
-
