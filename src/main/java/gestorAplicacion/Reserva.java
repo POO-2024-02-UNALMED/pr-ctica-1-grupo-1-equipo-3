@@ -19,6 +19,9 @@ public class Reserva implements Serializable{
     public Reserva(Mesa mesa) {
         this.mesa = mesa;
     }
+    //terminar
+    public Reserva(Cliente cliente,Mesa mesa,LocalDateTime fechaHora,int numeroPersonas,LocalDateTime fechaDeGeneracion, Mesero mesero) {
+    }
     
     public Reserva(Mesa mesa,LocalDateTime fechaHora,int numeroPersonas,LocalDateTime fechaDeGeneracion) {
     	this.mesa = mesa;
