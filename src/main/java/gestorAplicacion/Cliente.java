@@ -12,7 +12,7 @@ public class Cliente extends Persona implements Serializable{
     private int visitas;
     private int visitasParaDescuentos;
     private int DescuentoPorVisitas;
-    private HashMap<String, Integer> puntos;
+    
 
 	//Constructor con 3 paramentros para cliente
     public Cliente(String nombre, long identificacion, Restaurante restaurante) {
@@ -32,11 +32,7 @@ public class Cliente extends Persona implements Serializable{
         this.reserva = reserva;
         this.restaurante = restaurante;
         this.visitas = 0;
-        this.puntos = new HashMap<>();
-        this.puntos.put("frecuencia", 0);
-        this.puntos.put("calificacion", 0);
-        this.puntos.put("gasto", 0);
-        this.puntos.put("especiales", 0);
+        
         restaurante.agregarCliente(this);
     }
 
@@ -81,26 +77,12 @@ public class Cliente extends Persona implements Serializable{
 	    	}
     }
 
-    public void acumularPuntos(String categoria, int cantidad) {
-        if (puntos.containsKey(categoria)) {
-            puntos.put(categoria, puntos.get(categoria) + cantidad);
-        }
-    }
-
-    public void reducirPuntos(String categoria, int cantidad) {
-        if (puntos.containsKey(categoria) && puntos.get(categoria) >= cantidad) {
-            puntos.put(categoria, puntos.get(categoria) - cantidad);
-        }
-    }
-
-    public int getPuntosGenerales() {
-        return puntos.get("frecuencia") + puntos.get("gasto");
-    }
+   
 
     @Override
 	public String toString() {
 		return "Cliente [ reserva = " + reserva + ", restaurante = " + restaurante + ", visitas = " + visitas + ", puntos = "
-				+ puntos + ", nombre = " + nombre + ", id = " + identificacion + "]";
+				 + ", nombre = " + nombre + ", id = " + identificacion + "]";
 	}
 
 	public Calificacion calificarPorReserva(Pedido pedido, int calidadComida, int calidadMesero, int tiempoEspera, String comentario) {
