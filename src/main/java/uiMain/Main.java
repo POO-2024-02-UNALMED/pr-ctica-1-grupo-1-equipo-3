@@ -331,7 +331,7 @@ public class Main implements Utilidad {
                         puntosTotales -= puntosReserva;
                         break;  
                     } else {
-                        System.out.println("\n❌ No tiene suficientes puntos para la reserva.");
+                        System.out.println("\n No tiene suficientes puntos para la reserva.");
                     }
                 } else if (opcionUso == 2) {
                     System.out.println("\nHa seleccionado utilizarlo para servicios exclusivos.");
@@ -388,7 +388,7 @@ public class Main implements Utilidad {
                 System.out.println("➡️ Puntos restantes: " + puntosTotales + " puntos");
             }
         } else {
-            System.out.println("\n❌ No se encontraron domicilios para la identificación ingresada.");
+            System.out.println("\n No se encontraron domicilios para la identificación ingresada.");
         }
     
         // Volver al menú principal
