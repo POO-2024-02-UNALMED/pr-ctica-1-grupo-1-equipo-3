@@ -134,11 +134,20 @@ public class Restaurante implements Serializable{
         String[] elementosFecha = fecha.split("/");
         String[] elementosHora = hora.split(":");
 
+        int horaEntero = Integer.parseInt(elementosHora[0]);
+        int minutos = Integer.parseInt(elementosHora[1]);
+        
         if (elementosFecha.length == 3 && elementosHora.length == 2) {
-            return true;
-        } else {
-            return false;
+        	if(horaEntero >= 7 && horaEntero <= 23) {
+        		if(horaEntero == 23) {
+        			if(minutos > 0) {
+        				return false;
+        			}
+        		}
+        		return true;
+        	}
         }
+        return false;
     }
 
     //Convierte un String fecha y String hora a formato LocalDateTime para que puedan ser usadas en otros métodos
