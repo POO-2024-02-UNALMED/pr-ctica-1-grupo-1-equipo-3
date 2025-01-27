@@ -69,6 +69,21 @@ public class Mesero extends Persona implements Serializable{
         }
         return -1;
     }
+
+    //Este metodo se encarga de revisar las 3 ultimas calificaciones de los meseros, y si uno tiene las 3 ultimas calificaciones por debajo o igual de 2, sera despedido
+    public static void revisionMeseros(){
+        for (int i = 0; i < meseros.size(); i++){
+            if(meseros.get(i).getCalificaciones().size() > 2){
+                if(meseros.get(i).getCalificaciones().get(-1) >= 2){
+                    if(meseros.get(i).getCalificaciones().get(-2) >= 2){
+                        if(meseros.get(i).getCalificaciones().get(-3) >= 2){
+                            Mesero.getMeseros().remove(meseros.get(i));
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     public long getIdentificacion() {
         return super.getIdentificacion();

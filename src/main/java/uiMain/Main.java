@@ -526,7 +526,11 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
             System.out.println(cliente.getReserva().getMesa().getPedido().getFactura());   //Imprime factura con los detalles de calificiación
 
+            Mesero.revisionMeseros(); //se encarga de revisar las 3 ultimas calificaciones de los meseros, y si uno tiene las 3 ultimas calificaciones por debajo o igual de 2, sera despedido
+
             int posicionNuevaPrioridadMesero = Mesero.posicionPrioridadMesero(cliente.getReserva().getMesero());
+
+
 
             Mesero.organizarMeserosPorCalificacion();
             if (cliente.getReserva().getMesa().tipoMesa()) {  //Valida si la mesa es deluxe
@@ -543,6 +547,11 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                         System.out.printf("Restaurante:              %.1f                          %.1f%n",reputacionActualRestaurante,restaurante.getReputacion());
                         System.out.printf("Mesero:                   %.1f                          %.1f%n",calificionActualMesero,cliente.getReserva().getMesero().getPromCalificaciones());
                         System.out.printf("Prioridad del mesero:     %d                           %d%n", posicionActualPrioridadMesero,posicionNuevaPrioridadMesero);
+                        if (Mesero.posicionPrioridadMesero(cliente.getReserva().getMesero()) == -1){
+                            System.out.printf("El mesero %d, ha sido despedido", cliente.getReserva().getMesero().getNombre());
+                        }else{
+                            System.out.printf("El mesero %d, sigue activo", cliente.getReserva().getMesero().getNombre());
+                        }
                         break;
                     case 2:
                         break;
