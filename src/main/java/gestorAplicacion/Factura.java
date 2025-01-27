@@ -36,7 +36,7 @@ public class Factura implements Serializable{
                 "-------------------------------------" + "\n" +
                 "Total: " + this.totalFactura + "\n" +
                 "Descuento aplicado: "+ this.aplicarDescuento(calificacion) + "\n" +
-                "Calificación del servicio: " + this.calificacion.getPromedioCalificacion() + "\n" +
+                "Calificación del servicio: " + this.calificacion.getPromedioCalificacion() + "/5" + "\n" +
                 "\n=====================================" + "\n" +
                 "Gracias por visitarnos. ¡Esperamos verlo pronto!"  + "\n" +
                 "=====================================";

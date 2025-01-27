@@ -2,6 +2,7 @@
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
 import gestorAplicacion.*;
+import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -410,7 +411,7 @@ public class Main implements Utilidad {
         int tiempoEspera = 0;
         String comentario = "";
         do {
-            System.out.print("¿Desea relizar una calificación?" + "\n" +
+            System.out.print("¿Desea realizar una calificación?" + "\n" +
                                 "1. Sí." + "\n" +
                                 "2. No." + "\n");
             int eleccion1 = Utilidad.solicitarEntero(1,2);
@@ -424,7 +425,7 @@ public class Main implements Utilidad {
                             encendido2 = false;
                         }else{
                             System.out.print("La identificación no está asociada a ningún cliente" + "\n" +
-                                    "1. Deseo ingresar una identificación valida." + "\n" +
+                                    "1. Deseo ingresar una identificación válida." + "\n" +
                                     "2. Salir." + "\n");
 
                             int eleccion2 = Utilidad.solicitarEntero(1,2);
@@ -441,7 +442,7 @@ public class Main implements Utilidad {
                         }
                     }while(encendido2);
                     if (restaurante.indicarCliente(idCliente).tipoCliente()) { //Valida si es consumo local
-                        System.out.println("Usted ha entrado en el sistema de calificacón para clientes con consumo en el local." + "\n" +
+                        System.out.println("Usted ha entrado en el sistema de calificación para clientes con consumo en el local." + "\n" +
                                 "Para realizar la calificación porfavor conteste la siguiente encuesta:" + "\n" +
                                 "1. Para puntuar la calidad de la comida: ");
                         calidadComida = Utilidad.solicitarEntero(1,5);
@@ -455,7 +456,7 @@ public class Main implements Utilidad {
                         System.out.print("Por ultimo, ¿desea dejar un comentario?" + "\n" +
                                 "1. Sí." + "\n" +
                                 "2. No." + "\n");
-                        int eleccion3 = Utilidad.solicitarEntero(1,5);
+                        int eleccion3 = Utilidad.solicitarEntero(1,2);
                         switch (eleccion3) {
                             case 1:
                                 System.out.print("Deje su comentario: ");
@@ -467,7 +468,7 @@ public class Main implements Utilidad {
                                 break;
                         }
                         break;
-                    }else {System.out.println("Usted ha entrado en el sistema de calificacón para clientes con consumo a domicilio." + "\n" +
+                    }else {System.out.println("Usted ha entrado en el sistema de calificación para clientes con consumo a domicilio." + "\n" +
                             "Para realizar la calificación porfavor conteste la siguiente encuesta:" + "\n" +
                             "1. Para puntuar la calidad de la comida: ");
                         calidadComida = Utilidad.solicitarEntero(1,5);
@@ -542,11 +543,11 @@ public class Main implements Utilidad {
                         System.out.println("                  ANTES DE SU CALIFICACIÓN     DESPUES DE SU CALIFICACIÓN");
                         System.out.printf("Restaurante:              %.1f                          %.1f%n",reputacionActualRestaurante,restaurante.getReputacion());
                         System.out.printf("Mesero:                   %.1f                          %.1f%n",calificionActualMesero,cliente.getReserva().getMesero().getPromCalificaciones());
-                        System.out.printf("Prioridad del mesero:     %d                           %d%n", posicionActualPrioridadMesero,posicionNuevaPrioridadMesero);
+                        System.out.printf("Prioridad del mesero:     %d                            %d%n", posicionActualPrioridadMesero,posicionNuevaPrioridadMesero);
                         if (Mesero.posicionPrioridadMesero(cliente.getReserva().getMesero()) == -1){
-                            System.out.printf("El mesero %d, ha sido despedido", cliente.getReserva().getMesero().getNombre());
+                            System.out.printf("El mesero %s, ha sido despedido", cliente.getReserva().getMesero().getNombre());
                         }else{
-                            System.out.printf("El mesero %d, sigue activo", cliente.getReserva().getMesero().getNombre());
+                            System.out.printf("El mesero %s, sigue activo", cliente.getReserva().getMesero().getNombre());
                         }
                         break;
                     case 2:
