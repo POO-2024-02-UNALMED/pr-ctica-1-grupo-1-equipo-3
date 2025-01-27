@@ -18,7 +18,7 @@ public class Domiciliario extends Persona implements Serializable {
     public Domiciliario(String nombre, Long identificacion, double promCalificaciones, int totalCalificaciones) {
         super(nombre, identificacion);
         this.billetera = new ArrayList<>();
-        this.calificaciones = new ArrayList<>();
+        this.calificaciones = new ArrayList<Integer>();
         inicializarBilletera();
         listaDomiciliarios.add(this);
         this.promCalificaciones = promCalificaciones;
