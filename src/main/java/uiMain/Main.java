@@ -27,11 +27,8 @@ public class Main implements Utilidad {
                                 "3. Realizar el pedido de mi reserva." + "\n" +
                                 "4. Gestionar recompensas" + "\n" +
                                 "5. Calificar el servicio." + "\n" +
-                                "6. Salir." + "\n" +
-                                "Ingrese un número para elegir una opción: ");
-            Scanner valorEntrada = new Scanner(System.in);
-            int eleccion = 0;
-            eleccion = valorEntrada.nextInt();
+                                "6. Salir." + "\n");
+            int eleccion = Utilidad.solicitarEntero(1,6);
             switch (eleccion) {
                 case 1:
                 	reservar(restaurante);
@@ -362,9 +359,10 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
     //FUNCIONALIDAD 5
     public static void calificar(Restaurante restaurante) {
+        Mesero.organizarMeserosPorCalificacion(); //Ordena los meseros iniciales
         Scanner valorEntrada1 = new Scanner(System.in);
         boolean encendido1 = true;
-        int idCliente = 0;
+        long idCliente = 0;
         int calidadComida = 0;
         int calidadMesero = 0;
         int tiempoEspera = 0;
@@ -372,25 +370,22 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         do {
             System.out.print("¿Desea relizar una calificación?" + "\n" +
                                 "1. Sí." + "\n" +
-                                "2. No." + "\n" +
-                                "Ingrese un número para elegir una opción: ");
-            int eleccion1 = 0;
-            eleccion1 = valorEntrada1.nextInt();
+                                "2. No." + "\n");
+            int eleccion1 = Utilidad.solicitarEntero(1,2);
             switch (eleccion1) {
                 case 1:
                     boolean encendido2 = true;
                     do {
-                        System.out.print("Ingrese su identificación para realizar la calificación: ");
-                        idCliente = valorEntrada1.nextInt();
+                        idCliente = Utilidad.solicitarId();
                         boolean validarCliente = restaurante.validarCliente(idCliente, restaurante);
                         if (validarCliente){   //validar que la id sea de un cliente
                             encendido2 = false;
                         }else{
                             System.out.print("La identificación no está asociada a ningún cliente" + "\n" +
                                     "1. Deseo ingresar una identificación valida." + "\n" +
-                                    "2. Salir." + "\n" +
-                                    "Ingrese un número para elegir una opción: ");
-                            int eleccion2 = valorEntrada1.nextInt();
+                                    "2. Salir." + "\n");
+
+                            int eleccion2 = Utilidad.solicitarEntero(1,2);
                             switch (eleccion2){
                                 case 1:
                                     encendido2 = true;
@@ -403,24 +398,22 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                             }
                         }
                     }while(encendido2);
-                    if (restaurante.indicarCliente(idCliente).tipoCliente()) {
+                    if (restaurante.indicarCliente(idCliente).tipoCliente()) { //Valida si es consumo local
                         System.out.println("Usted ha entrado en el sistema de calificacón para clientes con consumo en el local." + "\n" +
                                 "Para realizar la calificación porfavor conteste la siguiente encuesta:" + "\n" +
                                 "1. Para puntuar la calidad de la comida: ");
-                        calidadComida = Utilidad.solicitarEntero();
+                        calidadComida = Utilidad.solicitarEntero(1,5);
 
                         System.out.println("2. Para puntuar la calidad del mesero");
-                        calidadMesero = Utilidad.solicitarEntero();
+                        calidadMesero = Utilidad.solicitarEntero(1,5);
 
                         System.out.println("3. Para puntuar el tiempo de espera: ");
-                        tiempoEspera = Utilidad.solicitarEntero();
+                        tiempoEspera = Utilidad.solicitarEntero(1,5);
 
                         System.out.print("Por ultimo, ¿desea dejar un comentario?" + "\n" +
                                 "1. Sí." + "\n" +
-                                "2. No." + "\n" +
-                                "Ingrese un número para elegir una opción: ");
-                        int eleccion3 = valorEntrada1.nextInt();
-                        valorEntrada1.nextLine();
+                                "2. No." + "\n");
+                        int eleccion3 = Utilidad.solicitarEntero(1,5);
                         switch (eleccion3) {
                             case 1:
                                 System.out.print("Deje su comentario: ");
@@ -435,17 +428,15 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                     }else {System.out.println("Usted ha entrado en el sistema de calificacón para clientes con consumo a domicilio." + "\n" +
                             "Para realizar la calificación porfavor conteste la siguiente encuesta:" + "\n" +
                             "1. Para puntuar la calidad de la comida: ");
-                        calidadComida = Utilidad.solicitarEntero();
+                        calidadComida = Utilidad.solicitarEntero(1,5);
 
                         System.out.println("2. Para puntuar el tiempo de espera: ");
-                        tiempoEspera = Utilidad.solicitarEntero();
+                        tiempoEspera = Utilidad.solicitarEntero(1,5);
 
                         System.out.print("Por ultimo, ¿desea dejar un comentario?" + "\n" +
                                 "1. Sí." + "\n" +
-                                "2. No." + "\n" +
-                                "Ingrese un número para elegir una opción: ");
-                        int eleccion3 = valorEntrada1.nextInt();
-                        valorEntrada1.nextLine();
+                                "2. No." + "\n");
+                        int eleccion3 = Utilidad.solicitarEntero(1,2);
                         switch (eleccion3) {
                             case 1:
                                 System.out.print("Deje su comentario: ");
@@ -470,15 +461,15 @@ public static void gestionarRecompensas(Restaurante restaurante) {
         Cliente cliente = restaurante.indicarCliente(idCliente);  //para consumo local
         Cliente cliente1 = Domicilio.indicarCliente(idCliente); //Para domicilio
 
-        System.out.println(Mesero.getMeseros());
 
-        //Estadisticas antes de la calificación
-        double calificionActualMesero = cliente.getReserva().getMesero().getPromCalificaciones();
-        double reputacionActualRestaurante = restaurante.getReputacion();
-        int posicionActualPrioridadMesero = Mesero.posicionPrioridadMesero(cliente.getReserva().getMesero());
+        double reputacionActualRestaurante = restaurante.getReputacion(); //Dato para cualquier tipo de calificacion
+
+        if(restaurante.indicarCliente(idCliente).tipoCliente()){ //valida si es consumo local
+            //Datos antes de la califiacion por consumo local
+            double calificionActualMesero = cliente.getReserva().getMesero().getPromCalificaciones();
+            int posicionActualPrioridadMesero = Mesero.posicionPrioridadMesero(cliente.getReserva().getMesero());
 
 
-        if(restaurante.indicarCliente(idCliente).tipoCliente()){ //valida si es consumo local o domicilio
             Calificacion calificacion = cliente.calificarPorReserva((cliente.getReserva().getMesa().getPedido()), calidadComida, calidadMesero, tiempoEspera, comentario);  //Se hace la calificacion
 
             cliente.getReserva().getMesa().getPedido().tiempoEsperaRestaurante(calificacion); //Se encarga de actualizar la reputacion del restaurante por el tiempo de espera
@@ -487,26 +478,25 @@ public static void gestionarRecompensas(Restaurante restaurante) {
 
             restaurante.actualizarReputacion(calificacion);  //Se actualiza la reputacion del restaurante
 
-            System.out.println(cliente.getReserva().getMesa().getPedido().getFactura());
+            System.out.println(cliente.getReserva().getMesa().getPedido().getFactura());   //Imprime factura con los detalles de calificiación
 
             int posicionNuevaPrioridadMesero = Mesero.posicionPrioridadMesero(cliente.getReserva().getMesero());
 
-            cliente.getReserva().getMesa().getPedido().getFactura().prioridadMeseros(restaurante);
+            Mesero.organizarMeserosPorCalificacion();
             if (cliente.getReserva().getMesa().tipoMesa()) {  //Valida si la mesa es deluxe
                 System.out.printf("¡Hola %s! Bienvenido al apartado exclusivo para clientes premium.%n", cliente.getNombre());
                 System.out.print("Por los beneficios de haber estado en una de nuestras mesas deluxe," + "\n" +
                         "se le proporciona la posibilidad de visualizar el impacto de su califiacación." + "\n" +
                         "¿Desea verlo?" + "\n" +
                         "1. Sí." + "\n" +
-                        "2. No." + "\n" +
-                        "Ingrese un número para elegir una opción: ");
-                int eleccion4 = valorEntrada1.nextInt();
+                        "2. No." + "\n");
+                int eleccion4 = Utilidad.solicitarEntero(1,2);
                 switch (eleccion4) {
                     case 1:
                         System.out.println("                  ANTES DE SU CALIFICACIÓN     DESPUES DE SU CALIFICACIÓN");
                         System.out.printf("Restaurante:              %.1f                          %.1f%n",reputacionActualRestaurante,restaurante.getReputacion());
                         System.out.printf("Mesero:                   %.1f                          %.1f%n",calificionActualMesero,cliente.getReserva().getMesero().getPromCalificaciones());
-                        System.out.printf("Prioridad del mesero:     %d%n                          %d%n", posicionActualPrioridadMesero,posicionNuevaPrioridadMesero);
+                        System.out.printf("Prioridad del mesero:     %d                           %d%n", posicionActualPrioridadMesero,posicionNuevaPrioridadMesero);
                         break;
                     case 2:
                         break;
@@ -515,29 +505,57 @@ public static void gestionarRecompensas(Restaurante restaurante) {
                 System.out.println("Consulta con nuestro equipo cómo acceder a una mesa deluxe en tu próxima visita y obtener un apartado exclusivo.");
             }
         }
-        if (!restaurante.indicarCliente(idCliente).tipoCliente()){
+        if (!restaurante.indicarCliente(idCliente).tipoCliente()){  //Valida si es domicilio
+
+            //Dato antes de la califiación
+            double calificacionActualDomiciliario = Domicilio.indicarDomicilio(idCliente).getDomiciliario().getPromCalificaciones();
+
+
             Calificacion calificacion = cliente1.calificarPorDomicilio((Domicilio.indicarDomicilio(idCliente)),calidadComida, tiempoEspera, comentario);  //Se hace calificacion
 
             if (tiempoEspera < 3){  //Se encarga de actualizar la reputacion del restaurante por el tiempo de espera
                 restaurante.setReputacion(restaurante.getReputacion()-0.1);
             }
-            int totalPagarDomimicilio = Utilidad.aplicarDescuento(calificacion, (Domicilio.indicarDomicilio(idCliente).getCosto()));  //Se aplica el descuento si el promdecalificaion es menor que 3
 
             restaurante.actualizarReputacion(calificacion); //Se actualiza la reputacion del restaurante
 
+            System.out.println("\n=====================================" + "\n" +
+                            "         FACTURA DE CONSUMO AURA GOURMET         " + "\n" +
+                   "Restaurante: " + restaurante.getNombre() + "\n" +
+                   "Cliente: " + cliente1.getNombre() + "\n" +
+                   "Domiciliario encargado: " + Domicilio.indicarDomicilio(idCliente).getDomiciliario().getNombre() + "\n" +
+                   "-------------------------------------" + "\n" +
+                    Utilidad.aplicarDescuento(calificacion, (Domicilio.indicarDomicilio(idCliente).getCosto())) + "\n" +
+                   "Calificación del servicio: " + calificacion.getPromedioCalificacion() + "\n" +
+                   "\n=====================================" + "\n" +
+                   "Gracias por visitarnos. ¡Esperamos verlo pronto!"  + "\n" +
+                   "=====================================");
+            Mesero.organizarMeserosPorCalificacion();
             if((Domicilio.indicarDomicilio(idCliente).isDomicilioPrioritario())){ //Valida si el domicilio es prioriatario
                 System.out.printf("¡Hola %s! Bienvenido al apartado exclusivo para clientes premium.%n", cliente.getNombre());
-                System.out.print("Por los beneficios de que su pedido es prioritario," + "\n" +
+                System.out.print("Por el beneficio de que su pedido es prioritario," + "\n" +
                         "se le proporciona la posibilidad de visualizar el impacto de su califiacación." + "\n" +
                         "¿Desea verlo?" + "\n" +
                         "1. Sí." + "\n" +
-                        "2. No." + "\n" +
-                        "Ingrese un número para elegir una opción: ");
-                int eleccion4 = valorEntrada1.nextInt();
+                        "2. No." + "\n");
+                int eleccion4 = Utilidad.solicitarEntero(1,2);
+                switch (eleccion4) {
+                    case 1:
+                        System.out.println("                  ANTES DE SU CALIFICACIÓN     DESPUES DE SU CALIFICACIÓN");
+                        System.out.printf("Restaurante:              %.1f                          %.1f%n",reputacionActualRestaurante,restaurante.getReputacion());
+                        System.out.printf("Domiciliario:             %.1f                          %.1f%n",calificacionActualDomiciliario, Domicilio.indicarDomicilio(idCliente).getDomiciliario().getPromCalificaciones());
+                        break;
+                    case 2:
+                        break;
+                }
 
+            }else{
+                System.out.println("Consulta con nuestro equipo para acceder a un apartado exclusivo si tu proximo pedido es prioritario.");
             }
         }
+        Serializador.serializarListas();
 
+        menuPrincipal(restaurante);
 
     }
     

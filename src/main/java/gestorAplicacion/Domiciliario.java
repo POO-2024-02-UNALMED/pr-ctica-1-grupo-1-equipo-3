@@ -18,6 +18,7 @@ public class Domiciliario extends Persona implements Serializable {
     public Domiciliario(String nombre, Long identificacion, double promCalificaciones, int totalCalificaciones) {
         super(nombre, identificacion);
         this.billetera = new ArrayList<>();
+        this.calificaciones = new ArrayList<>();
         inicializarBilletera();
         listaDomiciliarios.add(this);
         this.promCalificaciones = promCalificaciones;
@@ -105,5 +106,9 @@ public class Domiciliario extends Persona implements Serializable {
     // Getter para obtner la lista de califiaciones del domiciliario
     public ArrayList<Integer> getCalificaciones() {
         return calificaciones;
+    }
+
+    public double getPromCalificaciones() {
+        return promCalificaciones;
     }
 }

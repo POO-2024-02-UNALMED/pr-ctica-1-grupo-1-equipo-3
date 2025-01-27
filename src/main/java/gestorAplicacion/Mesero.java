@@ -63,8 +63,8 @@ public class Mesero extends Persona implements Serializable{
     //metodo que retorna la posicion en prioridad del mesero para ser escogido
     public static int posicionPrioridadMesero(Mesero mesero){
         for (int i = 0; i < meseros.size(); i++) {
-            if(meseros.get(i).equals(mesero)){
-                return i;
+            if(meseros.get(i).getNombre().equals(mesero.getNombre())){
+                return i + 1;
             }
         }
         return -1;
