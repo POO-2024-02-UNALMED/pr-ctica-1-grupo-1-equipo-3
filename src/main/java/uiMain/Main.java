@@ -863,5 +863,9 @@ public class Main implements Utilidad {
             System.out.println("Gracias por su pedido. El domiciliario " + domiciliario.getNombre() + 
                                " (" + (domicilio.isDomicilioPrioritario() ? "Prioritario" : "No prioritario") + ")" + 
                                " se encargará de la entrega.");
+            
+            
+            //Volver al menu principal
+            menuPrincipal(restaurante);
         } 
 }
