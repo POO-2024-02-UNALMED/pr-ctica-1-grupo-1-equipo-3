@@ -58,14 +58,7 @@ public class Factura implements Serializable{
     	this.totalFactura += precio;
     }
 
-    public void calcularPuntosPorGasto() {
-        restaurante.calcularPuntosPorGasto(cliente, totalFactura);
-    }
-
-    public void asignarPuntosPorPropina() {
-        restaurante.calcularPuntosPorGasto(cliente, propina);
-    }
-
+    
     // La factura queda con su calificacion
     public void asociarCalificacion(Calificacion calificacion) {
         this.calificacion = calificacion;
