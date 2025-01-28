@@ -334,10 +334,53 @@ public class Main implements Utilidad {
                     }
                 } else if (opcionUso == 2) {
                     System.out.println("\nHa seleccionado utilizarlo para servicios exclusivos.");
-                    // Lógica para servicios exclusivos...
+                    System.out.println("\nMesas deluxe disponibles:");
+                    Mesa mesaMayorCapacidad = null;
+                    for (Mesa mesa : restaurante.getMesas()) {
+                        if (mesa.getTipo().equalsIgnoreCase("deluxe")) {
+                            int puntosRequeridos = Math.max(2000, mesa.getCapacidad() * 500);
+                            System.out.println("Mesa " + mesa.getNumero() + " | Capacidad: " + mesa.getCapacidad() + " | Puntos requeridos: " + puntosRequeridos);
+                            if (mesaMayorCapacidad == null || mesa.getCapacidad() > mesaMayorCapacidad.getCapacidad()) {
+                                mesaMayorCapacidad = mesa;
+                            }
+                        }
+                    }
+                    System.out.println("\n¿Desea elegir una de estas mesas especiales para su próxima reserva?");
+                    System.out.println("1. Sí, elegir una mesa deluxe");
+                    System.out.println("2. No, prefiero usar los puntos para otra cosa");
+                    System.out.print("Seleccione una opción: ");
+                    int opcionMesa = scanner.nextInt();
                 } else if (opcionUso == 3) {
                     System.out.println("\nHa seleccionado utilizarlo para productos del menú.");
-                    // Lógica para productos del menú...
+                    System.out.println("\nMenú disponible (puntos requeridos):");
+                    for (Menu plato : Menu.values()) {
+                        int puntosRequeridos = (int) (plato.getPrecio() / 1000);
+                        System.out.println("- " + plato.getNombre() + " | Puntos: " + puntosRequeridos);
+                    }
+    
+                    System.out.print("Ingrese el nombre del producto que desea canjear: ");
+                    scanner.nextLine();
+                    String productoElegido = scanner.nextLine();
+    
+                    Menu productoSeleccionado = null;
+                    for (Menu plato : Menu.values()) {
+                        if (plato.getNombre().equalsIgnoreCase(productoElegido)) {
+                            productoSeleccionado = plato;
+                            break;
+                        }
+                    }
+    
+                    if (productoSeleccionado != null) {
+                        int puntosRequeridos = (int) (productoSeleccionado.getPrecio() / 1000);
+                        if (puntosTotales >= puntosRequeridos) {
+                            puntosTotales -= puntosRequeridos;
+                            System.out.println("\n¡Ha canjeado " + productoSeleccionado.getNombre() + " con éxito!");
+                        } else {
+                            System.out.println("\nNo tiene suficientes puntos para canjear este producto.");
+                        }
+                    } else {
+                        System.out.println("\nEl producto ingresado no es válido.");
+                    }
                 } else if (opcionUso == 0) {
                     System.out.println("\nVolviendo al menú principal...");
                     break;
