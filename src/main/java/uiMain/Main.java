@@ -24,7 +24,7 @@ public class Main implements Utilidad {
                                 "1. Realizar una reserva." + "\n" +
                                 "2. Realizar un domicilio." + "\n" +
                                 "3. Realizar el pedido de mi reserva." + "\n" +
-                                "4. Gestionar recompensas" + "\n" +
+                                "4. Gestionar recompensas." + "\n" +
                                 "5. Calificar el servicio." + "\n" +
                                 "6. Salir." + "\n");
             int eleccion = Utilidad.solicitarEntero(1,6);
@@ -251,7 +251,7 @@ public class Main implements Utilidad {
 					System.out.println("Número de Reserva: " + reserva.getId());
 					System.out.println("Fecha: " + reserva.getFechaHora());
 					System.out.println("Numero de Mesa: " + reserva.getMesa().getNumero());
-					System.out.println("Mesero Asignado: $" + reserva.getMesa().getMesero().getNombre());
+					System.out.println("Mesero Asignado:  " + reserva.getMesa().getMesero().getNombre());
 					System.out.println("Total: $" + reserva.getPrecioTotal());
 					System.out.println("==============================");
 					System.out.println("¿Desea confirmar su reserva(S)");

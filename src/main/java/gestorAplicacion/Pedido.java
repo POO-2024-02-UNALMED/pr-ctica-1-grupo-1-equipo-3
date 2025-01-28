@@ -15,7 +15,7 @@ public class Pedido implements Serializable{
     private List<Map.Entry<String, Integer>> pedidoListaTuplas = new ArrayList<>();
 	private Calificacion calificacion;
     private double promCalificacion;
-    private String platoCortesia = "No aplica";
+    private String platoCortesia = "No aplica"; 
     private long descuento;
     private long valorSinDescuento;
     private long valorConDescuento;
@@ -28,6 +28,7 @@ public class Pedido implements Serializable{
     }
     public Pedido(Cliente cliente) {
     	this.titular = cliente;
+    	factura = titular.getReserva().getFactura(); //le asigno al pedido la factura que esta asignada a la reserva
     }
     
     //metodo para agregar elementos al pedido
@@ -64,55 +65,8 @@ public class Pedido implements Serializable{
     	} else {
     	 setDescuento(0);
 		 setValorConDescuento(total); }
+    	 factura.sumarValor(valorConDescuento); //le agrega el valor de los platos a la factura
     }
-    
-     public void imprimirResumenPedido(List<Map.Entry<String, Integer>> listaDeTuplas) {
-     double costoTotal = 0;
-
-     System.out.println("\nResumen del pedido:");
-     System.out.println("--------------------------------------------------");
-     System.out.println("Producto         Cantidad     Precio Unitario    Precio Total");
-     System.out.println("--------------------------------------------------");
-
-     // Recorrer la lista de tuplas para generar la parte de la factura de los platos
-     for (Map.Entry<String, Integer> item : listaDeTuplas) {
-         String plato = item.getKey();
-         int cantidad = item.getValue();
-
-         for (Menu menu : Menu.values()) {
-           if (menu.name().equalsIgnoreCase(plato)) {
-               double precioUnitario = menu.getPrecio();
-               double precioTotal = precioUnitario * cantidad;
-               costoTotal += precioTotal;
-
-               // Utilizar Utilidad.formatoPrecio() para dar formato a los precios
-               String precioUnitarioFormat = Utilidad.formatoPrecio(precioUnitario);
-               String precioTotalFormat = Utilidad.formatoPrecio(precioTotal);
-
-               // Imprimir detalles del producto
-               System.out.printf("%-15s %-10d %-15s %-15s%n",
-               menu.getNombre(), cantidad, precioUnitarioFormat, precioTotalFormat);
-               break; }
-         }
-      }
-            System.out.println("--------------------------------------------------");
-            System.out.println("PLATO DE CORTESIA: " + platoCortesia);
-            System.out.println("--------------------------------------------------");
-            
-           if (descuento!=0) {
-        	   String descuentoFormat = Utilidad.formatoPrecio(descuento);
-        	   String valorSinDescuentoFormat = Utilidad.formatoPrecio(valorSinDescuento);
-        	   System.out.println("INFORMACION DE LOS DESCUENTOS POR FIDELIDAD:\n");
-        	   System.out.println("subtotal de los platos: " + valorSinDescuentoFormat);
-        	   System.out.println("Tienes un descuento por numero de visitas del " + titular.getDescuentoPorVisitas() + "%");
-        	   System.out.println("Valor del descuento: " + descuentoFormat);
-        	   costoTotal = valorConDescuento;
-           }
-            
-           System.out.println("--------------------------------------------------");
-           String costoTotalFormat = Utilidad.formatoPrecio(costoTotal);
-            System.out.println("Costo Total de los platos: " + costoTotalFormat);
-}
            
 	//Este metodo se encarga de tomar la calificacion del tiempo de espera del cliente para determinar la calificacion general del restaurante
     public void tiempoEsperaRestaurante(Calificacion calificacion){

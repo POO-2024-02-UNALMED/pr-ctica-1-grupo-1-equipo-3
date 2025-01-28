@@ -21,7 +21,6 @@ public class CreacionPedido {
 	int id = 0;
 	// activar si se necesita ver la lista de reservas: System.out.println("lista de reservas: " + Restaurante.getIdConReservas()+"\n");
 	while (true) {
-		System.out.println(Restaurante.getIdConReservas());
 		System.out.println("\ningrese el numero de identificacion asociado a su reserva:");
 	String input = scanner.nextLine();
 	
@@ -199,7 +198,6 @@ public class CreacionPedido {
 	
     public static void imprimirResumenPedido(List<Map.Entry<String, Integer>> listaDeTuplas, Pedido pedido) {
     double costoTotal = 0;
-
     System.out.println("\nResumen del pedido:");
     System.out.println("--------------------------------------------------");
     System.out.println("Producto         Cantidad     Precio Unitario    Precio Total");
@@ -239,9 +237,28 @@ public class CreacionPedido {
        	   System.out.println("Valor del descuento: " + descuentoFormat);
        	   costoTotal = pedido.getValorConDescuento();
           }
-           
+          System.out.println("--------------------------------------------------");
+          System.out.print("COBROS ASOCIADOS A LA RESERVA: ");
+          if (ofrecerCortesia && pedido.getFactura().getTotalFactura() - pedido.getValorConDescuento() == 80000) {
+        	    System.out.println("\nValor de reserva con mesa tipo deluxe: 30.000");
+        	    System.out.println("Valor de reserva creada con más de un mes de anticipación: 50.000");
+        	} else if (ofrecerCortesia) {
+        	    System.out.println("\nValor de reserva con mesa tipo deluxe: 30.000");
+        	} else if (pedido.getFactura().getTotalFactura() - pedido.getValorConDescuento() == 50000) {
+        	    System.out.println("\nValor de reserva creada con más de un mes de anticipación: 50.000");
+        	} else {
+        	    System.out.println("No aplica");
+        	}
           System.out.println("--------------------------------------------------");
           String costoTotalFormat = Utilidad.formatoPrecio(costoTotal);
-           System.out.println("Costo Total de los platos: " + costoTotalFormat);
-}
+          System.out.println("Costo Total de los platos: " + costoTotalFormat);
+          String costoTotal2Format = Utilidad.formatoPrecio(pedido.getFactura().getTotalFactura());
+          System.out.println("Costo platos + Cobros de reserva: " + costoTotal2Format);
+          try {
+              Thread.sleep(2000); } 
+  	    catch (InterruptedException e) {
+              e.printStackTrace(); }
+          System.out.println("\nGracias por realizar su pedido! "
+          		+ "\nlo invitamos a dejar su calificacion del servicio luego de su consumo");
+} 
 }

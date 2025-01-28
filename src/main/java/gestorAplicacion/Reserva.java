@@ -17,6 +17,7 @@ public class Reserva implements Serializable{
     private int numeroPersonas;
     private Cliente cliente;
     private int precioTotal;
+    private boolean recargoPorFecha;
 
     public Reserva(Mesa mesa) {
         this.mesa = mesa;
@@ -44,6 +45,7 @@ public class Reserva implements Serializable{
 
         if (mesesDiferencia > 1) {
             this.precioTotal += 50000;
+            recargoPorFecha = true;
         }
     }
 
@@ -100,4 +102,10 @@ public class Reserva implements Serializable{
     public int getId() {
     	return this.id;
     }
+	public boolean getRecargoPorFecha() {
+		return recargoPorFecha;
+	}
+	public void setRecargoPorFecha(boolean recargoPorFecha) {
+		this.recargoPorFecha = recargoPorFecha;
+	}
 }

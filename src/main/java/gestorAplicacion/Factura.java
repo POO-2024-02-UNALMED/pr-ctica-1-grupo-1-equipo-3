@@ -54,11 +54,10 @@ public class Factura implements Serializable{
         return facturas;
     }
     
-    public void sumarValor(int precio) {
+    public void sumarValor(double precio) {
     	this.totalFactura += precio;
     }
 
-    
     // La factura queda con su calificacion
     public void asociarCalificacion(Calificacion calificacion) {
         this.calificacion = calificacion;
