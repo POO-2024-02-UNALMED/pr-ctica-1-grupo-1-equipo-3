@@ -30,7 +30,7 @@ public class Factura implements Serializable{
     public String toString(){
         return "\n=====================================" + "\n" +
                 "         FACTURA DE CONSUMO AURA GOURMET         " + "\n" +
-                "Restaurante: " + this.restaurante.getNombre() + "\n" +
+                "Restaurante: " + Restaurante.getRestaurante().get(0).getNombre() + "\n" +
                 "Cliente: " + this.cliente.getNombre() + "\n" +
                 "Mesero encargado: " + this.cliente.getReserva().getMesero() + "\n" +
                 "-------------------------------------" + "\n" +
@@ -95,5 +95,9 @@ public class Factura implements Serializable{
                 }
         });
 
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

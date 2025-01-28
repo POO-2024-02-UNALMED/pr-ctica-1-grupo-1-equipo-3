@@ -174,4 +174,8 @@ public class Cliente extends Persona implements Serializable{
         }
         return false;
     }
+
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
 }
