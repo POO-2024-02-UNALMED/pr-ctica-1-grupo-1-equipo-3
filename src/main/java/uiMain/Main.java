@@ -170,7 +170,7 @@ public class Main implements Utilidad {
 					cliente.setReserva(reserva);
 
 					//Datos adicionales para mesa "deluxe"
-					System.out.println(reserva.getMesa().getTipo());
+		
 					if (reserva.getMesa().getTipo().equals("deluxe")) {
 						System.out.println("Ingrese el tipo de decoracion que desea: elegante, rústico o moderno");
 						String estilo = scannerFuncionalidad1.nextLine();

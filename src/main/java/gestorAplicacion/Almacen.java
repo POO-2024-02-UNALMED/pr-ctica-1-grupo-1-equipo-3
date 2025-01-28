@@ -111,4 +111,13 @@ public class Almacen implements Serializable {
             }
         }
     }
+    
+    public void revertirInventario(Menu menu, int cantidad) {
+    	 for (String ingrediente : menu.ingredientes) {
+             int index = nombres.indexOf(ingrediente);
+             if (index != -1) {
+                 cantidades.set(index, cantidades.get(index) + cantidad);
+             }
+         }
+     }
 }

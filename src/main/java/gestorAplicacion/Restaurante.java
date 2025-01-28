@@ -250,4 +250,10 @@ public class Restaurante implements Serializable{
         }
         return null;
     }
+    
+    public boolean obtenerTipoMesa(Reserva reserva) {
+       if (reserva.getMesa().getTipo().equals("deluxe")) {
+    	   return true;
+       } else { return false; }
+    }
 }
