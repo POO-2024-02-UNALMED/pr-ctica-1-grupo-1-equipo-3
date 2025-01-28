@@ -422,7 +422,9 @@ public class Main implements Utilidad {
             
         } else {
             System.out.println("\n No se encontraron compras para la identificación ingresada.");
+            
         }
+        
     
         menuPrincipal(restaurante);
     }
