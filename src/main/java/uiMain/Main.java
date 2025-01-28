@@ -2,7 +2,6 @@
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
 import gestorAplicacion.*;
-import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -281,40 +280,36 @@ public class Main implements Utilidad {
     public static void gestionarRecompensas(Restaurante restaurante) {
         Scanner scanner = new Scanner(System.in);
     
-        // Solicitar la identificación del cliente
         System.out.print("Ingrese la identificación del cliente que desea buscar: ");
         long identificacionBuscada = scanner.nextLong();
     
-        // Variables para calcular puntos
         Domicilio ultimoDomicilio = null;
         int visitas = 0;
         double totalGastado = 0;
-    
-        // Recorrer la lista de domicilios para encontrar los datos del cliente
+        
         for (Domicilio d : Domicilio.getDomicilios()) {
             if (d.getCliente().getIdentificacion() == identificacionBuscada) {
-                visitas++; 
-                totalGastado += d.getCosto(); 
-                ultimoDomicilio = d; 
+                visitas++;
+                totalGastado += d.getCosto();
+                ultimoDomicilio = d;
             }
         }
     
         if (ultimoDomicilio != null) {
-            System.out.println("\nÚltimo domicilio del cliente con ID " + identificacionBuscada + ":");
+            System.out.println("\nÚltima compra del cliente con ID " + identificacionBuscada + ":");
             System.out.println("Cliente: " + ultimoDomicilio.getCliente().getNombre() +
                                " | Dirección: " + ultimoDomicilio.getDireccion() +
                                " | Costo total: $" + ultimoDomicilio.getCosto());
     
-            // Calcular puntos antes de mostrar el menú
-            int puntosPorCosto = (int) (totalGastado / 100);  // 1 punto por cada 100 unidades gastadas
-            int puntosPorVisitas = visitas;  // 1 punto por cada visita
+            // Actualización en el cálculo de puntos
+            int puntosPorCosto = (int) (totalGastado / 100) * 10; // 10 puntos por cada $100 gastados
+            int puntosPorVisitas = visitas * 5; // 5 puntos por cada visita
             int puntosTotales = puntosPorCosto + puntosPorVisitas;
     
-            // **Mostrar total de puntos antes de que el usuario seleccione una opción**
-            System.out.println("\n Total de puntos acumulados: " + puntosTotales + " puntos ");
+            System.out.println("\nTotal de puntos acumulados: " + puntosTotales + " puntos");
     
             int opcionUso = -1;
-            while (opcionUso != 0) {  
+            while (opcionUso != 0) {
                 System.out.println("\n¿Para qué desea utilizar los puntos?");
                 System.out.println("1. Reserva");
                 System.out.println("2. Servicios exclusivos");
@@ -324,77 +319,50 @@ public class Main implements Utilidad {
                 opcionUso = scanner.nextInt();
     
                 if (opcionUso == 1) {
-                    System.out.println("\nHa seleccionado utilizarlo para una reserva.");
-                    System.out.print("Ingrese la cantidad de puntos que desea usar para la reserva: ");
-                    int puntosReserva = scanner.nextInt();
-                    if (puntosTotales >= puntosReserva) {
-                        System.out.println("\n✅ ¡Reserva realizada con éxito! ✅");
-                        puntosTotales -= puntosReserva;
-                        break;  
+                    if (puntosTotales > 50) {  // Ajuste a 50 puntos para reserva
+                        System.out.println("\nHa seleccionado utilizarlo para una reserva.");
+                        System.out.print("Ingrese la cantidad de puntos que desea usar para la reserva: ");
+                        int puntosReserva = scanner.nextInt();
+                        if (puntosTotales >= puntosReserva) {
+                            puntosTotales -= puntosReserva;
+                            System.out.println("\n ¡Reserva realizada con éxito! ");
+                        } else {
+                            System.out.println("\n No tiene suficientes puntos para la reserva.");
+                        }
                     } else {
-                        System.out.println("\n No tiene suficientes puntos para la reserva.");
+                        System.out.println("\n No tiene suficientes puntos para realizar una reserva. Se requieren más de 50 puntos.");
                     }
                 } else if (opcionUso == 2) {
                     System.out.println("\nHa seleccionado utilizarlo para servicios exclusivos.");
-                    System.out.println("\nMesas deluxe disponibles:");
-                    for (Mesa mesa : restaurante.getMesas()) {
-                        if (mesa.getTipo().equalsIgnoreCase("deluxe")) {
-                            System.out.println("Mesa " + mesa.getNumero() + " | Capacidad: " + mesa.getCapacidad());
-                        }
-                    }
-                    break;  
+                    // Lógica para servicios exclusivos...
                 } else if (opcionUso == 3) {
                     System.out.println("\nHa seleccionado utilizarlo para productos del menú.");
-                    System.out.println("\nMenú disponible (puntos requeridos):");
-                    for (Menu plato : Menu.values()) {
-                        int puntosRequeridos = (int) (plato.getPrecio() / 1000); 
-                        System.out.println("- " + plato.getNombre() + " | Puntos: " + puntosRequeridos);
-                    }
-    
-                    System.out.print("Ingrese el nombre del producto que desea canjear: ");
-                    scanner.nextLine(); 
-                    String productoElegido = scanner.nextLine();
-    
-                    Menu productoSeleccionado = null;
-                    for (Menu plato : Menu.values()) {
-                        if (plato.getNombre().equalsIgnoreCase(productoElegido)) {
-                            productoSeleccionado = plato;
-                            break;
-                        }
-                    }
-    
-                    if (productoSeleccionado != null) {
-                        int puntosRequeridos = (int) (productoSeleccionado.getPrecio() / 1000);
-                        if (puntosTotales >= puntosRequeridos) {
-                            System.out.println("\n✅ ¡Ha canjeado " + productoSeleccionado.getNombre() + " con éxito! ✅");
-                            puntosTotales -= puntosRequeridos;
-                            break;
-                        } else {
-                            System.out.println("\n❌ No tiene suficientes puntos para canjear este producto.");
-                        }
-                    } else {
-                        System.out.println("\n❌ El producto ingresado no es válido.");
-                    }
+                    // Lógica para productos del menú...
                 } else if (opcionUso == 0) {
                     System.out.println("\nVolviendo al menú principal...");
-                    break;  
+                    break;
                 } else {
-                    System.out.println("\n❌ Opción no válida. Por favor, elija una opción correcta.");
+                    System.out.println("\n Opción no válida. Por favor, elija una opción correcta.");
                 }
     
-                // Mostrar puntos actualizados después de cada acción
-                System.out.println("\n🔹 Resumen de puntos acumulados 🔹");
-                System.out.println("- Puntos por visitas: " + puntosPorVisitas + " puntos");
-                System.out.println("- Puntos por costo total: " + puntosPorCosto + " puntos");
-                System.out.println("➡️ Puntos restantes: " + puntosTotales + " puntos");
+                System.out.println("\n Resumen de puntos acumulados ");
+                System.out.println(" Puntos restantes: " + puntosTotales + " puntos");
             }
         } else {
             System.out.println("\n No se encontraron domicilios para la identificación ingresada.");
         }
     
-        // Volver al menú principal
         menuPrincipal(restaurante);
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
    
