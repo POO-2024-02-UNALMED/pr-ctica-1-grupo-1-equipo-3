@@ -20,6 +20,7 @@ public class Cliente extends Persona implements Serializable{
         this.restaurante = restaurante;
         this.visitas = 0;
         restaurante.agregarCliente(this);
+        clientes.add(this);
     }
 
     //Constructor sin parametros para Cliente
@@ -34,6 +35,7 @@ public class Cliente extends Persona implements Serializable{
         this.visitas = 0;
         
         restaurante.agregarCliente(this);
+        clientes.add(this);
     }
 
     public void setReserva(Reserva reserva) {
@@ -85,7 +87,7 @@ public class Cliente extends Persona implements Serializable{
 				 + ", nombre = " + nombre + ", id = " + identificacion + "]";
 	}
 
-	public Calificacion calificarPorReserva(Pedido pedido, int calidadComida, int calidadMesero, int tiempoEspera, String comentario) {
+	public Calificacion calificar(Pedido pedido, int calidadComida, int calidadMesero, int tiempoEspera, String comentario) {
         Calificacion nuevaCalificacion = new Calificacion(this, pedido, calidadComida,calidadMesero,  tiempoEspera,  comentario);
 
         pedido.setCalificacion(nuevaCalificacion); //Se asocia la calificaión al pedido
@@ -103,7 +105,7 @@ public class Cliente extends Persona implements Serializable{
         return nuevaCalificacion;
     }
 
-    public Calificacion calificarPorDomicilio(Domicilio domicilio, int calidadComida, int tiempoEspera, String comentario){
+    public Calificacion calificar(Domicilio domicilio, int calidadComida, int tiempoEspera, String comentario){
         Calificacion nuevaCalificacion = new Calificacion(this, domicilio, calidadComida, tiempoEspera, comentario);
 
         domicilio.setCalificacion(nuevaCalificacion);  //Se asocia la calificación al domicilio

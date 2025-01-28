@@ -153,8 +153,8 @@ public class Restaurante implements Serializable{
     
     //metodo para buscar si el id ingresado esta asociado a una reserva
     public static boolean BuscarId(int id) {
-    	 for (int idReserva : idConReservas) {
-             if (idReserva==id) {
+    	 for (Cliente cliente : Cliente.getClientes()) {
+             if (cliente.getIdentificacion()==id) {
                  return true; //Si se encuentra el id
              }
          }

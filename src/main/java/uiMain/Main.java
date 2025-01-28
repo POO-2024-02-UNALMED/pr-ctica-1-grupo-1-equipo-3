@@ -3,6 +3,7 @@ import baseDatos.Deserializador;
 import baseDatos.Serializador;
 import gestorAplicacion.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Main implements Utilidad {
 
     public static void main(String[] args) {
         Deserializador.deserializarListas();
+
 
         menuPrincipal(Restaurante.getRestaurante().get(0));
     }
@@ -302,22 +304,177 @@ public class Main implements Utilidad {
                 ultimoDomicilio = d;
                 
             }
+            if (ultimoDomicilio != null) {
+                System.out.println("\nÚltimo domicilio del cliente con ID " + identificacionBuscada + ":");
+                System.out.println("Cliente: " + ultimoDomicilio.getCliente().getNombre() +
+                                   " | Dirección: " + ultimoDomicilio.getDireccion() +
+                                   " | Costo total: $" + ultimoDomicilio.getCosto());
+        
+                int puntosPorCosto = (int) (totalGastado / 100);
+                int puntosPorVisitas =  (visitas > 5) ? (visitas - 5) * 20 : 0;
+                int puntosTotales = puntosPorCosto + puntosPorVisitas;
+        
+                System.out.println("\nTotal de puntos acumulados: " + puntosTotales + " puntos");
+        
+                int opcionUso = -1;
+                while (opcionUso != 0) {
+                    System.out.println("\n¿Para qué desea utilizar los puntos?");
+                    System.out.println("1. Reserva");
+                    System.out.println("2. Servicios exclusivos");
+                    System.out.println("3. Productos del menú");
+                    System.out.println("4. Devolución del producto");
+                    System.out.println("5. Mal servicio");
+                    System.out.println("0. Salir");
+                    System.out.print("Ingrese la opción (1, 2, 3, 4, 5 o 0 para salir): ");
+                    opcionUso = scanner.nextInt();
+        
+                    if (opcionUso == 1) {
+                        if (puntosTotales > 1000) {
+                            System.out.println("\nHa seleccionado utilizarlo para una reserva.");
+                            System.out.print("Ingrese la cantidad de puntos que desea usar para la reserva: ");
+                            int puntosReserva = scanner.nextInt();
+                            if (puntosPorVisitas >= puntosReserva) {
+                                puntosTotales -= puntosReserva;
+                                System.out.println("\n ¡Reserva realizada con éxito! ");
+                            } else {
+                                System.out.println("\n No tiene suficientes puntos para la reserva.");
+                            }
+                        } else {
+                            System.out.println("\n No tiene suficientes puntos para realizar una reserva. Se requieren más de 10000 puntos.");
+                        }
+                    } else if (opcionUso == 2) {
+                        System.out.println("\nHa seleccionado utilizarlo para servicios exclusivos.");
+                        System.out.println("\nMesas deluxe disponibles:");
+                        Mesa mesaMayorCapacidad = null;
+                        for (Mesa mesa : restaurante.getMesas()) {
+                            if (mesa.getTipo().equalsIgnoreCase("deluxe")) {
+                                int puntosRequeridos = Math.max(2000, mesa.getCapacidad() * 500);
+                                System.out.println("Mesa " + mesa.getNumero() + " | Capacidad: " + mesa.getCapacidad() + " | Puntos requeridos: " + puntosRequeridos);
+                                if (mesaMayorCapacidad == null || mesa.getCapacidad() > mesaMayorCapacidad.getCapacidad()) {
+                                    mesaMayorCapacidad = mesa;
+                                }
+                            }
+                        }
+                        System.out.println("\n¿Desea elegir una de estas mesas especiales para su próxima reserva?");
+                        System.out.println("1. Sí, elegir una mesa deluxe");
+                        System.out.println("2. No, prefiero usar los puntos para otra cosa");
+                        System.out.print("Seleccione una opción: ");
+                        int opcionMesa = scanner.nextInt();
+        
+                        if (opcionMesa == 1) {
+                            System.out.print("\nIngrese el número de la mesa que desea reservar: ");
+                            int numeroMesa = scanner.nextInt();
+        
+                            boolean mesaEncontrada = false;
+                            for (Mesa mesa : restaurante.getMesas()) {
+                                if (mesa.getTipo().equalsIgnoreCase("deluxe") && mesa.getNumero() == numeroMesa) {
+                                    int puntosRequeridos = Math.max(2000, mesa.getCapacidad() * 500);
+                                    if (puntosPorCosto >= puntosRequeridos) {
+                                        puntosTotales -= puntosRequeridos;
+                                        System.out.println("\n ¡Mesa deluxe " + numeroMesa + " reservada con éxito! ");
+                                    } else {
+                                        System.out.println("\n No tiene suficientes puntos para esta mesa.");
+                                    }
+                                    mesaEncontrada = true;
+                                    break;
+                                }
+                            }
+        
+                            if (!mesaEncontrada) {
+                                System.out.println("\n Número de mesa no válido o no disponible.");
+                            }
+                        } else {
+                            System.out.println("\nPuede seguir usando sus puntos en otras opciones.");
+                        }
+                    } else if (opcionUso == 3) {
+                        System.out.println("\nHa seleccionado utilizarlo para productos del menú.");
+                        System.out.println("\nMenú disponible (puntos requeridos):");
+                        
+                        for (Menu plato : Menu.values()) {
+                            int puntosRequeridos = (int) (plato.getPrecio()/100 );
+                            System.out.println(""+puntosRequeridos);
+                            puntosTotales -= puntosRequeridos;
+                            System.err.println(""+puntosTotales);
+                            System.out.println("- " + plato.getNombre() + " | Puntos: " + puntosRequeridos);
+                        }
+        
+                        System.out.print("Ingrese el nombre del producto que desea canjear: ");
+                        scanner.nextLine();
+                        String productoElegido = scanner.nextLine();
+        
+                        Menu productoSeleccionado = null;
+                        for (Menu plato : Menu.values()) {
+                            if (plato.getNombre().equalsIgnoreCase(productoElegido)) {
+                                productoSeleccionado = plato;
+                                break;
+                            }
+                        }
+        
+                        if (productoSeleccionado != null) {
+                            int puntosRequeridos = (int) (productoSeleccionado.getPrecio() / 1000);
+                            if (puntosTotales >= puntosRequeridos) {
+                                puntosTotales -= puntosRequeridos;
+                                System.out.println("\n ¡Ha canjeado " + productoSeleccionado.getNombre() + " con éxito! ");
+                            } else {
+                                System.out.println("\n No tiene suficientes puntos para canjear este producto.");
+                            }
+                        } else {
+                            System.out.println("\n El producto ingresado no es válido.");
+                        }
+                    }else if (opcionUso == 4) {
+                        System.out.println("\nHa seleccionado la opción de devolución del producto.");
+                        System.out.print("Ingrese la cantidad de puntos que desea recuperar por devolución: ");
+                        int puntosDevolucion = scanner.nextInt();
+    
+                       if (puntosDevolucion > 0) {
+                            puntosTotales += puntosDevolucion; // Se suman los puntos devueltos
+                           System.out.println("\nSe han devuelto " + puntosDevolucion + " puntos a su saldo.");
+                        } else {
+                             System.out.println("\nNo puede devolver 0 o una cantidad negativa de puntos.");
+                    }
+                    }else if (opcionUso==5){
+                        System.out.println("\nHa seleccionado la opción de compensación por mal servicio.");
+        System.out.print("Ingrese la cantidad de puntos que desea recibir como compensación: ");
+        int puntosCompensacion = scanner.nextInt();
+    
+        if (puntosCompensacion > 0) {
+            puntosTotales += puntosCompensacion; // Se suman los puntos por compensación
+            System.out.println("\nSe han agregado " + puntosCompensacion + " puntos a su saldo como compensación.");
+        } else {
+            System.out.println("\nNo puede solicitar 0 o una cantidad negativa de puntos.");
+        }
+          
+                    } else if (opcionUso == 0) {
+                        System.out.println("\nVolviendo al menú principal...");
+                        break;
+                    } else {
+                        System.out.println("\n Opción no válida. Por favor, elija una opción correcta.");
+                    }
+        
+                    System.out.println("\n Resumen de puntos acumulados ");
+                    System.out.println(" Puntos restantes: " + puntosTotales + " puntos");
+                }
+                
+                
+            } else {
+                System.out.println("\n No se encontraron compras para la identificación ingresada.");
+                
+            }
+            
+
+
         }
         for(Cliente n :Cliente.getClientes()){
             if(n.getIdentificacion()==identificacionBuscada){
                 ultimaReserva=n;
+                totalGastado += n.getReserva().getFactura().getTotalFactura();
             }
         }    
        
-        if (ultimoDomicilio != null || ultimaReserva != null) {
-            System.out.println("\nÚltima actividad del cliente con ID " + identificacionBuscada + ":");
-        }
-    
-        if (ultimoDomicilio != null) {
-            System.out.println("\nÚltimo domicilio del cliente con ID " + identificacionBuscada + ":");
-            System.out.println("Cliente: " + ultimoDomicilio.getCliente().getNombre() +
-                               " | Dirección: " + ultimoDomicilio.getDireccion() +
-                               " | Costo total: $" + ultimoDomicilio.getCosto());
+
+        if (ultimaReserva != null) {
+            System.out.println("Cliente: " + ultimaReserva.getNombre() +
+                               " | Costo total: $" + ultimaReserva.getReserva().getFactura().getTotalFactura());
     
             int puntosPorCosto = (int) (totalGastado / 100);
             int puntosPorVisitas =  (visitas > 5) ? (visitas - 5) * 20 : 0;
@@ -601,7 +758,7 @@ public class Main implements Utilidad {
             int posicionActualPrioridadMesero = Mesero.posicionPrioridadMesero(cliente.getReserva().getMesero());
 
 
-            Calificacion calificacion = cliente.calificarPorReserva((cliente.getReserva().getMesa().getPedido()), calidadComida, calidadMesero, tiempoEspera, comentario);  //Se hace la calificacion
+            Calificacion calificacion = cliente.calificar((cliente.getReserva().getMesa().getPedido()), calidadComida, calidadMesero, tiempoEspera, comentario);  //Se hace la calificacion
 
             cliente.getReserva().getMesa().getPedido().tiempoEsperaRestaurante(calificacion); //Se encarga de actualizar la reputacion del restaurante por el tiempo de espera
 
@@ -651,7 +808,7 @@ public class Main implements Utilidad {
             double calificacionActualDomiciliario = Domicilio.indicarDomicilio(idCliente).getDomiciliario().getPromCalificaciones();
 
 
-            Calificacion calificacion = cliente1.calificarPorDomicilio((Domicilio.indicarDomicilio(idCliente)),calidadComida, tiempoEspera, comentario);  //Se hace calificacion
+            Calificacion calificacion = cliente1.calificar((Domicilio.indicarDomicilio(idCliente)),calidadComida, tiempoEspera, comentario);  //Se hace calificacion
 
             if (tiempoEspera < 3){  //Se encarga de actualizar la reputacion del restaurante por el tiempo de espera
                 restaurante.setReputacion(restaurante.getReputacion()-0.1);
