@@ -26,8 +26,10 @@ public class Pedido implements Serializable{
         this.restaurante = restaurante;
         pedidos.add(this);
     }
-    public Pedido(Cliente cliente) {
-    	this.titular = cliente;
+    public Pedido(Cliente cliente, Restaurante restaurante) {
+    	this.restaurante = restaurante;
+        this.titular = cliente;
+        cliente.getReserva().getMesa().setPedido(this);
     	factura = titular.getReserva().getFactura(); //le asigno al pedido la factura que esta asignada a la reserva
     }
     

@@ -3,15 +3,18 @@ import baseDatos.Deserializador;
 import baseDatos.Serializador;
 import gestorAplicacion.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import uiMain.CreacionPedido;
 
 public class Main implements Utilidad {
 
     public static void main(String[] args) {
         Deserializador.deserializarListas();
+
 
         menuPrincipal(Restaurante.getRestaurante().get(0));
     }
@@ -167,6 +170,7 @@ public class Main implements Utilidad {
 
 					// Asignación de clases
 					reserva.setCliente(cliente);
+                    reserva.getFactura().setCliente(cliente);
 					cliente.setReserva(reserva);
 
 					//Datos adicionales para mesa "deluxe"
@@ -548,7 +552,6 @@ public class Main implements Utilidad {
         Cliente cliente = restaurante.indicarCliente(idCliente);  //para consumo local
         Cliente cliente1 = Domicilio.indicarCliente(idCliente); //Para domicilio
 
-
         double reputacionActualRestaurante = restaurante.getReputacion(); //Dato para cualquier tipo de calificacion
 
         if(restaurante.indicarCliente(idCliente).tipoCliente()){ //valida si es consumo local
@@ -649,7 +652,7 @@ public class Main implements Utilidad {
                 System.out.println("Consulta con nuestro equipo para acceder a un apartado exclusivo si tu proximo pedido es prioritario.");
             }
         }
-        Serializador.serializarListas();
+       // Serializador.serializarListas();
 
         menuPrincipal(restaurante);
 

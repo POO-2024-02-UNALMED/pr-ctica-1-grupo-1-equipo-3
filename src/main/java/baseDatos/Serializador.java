@@ -2,6 +2,7 @@ package baseDatos;
 import gestorAplicacion.*;
 import java.io.*;
 import java.util.ArrayList;
+import uiMain.CreacionPedido;
 
 public class Serializador {
 
@@ -39,5 +40,6 @@ public class Serializador {
         Serializador.serializar(Restaurante.getRestaurante(),"restaurante");
         Serializador.serializar(Restaurante.getIdConReservas(), "ListaIdConReservas");
         Serializador.serializar(Restaurante.getListaClientes(), "ListaClientes");
+        Serializador.serializar(CreacionPedido.getCreacionPedidos(), "creacionPedidos");
     }
 }
