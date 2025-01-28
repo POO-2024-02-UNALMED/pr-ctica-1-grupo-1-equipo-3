@@ -302,7 +302,7 @@ public class Main implements Utilidad {
                                " | Costo total: $" + ultimoDomicilio.getCosto());
     
             int puntosPorCosto = (int) (totalGastado / 100);
-            int puntosPorVisitas = visitas;
+            int puntosPorVisitas =  (visitas > 5) ? (visitas - 5) * 20 : 0;
             int puntosTotales = puntosPorCosto + puntosPorVisitas;
     
             System.out.println("\nTotal de puntos acumulados: " + puntosTotales + " puntos");
@@ -325,7 +325,7 @@ public class Main implements Utilidad {
                         System.out.print("Ingrese la cantidad de puntos que desea usar para la reserva: ");
                         int puntosReserva = scanner.nextInt();
                         if (puntosPorVisitas >= puntosReserva) {
-                            puntosPorVisitas -= puntosReserva;
+                            puntosTotales -= puntosReserva;
                             System.out.println("\n ¡Reserva realizada con éxito! ");
                         } else {
                             System.out.println("\n No tiene suficientes puntos para la reserva.");
@@ -361,7 +361,7 @@ public class Main implements Utilidad {
                             if (mesa.getTipo().equalsIgnoreCase("deluxe") && mesa.getNumero() == numeroMesa) {
                                 int puntosRequeridos = Math.max(2000, mesa.getCapacidad() * 500);
                                 if (puntosPorCosto >= puntosRequeridos) {
-                                    puntosPorCosto -= puntosRequeridos;
+                                    puntosTotales -= puntosRequeridos;
                                     System.out.println("\n ¡Mesa deluxe " + numeroMesa + " reservada con éxito! ");
                                 } else {
                                     System.out.println("\n No tiene suficientes puntos para esta mesa.");
@@ -380,8 +380,10 @@ public class Main implements Utilidad {
                 } else if (opcionUso == 3) {
                     System.out.println("\nHa seleccionado utilizarlo para productos del menú.");
                     System.out.println("\nMenú disponible (puntos requeridos):");
+                    
                     for (Menu plato : Menu.values()) {
                         int puntosRequeridos = (int) (plato.getPrecio() / 1000);
+                        puntosTotales -= puntosRequeridos;
                         System.out.println("- " + plato.getNombre() + " | Puntos: " + puntosRequeridos);
                     }
     
@@ -408,6 +410,29 @@ public class Main implements Utilidad {
                     } else {
                         System.out.println("\n El producto ingresado no es válido.");
                     }
+                }else if (opcionUso == 4) {
+                    System.out.println("\nHa seleccionado la opción de devolución del producto.");
+                    System.out.print("Ingrese la cantidad de puntos que desea recuperar por devolución: ");
+                    int puntosDevolucion = scanner.nextInt();
+
+                   if (puntosDevolucion > 0) {
+                        puntosTotales += puntosDevolucion; // Se suman los puntos devueltos
+                       System.out.println("\nSe han devuelto " + puntosDevolucion + " puntos a su saldo.");
+                    } else {
+                         System.out.println("\nNo puede devolver 0 o una cantidad negativa de puntos.");
+                }
+                }else if (opcionUso==5){
+                    System.out.println("\nHa seleccionado la opción de compensación por mal servicio.");
+    System.out.print("Ingrese la cantidad de puntos que desea recibir como compensación: ");
+    int puntosCompensacion = scanner.nextInt();
+
+    if (puntosCompensacion > 0) {
+        puntosTotales += puntosCompensacion; // Se suman los puntos por compensación
+        System.out.println("\nSe han agregado " + puntosCompensacion + " puntos a su saldo como compensación.");
+    } else {
+        System.out.println("\nNo puede solicitar 0 o una cantidad negativa de puntos.");
+    }
+      
                 } else if (opcionUso == 0) {
                     System.out.println("\nVolviendo al menú principal...");
                     break;
