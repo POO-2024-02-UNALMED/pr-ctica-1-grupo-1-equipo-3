@@ -36,6 +36,7 @@ public class CreacionPedido {
 	                   clienteConReserva.getNombre() + "\nesta es su visita #" +
 			           clienteConReserva.getVisitas() + " a " + restaurante.getNombre() +
 			           "\n(recuerde que tenemos descuentos por fidelidad cada 5 visitas)");
+			
 			} else {
 			System.out.println("\nReserva encontrada! Bienvenid@ "+ 
 			                   clienteConReserva.getNombre() + "\npor ser tu visita #" +
@@ -80,6 +81,7 @@ public class CreacionPedido {
 	pedido.calcularValorDelPedido(pedido.getPedidoListaTuplas());
 	pedido.realizarDescuentos(pedido.getValorSinDescuento(), cliente.getDescuentoPorVisitas());
 	imprimirResumenPedido(pedido.getPedidoListaTuplas(), pedido);
+	Main.menuPrincipal(pedido.getRestaurante()); //Para volver al menu principal
 	}
 	
 	//metodo para crear el pedido
@@ -260,5 +262,9 @@ public class CreacionPedido {
               e.printStackTrace(); }
           System.out.println("\nGracias por realizar su pedido! "
           		+ "\nlo invitamos a dejar su calificacion del servicio luego de su consumo");
+          try {
+              Thread.sleep(2000); } 
+  	    catch (InterruptedException e) {
+              e.printStackTrace(); }
 } 
 }

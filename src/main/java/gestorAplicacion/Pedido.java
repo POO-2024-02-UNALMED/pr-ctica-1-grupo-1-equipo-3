@@ -54,7 +54,7 @@ public class Pedido implements Serializable{
         //System.out.println("El subtotal de tu pedido es: " + Utilidad.formatoPrecio(subtotal));
     }
     
-    public void realizarDescuentos(long total, int descuento) {
+	public void realizarDescuentos(long total, int descuento) {
     	if (descuento != 0) { 
     		long descuentoAplicado = (total*descuento)/100;
     		long nuevoValorPedido = total-descuentoAplicado;
@@ -140,5 +140,11 @@ public class Pedido implements Serializable{
 	}
 	public void setValorConDescuento(long valorConDescuento) {
 		this.valorConDescuento = valorConDescuento;
+	}
+	 public Restaurante getRestaurante() {
+			return restaurante;
+	}
+	public void setRestaurante(Restaurante restaurante) {
+			this.restaurante = restaurante;
 	}
 }
