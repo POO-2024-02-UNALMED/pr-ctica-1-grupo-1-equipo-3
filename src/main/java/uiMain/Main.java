@@ -15,7 +15,6 @@ public class Main implements Utilidad {
     public static void main(String[] args) {
         Deserializador.deserializarListas();
 
-
         menuPrincipal(Restaurante.getRestaurante().get(0));
     }
 
@@ -677,7 +676,7 @@ public class Main implements Utilidad {
                 System.out.println("Consulta con nuestro equipo para acceder a un apartado exclusivo si tu proximo pedido es prioritario.");
             }
         }
-       // Serializador.serializarListas();
+       Serializador.serializarListas();
 
         menuPrincipal(restaurante);
 

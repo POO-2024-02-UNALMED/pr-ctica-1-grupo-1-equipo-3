@@ -1,17 +1,14 @@
 package uiMain;
-import gestorAplicacion.Almacen;
-import gestorAplicacion.Cliente;
-import gestorAplicacion.Menu;
+import gestorAplicacion.*;
 import gestorAplicacion.Menu.MenuCortesias;
-import gestorAplicacion.Pedido;
-import gestorAplicacion.Reserva;
-import gestorAplicacion.Restaurante;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.io.Serializable;
+import baseDatos.Serializador;
+import baseDatos.Deserializador;
+import java.util.*;
 
-public class CreacionPedido {
+public class CreacionPedido implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private static ArrayList<CreacionPedido> creacionPedidos = new ArrayList<CreacionPedido>();
 	private static boolean ofrecerCortesia;
 	private static Scanner scanner = new Scanner(System.in);
 	private Cliente cliente;
@@ -73,15 +70,22 @@ public class CreacionPedido {
             e.printStackTrace(); }
         }
     }
+
 }
 
 	public static void completarInfoPedido(Cliente cliente) {
-	Pedido pedido = new Pedido(cliente); //asignarle titular al pedido
+		Deserializador.deserializarListas();
+	Pedido pedido = new Pedido(cliente, Restaurante.getRestaurante().get(0)); //asignarle titular al pedido
+		Serializador.serializarListas();
 	creacionDePedido(pedido);
 	pedido.calcularValorDelPedido(pedido.getPedidoListaTuplas());
 	pedido.realizarDescuentos(pedido.getValorSinDescuento(), cliente.getDescuentoPorVisitas());
 	imprimirResumenPedido(pedido.getPedidoListaTuplas(), pedido);
+
 	Main.menuPrincipal(pedido.getRestaurante()); //Para volver al menu principal
+
+
+
 	}
 	
 	//metodo para crear el pedido
@@ -195,7 +199,8 @@ public class CreacionPedido {
             Thread.sleep(1500); } 
 	    catch (InterruptedException e) {
             e.printStackTrace(); }
-	}  
+	}
+	Serializador.serializarListas();
 }
 	
     public static void imprimirResumenPedido(List<Map.Entry<String, Integer>> listaDeTuplas, Pedido pedido) {
@@ -262,9 +267,20 @@ public class CreacionPedido {
               e.printStackTrace(); }
           System.out.println("\nGracias por realizar su pedido! "
           		+ "\nlo invitamos a dejar su calificacion del servicio luego de su consumo");
+
           try {
               Thread.sleep(2000); } 
   	    catch (InterruptedException e) {
               e.printStackTrace(); }
-} 
+		Serializador.serializarListas();
 }
+		//Getter
+
+	public static ArrayList<CreacionPedido> getCreacionPedidos() {
+		return creacionPedidos;
+	}
+}
+
+
+
+
