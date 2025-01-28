@@ -3,12 +3,10 @@ import baseDatos.Deserializador;
 import baseDatos.Serializador;
 import gestorAplicacion.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import uiMain.CreacionPedido;
 
 public class Main implements Utilidad {
 
@@ -157,7 +155,9 @@ public class Main implements Utilidad {
 				LocalDateTime fechaActual = LocalDateTime.now();
 				//Creación Reserva
 				Reserva reserva = new Reserva(mesaEscogida, fechaReserva, numeroPersonas, fechaActual);
+                
 				boolean meseroAsignado = mesaEscogida.reservar(reserva);
+
 
 				//Asignación de mesero a la mesa y creación del Cliente 
 				if (meseroAsignado == false) {
@@ -265,7 +265,9 @@ public class Main implements Utilidad {
 						System.out.println("Reserva realizada con éxito, gracias por Reservar en "+restaurante.getNombre());
 						reserva.getFactura().sumarValor(reserva.getPrecioTotal()); //Suma el valor de la reserva a la factura
 						reservaExitosa = true;
-						restaurante.addIdConReserva(identificacion); // agregar id a la lista de reservas
+						
+                        
+                       
 					} else {
 						reserva.eliminarReserva();
 						mesaEscogida.eliminarReserva();
@@ -287,15 +289,28 @@ public class Main implements Utilidad {
         long identificacionBuscada = scanner.nextLong();
     
         Domicilio ultimoDomicilio = null;
+        Cliente ultimaReserva=null;
         int visitas = 0;
         double totalGastado = 0;
+       
+        
         
         for (Domicilio d : Domicilio.getDomicilios()) {
             if (d.getCliente().getIdentificacion() == identificacionBuscada) {
                 visitas++;
                 totalGastado += d.getCosto();
                 ultimoDomicilio = d;
+                
             }
+        }
+        for(Cliente n :Cliente.getClientes()){
+            if(n.getIdentificacion()==identificacionBuscada){
+                ultimaReserva=n;
+            }
+        }    
+       
+        if (ultimoDomicilio != null || ultimaReserva != null) {
+            System.out.println("\nÚltima actividad del cliente con ID " + identificacionBuscada + ":");
         }
     
         if (ultimoDomicilio != null) {
@@ -385,8 +400,10 @@ public class Main implements Utilidad {
                     System.out.println("\nMenú disponible (puntos requeridos):");
                     
                     for (Menu plato : Menu.values()) {
-                        int puntosRequeridos = (int) (plato.getPrecio() / 1000);
+                        int puntosRequeridos = (int) (plato.getPrecio()/100 );
+                        System.out.println(""+puntosRequeridos);
                         puntosTotales -= puntosRequeridos;
+                        System.err.println(""+puntosTotales);
                         System.out.println("- " + plato.getNombre() + " | Puntos: " + puntosRequeridos);
                     }
     
@@ -889,7 +906,7 @@ public class Main implements Utilidad {
          Domicilio domicilio = new Domicilio(cliente, pedidoItems, direccion, esPrioritario, costoTotal, domiciliario);
          ArrayList<Domicilio> domicilios = Domicilio.getDomicilios();
         domicilios.add(domicilio);
-        Serializador.serializarListas();
+       
             
             
 
