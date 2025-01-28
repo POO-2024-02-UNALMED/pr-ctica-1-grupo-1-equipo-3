@@ -296,14 +296,13 @@ public class Main implements Utilidad {
         }
     
         if (ultimoDomicilio != null) {
-            System.out.println("\nÚltima compra del cliente con ID " + identificacionBuscada + ":");
+            System.out.println("\nÚltimo domicilio del cliente con ID " + identificacionBuscada + ":");
             System.out.println("Cliente: " + ultimoDomicilio.getCliente().getNombre() +
                                " | Dirección: " + ultimoDomicilio.getDireccion() +
                                " | Costo total: $" + ultimoDomicilio.getCosto());
     
-            // Actualización en el cálculo de puntos
-            int puntosPorCosto = (int) (totalGastado / 100) * 10; // 10 puntos por cada $100 gastados
-            int puntosPorVisitas = visitas * 5; // 5 puntos por cada visita
+            int puntosPorCosto = (int) (totalGastado / 100);
+            int puntosPorVisitas = visitas;
             int puntosTotales = puntosPorCosto + puntosPorVisitas;
     
             System.out.println("\nTotal de puntos acumulados: " + puntosTotales + " puntos");
@@ -314,23 +313,25 @@ public class Main implements Utilidad {
                 System.out.println("1. Reserva");
                 System.out.println("2. Servicios exclusivos");
                 System.out.println("3. Productos del menú");
+                System.out.println("4. Devolución del producto");
+                System.out.println("5. Mal servicio");
                 System.out.println("0. Salir");
-                System.out.print("Ingrese la opción (1, 2, 3 o 0 para salir): ");
+                System.out.print("Ingrese la opción (1, 2, 3, 4, 5 o 0 para salir): ");
                 opcionUso = scanner.nextInt();
     
                 if (opcionUso == 1) {
-                    if (puntosTotales > 50) {  // Ajuste a 50 puntos para reserva
+                    if (puntosTotales > 1000) {
                         System.out.println("\nHa seleccionado utilizarlo para una reserva.");
                         System.out.print("Ingrese la cantidad de puntos que desea usar para la reserva: ");
                         int puntosReserva = scanner.nextInt();
-                        if (puntosTotales >= puntosReserva) {
-                            puntosTotales -= puntosReserva;
+                        if (puntosPorVisitas >= puntosReserva) {
+                            puntosPorVisitas -= puntosReserva;
                             System.out.println("\n ¡Reserva realizada con éxito! ");
                         } else {
                             System.out.println("\n No tiene suficientes puntos para la reserva.");
                         }
                     } else {
-                        System.out.println("\n No tiene suficientes puntos para realizar una reserva. Se requieren más de 50 puntos.");
+                        System.out.println("\n No tiene suficientes puntos para realizar una reserva. Se requieren más de 10000 puntos.");
                     }
                 } else if (opcionUso == 2) {
                     System.out.println("\nHa seleccionado utilizarlo para servicios exclusivos.");
@@ -350,6 +351,32 @@ public class Main implements Utilidad {
                     System.out.println("2. No, prefiero usar los puntos para otra cosa");
                     System.out.print("Seleccione una opción: ");
                     int opcionMesa = scanner.nextInt();
+    
+                    if (opcionMesa == 1) {
+                        System.out.print("\nIngrese el número de la mesa que desea reservar: ");
+                        int numeroMesa = scanner.nextInt();
+    
+                        boolean mesaEncontrada = false;
+                        for (Mesa mesa : restaurante.getMesas()) {
+                            if (mesa.getTipo().equalsIgnoreCase("deluxe") && mesa.getNumero() == numeroMesa) {
+                                int puntosRequeridos = Math.max(2000, mesa.getCapacidad() * 500);
+                                if (puntosPorCosto >= puntosRequeridos) {
+                                    puntosPorCosto -= puntosRequeridos;
+                                    System.out.println("\n ¡Mesa deluxe " + numeroMesa + " reservada con éxito! ");
+                                } else {
+                                    System.out.println("\n No tiene suficientes puntos para esta mesa.");
+                                }
+                                mesaEncontrada = true;
+                                break;
+                            }
+                        }
+    
+                        if (!mesaEncontrada) {
+                            System.out.println("\n Número de mesa no válido o no disponible.");
+                        }
+                    } else {
+                        System.out.println("\nPuede seguir usando sus puntos en otras opciones.");
+                    }
                 } else if (opcionUso == 3) {
                     System.out.println("\nHa seleccionado utilizarlo para productos del menú.");
                     System.out.println("\nMenú disponible (puntos requeridos):");
@@ -374,12 +401,12 @@ public class Main implements Utilidad {
                         int puntosRequeridos = (int) (productoSeleccionado.getPrecio() / 1000);
                         if (puntosTotales >= puntosRequeridos) {
                             puntosTotales -= puntosRequeridos;
-                            System.out.println("\n¡Ha canjeado " + productoSeleccionado.getNombre() + " con éxito!");
+                            System.out.println("\n ¡Ha canjeado " + productoSeleccionado.getNombre() + " con éxito! ");
                         } else {
-                            System.out.println("\nNo tiene suficientes puntos para canjear este producto.");
+                            System.out.println("\n No tiene suficientes puntos para canjear este producto.");
                         }
                     } else {
-                        System.out.println("\nEl producto ingresado no es válido.");
+                        System.out.println("\n El producto ingresado no es válido.");
                     }
                 } else if (opcionUso == 0) {
                     System.out.println("\nVolviendo al menú principal...");
@@ -391,12 +418,16 @@ public class Main implements Utilidad {
                 System.out.println("\n Resumen de puntos acumulados ");
                 System.out.println(" Puntos restantes: " + puntosTotales + " puntos");
             }
+            
+            
         } else {
-            System.out.println("\n No se encontraron domicilios para la identificación ingresada.");
+            System.out.println("\n No se encontraron compras para la identificación ingresada.");
         }
     
         menuPrincipal(restaurante);
     }
+    
+    
     
     
     
