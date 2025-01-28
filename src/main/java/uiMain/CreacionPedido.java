@@ -21,7 +21,8 @@ public class CreacionPedido {
 	int id = 0;
 	// activar si se necesita ver la lista de reservas: System.out.println("lista de reservas: " + Restaurante.getIdConReservas()+"\n");
 	while (true) {
-	System.out.println("\ningrese el numero de identificacion asociado a su reserva:");
+		System.out.println(Restaurante.getIdConReservas());
+		System.out.println("\ningrese el numero de identificacion asociado a su reserva:");
 	String input = scanner.nextLine();
 	
 	//verifica que la entrada sea solo digitos
@@ -31,8 +32,8 @@ public class CreacionPedido {
 		if (reservaEncontrada==true) { //Si el id se encuentra
 			Cliente clienteConReserva = Restaurante.retonarCliente(id); //retorna el objeto cliente asociado al id ingresado
 			int descuento = restaurante.DeterminarDescuentos(clienteConReserva); //incrementa las visitas del cliente y determina si cumple con las necesarias para obtener un descuento
-			clienteConReserva.setDescuentoPorVisitas(descuento);//asigna los descuentos
-			if (descuento == 0) {System.out.println("\nReserva encontrada! Bienvenido "+ 
+			clienteConReserva.setDescuentoPorVisitas(descuento);//asigna los descuentos@
+			if (descuento == 0) {System.out.println("\nReserva encontrada! Bienvenid@ "+ 
 	                   clienteConReserva.getNombre() + "\nesta es su visita #" +
 			           clienteConReserva.getVisitas() + " a " + restaurante.getNombre() +
 			           "\n(recuerde que tenemos descuentos por fidelidad cada 5 visitas)");

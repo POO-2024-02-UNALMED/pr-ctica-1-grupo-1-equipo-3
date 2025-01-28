@@ -15,7 +15,7 @@ public class Pedido implements Serializable{
     private List<Map.Entry<String, Integer>> pedidoListaTuplas = new ArrayList<>();
 	private Calificacion calificacion;
     private double promCalificacion;
-    private String platoCortesia;
+    private String platoCortesia = "No aplica";
     private long descuento;
     private long valorSinDescuento;
     private long valorConDescuento;
