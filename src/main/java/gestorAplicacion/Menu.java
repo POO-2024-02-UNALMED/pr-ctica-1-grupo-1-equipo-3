@@ -77,4 +77,22 @@ public enum Menu implements Serializable{
 	public String getNombre() {
 		return nombre;
 	}
+	
+	public enum MenuCortesias implements Serializable {
+	 ENTRADA_PANES_AJO("Entrada de Panes de Ajo"),
+	 SOPA_TOMATE("Sopa de Tomate"),
+	 COCTEL_MARGARITA("Cóctel Margarita"),
+	 PORCION_TORTA_CHOCOLATE("Porción de Torta de Chocolate"),   
+	 COPA_DE_HELADO("Copa de Helado");
+		    
+	 private final String name;
+
+     MenuCortesias(String name) {
+		this.name = name;
+	 }
+
+	 public String getNombre() {
+		return name;
+	 }
+   }
 }
